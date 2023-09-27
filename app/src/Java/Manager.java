@@ -4,7 +4,7 @@
 
 import java.util.*;
 
-// line 48 "AssetPlus.ump"
+// line 47 "AssetPlus.ump"
 public class Manager extends Staff
 {
 
@@ -12,22 +12,61 @@ public class Manager extends Staff
   // MEMBER VARIABLES
   //------------------------
 
+  //Manager Attributes
+  private String password;
+
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Manager(String aEmail, String aPassword, String aName, String aPhone, AssetPlus aAssetPlus, MaintenanceTicket aMaintenanceTicket)
+  public Manager(String aEmail, String aPassword, AssetPlus aAssetPlus, MaintenanceTicket aMaintenanceTicket)
   {
-    super(aEmail, aPassword, aName, aPhone, aAssetPlus, aMaintenanceTicket);
+    super(aEmail, aPassword, aAssetPlus, aMaintenanceTicket);
+    resetPassword();
   }
 
   //------------------------
   // INTERFACE
   //------------------------
+  /* Code from template attribute_SetDefaulted */
+  public boolean setPassword(String aPassword)
+  {
+    boolean wasSet = false;
+    password = aPassword;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean resetPassword()
+  {
+    boolean wasReset = false;
+    password = getDefaultPassword();
+    wasReset = true;
+    return wasReset;
+  }
+
+  /**
+   * allows easy reset when new manager
+   */
+  public String getPassword()
+  {
+    return password;
+  }
+  /* Code from template attribute_GetDefaulted */
+  public String getDefaultPassword()
+  {
+    return "manager";
+  }
 
   public void delete()
   {
     super.delete();
   }
 
+
+  public String toString()
+  {
+    return super.toString() + "["+
+            "password" + ":" + getPassword()+ "]";
+  }
 }

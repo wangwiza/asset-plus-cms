@@ -4,7 +4,7 @@
 
 import java.util.*;
 
-// line 17 "AssetPlus.ump"
+// line 16 "AssetPlus.ump"
 public class HotelFloor extends HotelLocation
 {
 

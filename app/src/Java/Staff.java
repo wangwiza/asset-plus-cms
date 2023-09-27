@@ -5,7 +5,7 @@
 import java.util.*;
 import java.sql.Date;
 
-// line 41 "AssetPlus.ump"
+// line 40 "AssetPlus.ump"
 public abstract class Staff extends User
 {
 
@@ -21,9 +21,9 @@ public abstract class Staff extends User
   // CONSTRUCTOR
   //------------------------
 
-  public Staff(String aEmail, String aPassword, String aName, String aPhone, AssetPlus aAssetPlus, MaintenanceTicket aMaintenanceTicket)
+  public Staff(String aEmail, String aPassword, AssetPlus aAssetPlus, MaintenanceTicket aMaintenanceTicket)
   {
-    super(aEmail, aPassword, aName, aPhone, aAssetPlus);
+    super(aEmail, aPassword, aAssetPlus);
     createdNotes = new ArrayList<MaintenanceNote>();
     boolean didAddMaintenanceTicket = setMaintenanceTicket(aMaintenanceTicket);
     if (!didAddMaintenanceTicket)

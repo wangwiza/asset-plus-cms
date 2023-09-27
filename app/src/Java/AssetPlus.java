@@ -229,9 +229,9 @@ public class AssetPlus
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Asset addAsset(int aId, Date aPurchaseDate, HotelLocation aHotelLocation, AssetType aAssetType)
+  public Asset addAsset(Date aPurchaseDate, HotelLocation aHotelLocation, AssetType aAssetType)
   {
-    return new Asset(aId, aPurchaseDate, this, aHotelLocation, aAssetType);
+    return new Asset(aPurchaseDate, this, aHotelLocation, aAssetType);
   }
 
   public boolean addAsset(Asset aAsset)

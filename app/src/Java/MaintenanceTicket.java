@@ -2,13 +2,13 @@
 /*This code was generated using the UMPLE 1.32.1.6535.66c005ced modeling language!*/
 
 
-import java.util.*;
 import java.sql.Date;
+import java.util.*;
 
 /**
  * Maintenance
  */
-// line 82 "AssetPlus.ump"
+// line 79 "AssetPlus.ump"
 public class MaintenanceTicket
 {
 
@@ -24,18 +24,20 @@ public class MaintenanceTicket
   // STATIC VARIABLES
   //------------------------
 
-  private static Map<String, MaintenanceTicket> maintenanceticketsById = new HashMap<String, MaintenanceTicket>();
+  private static int nextId = 1;
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //MaintenanceTicket Attributes
-  private String id;
   private Date creationDate;
   private String description;
-  private String imageURL;
+  private List<String> imageURLs;
   private boolean requiresManagerApproval;
+
+  //Autounique Attributes
+  private int id;
 
   //MaintenanceTicket Associations
   private List<Staff> assignees;
@@ -47,16 +49,13 @@ public class MaintenanceTicket
   // CONSTRUCTOR
   //------------------------
 
-  public MaintenanceTicket(String aId, Date aCreationDate, String aDescription, String aImageURL, boolean aRequiresManagerApproval, User aUser, Asset aAsset)
+  public MaintenanceTicket(Date aCreationDate, String aDescription, boolean aRequiresManagerApproval, User aUser, Asset aAsset)
   {
     creationDate = aCreationDate;
     description = aDescription;
-    imageURL = aImageURL;
+    imageURLs = new ArrayList<String>();
     requiresManagerApproval = aRequiresManagerApproval;
-    if (!setId(aId))
-    {
-      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
+    id = nextId++;
     assignees = new ArrayList<Staff>();
     notes = new ArrayList<MaintenanceNote>();
     boolean didAddUser = setUser(aUser);
@@ -75,25 +74,6 @@ public class MaintenanceTicket
   // INTERFACE
   //------------------------
 
-  public boolean setId(String aId)
-  {
-    boolean wasSet = false;
-    String anOldId = getId();
-    if (anOldId != null && anOldId.equals(aId)) {
-      return true;
-    }
-    if (hasWithId(aId)) {
-      return wasSet;
-    }
-    id = aId;
-    wasSet = true;
-    if (anOldId != null) {
-      maintenanceticketsById.remove(anOldId);
-    }
-    maintenanceticketsById.put(aId, this);
-    return wasSet;
-  }
-
   public boolean setCreationDate(Date aCreationDate)
   {
     boolean wasSet = false;
@@ -109,13 +89,19 @@ public class MaintenanceTicket
     wasSet = true;
     return wasSet;
   }
-
-  public boolean setImageURL(String aImageURL)
+  /* Code from template attribute_SetMany */
+  public boolean addImageURL(String aImageURL)
   {
-    boolean wasSet = false;
-    imageURL = aImageURL;
-    wasSet = true;
-    return wasSet;
+    boolean wasAdded = false;
+    wasAdded = imageURLs.add(aImageURL);
+    return wasAdded;
+  }
+
+  public boolean removeImageURL(String aImageURL)
+  {
+    boolean wasRemoved = false;
+    wasRemoved = imageURLs.remove(aImageURL);
+    return wasRemoved;
   }
 
   public boolean setRequiresManagerApproval(boolean aRequiresManagerApproval)
@@ -124,21 +110,6 @@ public class MaintenanceTicket
     requiresManagerApproval = aRequiresManagerApproval;
     wasSet = true;
     return wasSet;
-  }
-
-  public String getId()
-  {
-    return id;
-  }
-  /* Code from template attribute_GetUnique */
-  public static MaintenanceTicket getWithId(String aId)
-  {
-    return maintenanceticketsById.get(aId);
-  }
-  /* Code from template attribute_HasUnique */
-  public static boolean hasWithId(String aId)
-  {
-    return getWithId(aId) != null;
   }
 
   public Date getCreationDate()
@@ -150,15 +121,45 @@ public class MaintenanceTicket
   {
     return description;
   }
-
-  public String getImageURL()
+  /* Code from template attribute_GetMany */
+  public String getImageURL(int index)
   {
-    return imageURL;
+    String aImageURL = imageURLs.get(index);
+    return aImageURL;
+  }
+
+  public String[] getImageURLs()
+  {
+    String[] newImageURLs = imageURLs.toArray(new String[imageURLs.size()]);
+    return newImageURLs;
+  }
+
+  public int numberOfImageURLs()
+  {
+    int number = imageURLs.size();
+    return number;
+  }
+
+  public boolean hasImageURLs()
+  {
+    boolean has = imageURLs.size() > 0;
+    return has;
+  }
+
+  public int indexOfImageURL(String aImageURL)
+  {
+    int index = imageURLs.indexOf(aImageURL);
+    return index;
   }
 
   public boolean getRequiresManagerApproval()
   {
     return requiresManagerApproval;
+  }
+
+  public int getId()
+  {
+    return id;
   }
   /* Code from template attribute_IsBoolean */
   public boolean isRequiresManagerApproval()
@@ -417,7 +418,6 @@ public class MaintenanceTicket
 
   public void delete()
   {
-    maintenanceticketsById.remove(getId());
     for(int i=assignees.size(); i > 0; i--)
     {
       Staff aAssignee = assignees.get(i - 1);
@@ -450,7 +450,6 @@ public class MaintenanceTicket
     return super.toString() + "["+
             "id" + ":" + getId()+ "," +
             "description" + ":" + getDescription()+ "," +
-            "imageURL" + ":" + getImageURL()+ "," +
             "requiresManagerApproval" + ":" + getRequiresManagerApproval()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "creationDate" + "=" + (getCreationDate() != null ? !getCreationDate().equals(this)  ? getCreationDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "user = "+(getUser()!=null?Integer.toHexString(System.identityHashCode(getUser())):"null") + System.getProperties().getProperty("line.separator") +

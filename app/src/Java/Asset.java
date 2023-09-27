@@ -2,8 +2,8 @@
 /*This code was generated using the UMPLE 1.32.1.6535.66c005ced modeling language!*/
 
 
-import java.util.*;
 import java.sql.Date;
+import java.util.*;
 
 // line 70 "AssetPlus.ump"
 public class Asset
@@ -13,15 +13,21 @@ public class Asset
   // STATIC VARIABLES
   //------------------------
 
-  private static Map<Integer, Asset> assetsById = new HashMap<Integer, Asset>();
+  private static int nextId = 1;
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
   //Asset Attributes
-  private int id;
   private Date purchaseDate;
+
+  //Autounique Attributes
+
+  /**
+   * automatic Integer
+   */
+  private int id;
 
   //Asset Associations
   private List<MaintenanceTicket> maintenanceHistory;
@@ -33,13 +39,10 @@ public class Asset
   // CONSTRUCTOR
   //------------------------
 
-  public Asset(int aId, Date aPurchaseDate, AssetPlus aAssetPlus, HotelLocation aHotelLocation, AssetType aAssetType)
+  public Asset(Date aPurchaseDate, AssetPlus aAssetPlus, HotelLocation aHotelLocation, AssetType aAssetType)
   {
     purchaseDate = aPurchaseDate;
-    if (!setId(aId))
-    {
-      throw new RuntimeException("Cannot create due to duplicate id. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
+    id = nextId++;
     maintenanceHistory = new ArrayList<MaintenanceTicket>();
     boolean didAddAssetPlus = setAssetPlus(aAssetPlus);
     if (!didAddAssetPlus)
@@ -62,25 +65,6 @@ public class Asset
   // INTERFACE
   //------------------------
 
-  public boolean setId(int aId)
-  {
-    boolean wasSet = false;
-    Integer anOldId = getId();
-    if (anOldId != null && anOldId.equals(aId)) {
-      return true;
-    }
-    if (hasWithId(aId)) {
-      return wasSet;
-    }
-    id = aId;
-    wasSet = true;
-    if (anOldId != null) {
-      assetsById.remove(anOldId);
-    }
-    assetsById.put(aId, this);
-    return wasSet;
-  }
-
   public boolean setPurchaseDate(Date aPurchaseDate)
   {
     boolean wasSet = false;
@@ -89,24 +73,17 @@ public class Asset
     return wasSet;
   }
 
-  public int getId()
-  {
-    return id;
-  }
-  /* Code from template attribute_GetUnique */
-  public static Asset getWithId(int aId)
-  {
-    return assetsById.get(aId);
-  }
-  /* Code from template attribute_HasUnique */
-  public static boolean hasWithId(int aId)
-  {
-    return getWithId(aId) != null;
-  }
-
   public Date getPurchaseDate()
   {
     return purchaseDate;
+  }
+
+  /**
+   * automatic Integer
+   */
+  public int getId()
+  {
+    return id;
   }
   /* Code from template association_GetMany */
   public MaintenanceTicket getMaintenanceHistory(int index)
@@ -115,10 +92,6 @@ public class Asset
     return aMaintenanceHistory;
   }
 
-  /**
-   * Date bestBeforeDate = {
-   * };
-   */
   public List<MaintenanceTicket> getMaintenanceHistory()
   {
     List<MaintenanceTicket> newMaintenanceHistory = Collections.unmodifiableList(maintenanceHistory);
@@ -163,9 +136,9 @@ public class Asset
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public MaintenanceTicket addMaintenanceHistory(String aId, Date aCreationDate, String aDescription, String aImageURL, boolean aRequiresManagerApproval, User aUser)
+  public MaintenanceTicket addMaintenanceHistory(Date aCreationDate, String aDescription, boolean aRequiresManagerApproval, User aUser)
   {
-    return new MaintenanceTicket(aId, aCreationDate, aDescription, aImageURL, aRequiresManagerApproval, aUser, this);
+    return new MaintenanceTicket(aCreationDate, aDescription, aRequiresManagerApproval, aUser, this);
   }
 
   public boolean addMaintenanceHistory(MaintenanceTicket aMaintenanceHistory)
@@ -289,7 +262,6 @@ public class Asset
 
   public void delete()
   {
-    assetsById.remove(getId());
     while (maintenanceHistory.size() > 0)
     {
       MaintenanceTicket aMaintenanceHistory = maintenanceHistory.get(maintenanceHistory.size() - 1);

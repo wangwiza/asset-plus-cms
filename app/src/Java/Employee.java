@@ -16,9 +16,9 @@ public class Employee extends Staff
   // CONSTRUCTOR
   //------------------------
 
-  public Employee(String aEmail, String aPassword, String aName, String aPhone, AssetPlus aAssetPlus, MaintenanceTicket aMaintenanceTicket)
+  public Employee(String aEmail, String aPassword, AssetPlus aAssetPlus, MaintenanceTicket aMaintenanceTicket)
   {
-    super(aEmail, aPassword, aName, aPhone, aAssetPlus, aMaintenanceTicket);
+    super(aEmail, aPassword, aAssetPlus, aMaintenanceTicket);
   }
 
   //------------------------

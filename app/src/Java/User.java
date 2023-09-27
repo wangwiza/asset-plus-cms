@@ -8,7 +8,7 @@ import java.sql.Date;
 /**
  * User
  */
-// line 31 "AssetPlus.ump"
+// line 30 "AssetPlus.ump"
 public abstract class User
 {
 
@@ -36,11 +36,11 @@ public abstract class User
   // CONSTRUCTOR
   //------------------------
 
-  public User(String aEmail, String aPassword, String aName, String aPhone, AssetPlus aAssetPlus)
+  public User(String aEmail, String aPassword, AssetPlus aAssetPlus)
   {
     password = aPassword;
-    name = aName;
-    phone = aPhone;
+    name = null;
+    phone = null;
     if (!setEmail(aEmail))
     {
       throw new RuntimeException("Cannot create due to duplicate email. See http://manual.umple.org?RE003ViolationofUniqueness.html");
@@ -56,25 +56,6 @@ public abstract class User
   //------------------------
   // INTERFACE
   //------------------------
-
-  public boolean setEmail(String aEmail)
-  {
-    boolean wasSet = false;
-    String anOldEmail = getEmail();
-    if (anOldEmail != null && anOldEmail.equals(aEmail)) {
-      return true;
-    }
-    if (hasWithEmail(aEmail)) {
-      return wasSet;
-    }
-    email = aEmail;
-    wasSet = true;
-    if (anOldEmail != null) {
-      usersByEmail.remove(anOldEmail);
-    }
-    usersByEmail.put(aEmail, this);
-    return wasSet;
-  }
 
   public boolean setPassword(String aPassword)
   {
@@ -170,9 +151,9 @@ public abstract class User
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public MaintenanceTicket addCreatedTicket(String aId, Date aCreationDate, String aDescription, String aImageURL, boolean aRequiresManagerApproval, Asset aAsset)
+  public MaintenanceTicket addCreatedTicket(Date aCreationDate, String aDescription, boolean aRequiresManagerApproval, Asset aAsset)
   {
-    return new MaintenanceTicket(aId, aCreationDate, aDescription, aImageURL, aRequiresManagerApproval, this, aAsset);
+    return new MaintenanceTicket(aCreationDate, aDescription, aRequiresManagerApproval, this, aAsset);
   }
 
   public boolean addCreatedTicket(MaintenanceTicket aCreatedTicket)

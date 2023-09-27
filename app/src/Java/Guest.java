@@ -16,9 +16,9 @@ public class Guest extends User
   // CONSTRUCTOR
   //------------------------
 
-  public Guest(String aEmail, String aPassword, String aName, String aPhone, AssetPlus aAssetPlus)
+  public Guest(String aEmail, String aPassword, AssetPlus aAssetPlus)
   {
-    super(aEmail, aPassword, aName, aPhone, aAssetPlus);
+    super(aEmail, aPassword, aAssetPlus);
   }
 
   //------------------------

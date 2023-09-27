@@ -8,7 +8,7 @@ import java.sql.Date;
 /**
  * Location
  */
-// line 11 "AssetPlus.ump"
+// line 10 "AssetPlus.ump"
 public abstract class HotelLocation
 {
 
@@ -78,9 +78,9 @@ public abstract class HotelLocation
     return 0;
   }
   /* Code from template association_AddManyToOne */
-  public Asset addFurnishing(int aId, Date aPurchaseDate, AssetPlus aAssetPlus, AssetType aAssetType)
+  public Asset addFurnishing(Date aPurchaseDate, AssetPlus aAssetPlus, AssetType aAssetType)
   {
-    return new Asset(aId, aPurchaseDate, aAssetPlus, this, aAssetType);
+    return new Asset(aPurchaseDate, aAssetPlus, this, aAssetType);
   }
 
   public boolean addFurnishing(Asset aFurnishing)

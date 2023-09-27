@@ -4,7 +4,6 @@ class AssetPlus
   1 <@>- * Asset assets;
   1 <@>- * AssetType assetTypes;
   1 <@>- * HotelLocation locations;
-  // 1 <@>- * MaintenanceTicket tickets;
 }
 
 // Location
@@ -31,10 +30,10 @@ class HotelRoom
 class User 
 { 
   abstract;
-  unique email;
+  unique immutable email;
   password;
-  name;
-  phone;
+  lazy name;
+  lazy phone;
   1 -- * MaintenanceTicket createdTickets;
 }
 
@@ -48,6 +47,7 @@ class Staff
 class Manager
 {
   isA Staff;
+  defaulted password = "manager"; // allows easy reset when new manager
 }
 
 class Employee
@@ -69,11 +69,8 @@ class AssetType
 
 class Asset
 {
-  unique Integer id;
+  autounique id; // automatic Integer
   Date purchaseDate;
-//   Date bestBeforeDate = {
-
-//   };
   1 <@>- * MaintenanceTicket maintenanceHistory;
 
 }
@@ -81,10 +78,10 @@ class Asset
 // Maintenance
 class MaintenanceTicket
 {
-  unique id;
+  autounique id;
   Date creationDate;
   description;
-  imageURL;
+  lazy String[] imageURLs; // doesn't make sense to make association with new class
   Boolean requiresManagerApproval;
   enum PriorityLevel {Urgent, Normal, Low};
   enum Status {Open, Resolved, Closed};
