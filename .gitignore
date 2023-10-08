@@ -3,3 +3,11 @@
 
 # Ignore Gradle build output directory
 build
+*/**/build
+
+bin
+
+
+*/**/__pycache__
+
+**/*.class
