@@ -18,7 +18,7 @@ public class AssetPlusFeatureSet1Controller {
     } catch (exception e) {
       throw new Exception("An error has occured. Please try again.");
     }
-    return ""
+    return "";
   }
 
   public static String addEmployeeOrGuest(String email, String password, String name, String phoneNumber,
@@ -30,29 +30,29 @@ public class AssetPlusFeatureSet1Controller {
         status = ap.addGuest(ap.addGuest(email, name, password, phoneNumber));
       } 
       if (status==false) {
-        throw new Exception("Duplicate user. User has not been added")
+        throw new Exception("Duplicate user. User has not been added");
       }
     } catch (exception e) {
-      throw new Exception("An error has occured. Please try again.")
+      throw new Exception("An error has occured. Please try again.");
     }
-    return ""
+    return "";
   }
 
   public static String updateEmployeeOrGuest(String email, String newPassword, String newName, String newPhoneNumber) {
     try {
-      List<Employee> employeeList = ap.getEmployees()
+      List<Employee> employeeList = ap.getEmployees();
       for (let i=0; i<employeeList.size; i++) {
         if (employeeList[i].getEmail==email){
-          employeeList[i].setPassword(newPassword)
-          employeeList[i].setPhoneNumber(newPhoneNumber)
-          employeeList[i].setName(newName)
-          break
+          employeeList[i].setPassword(newPassword);
+          employeeList[i].setPhoneNumber(newPhoneNumber);
+          employeeList[i].setName(newName);
+          break;
         }
       }
     } catch (exception e) {
-      throw new Exception("An error has occured. Please try again.")
+      throw new Exception("An error has occured. Please try again.");
     }
-    return ""
+    return "";
   }
 
 }
