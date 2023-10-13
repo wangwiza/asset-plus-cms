@@ -14,18 +14,25 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class DeleteGuestStepDefinitions {
-  @author("William Wang")
+  // "global" variables to be used in step definitions
+  private AssetPlus ap;
+  private String error;
+
+  /**
+   * @author William Wang
+   * @param dataTable
+   */
   @Given("the following guests exist in the system \\(p8)")
   public void the_following_guests_exist_in_the_system_p8(
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    List<Map<String, String>> rows = dataTable.asMaps();
+    for (var row : rows) {
+      String email = row.get("email");
+      String password = row.get("password");
+      String name = row.get("name");
+      String phoneNumber = row.get("phoneNumber");
+      ap.addGuest(email, name, password, phoneNumber);
+    }
   }
 
   @author("Krasimir Kirov")
