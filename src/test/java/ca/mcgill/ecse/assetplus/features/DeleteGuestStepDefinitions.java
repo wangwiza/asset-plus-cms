@@ -1,5 +1,10 @@
 package ca.mcgill.ecse.assetplus.features;
 
+import java.util.List;
+import java.util.Map;
+import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+import ca.mcgill.ecse.assetplus.model.AssetPlus;
+import ca.mcgill.ecse.assetplus.model.Manager;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -23,14 +28,22 @@ public class DeleteGuestStepDefinitions {
   @Given("the following manager exists in the system \\(p8)")
   public void the_following_manager_exists_in_the_system_p8(
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+        // Write code here that turns the phrase above into concrete actions
+        // For automatic transformation, change DataTable to one of
+        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+        // Double, Byte, Short, Long, BigInteger or BigDecimal.
+        // For other transformations you can register a DataTableType.
+        AssetPlus ap = AssetPlusApplication.getAssetPlus();
+        List<Map<String, String>> rows = dataTable.asMaps();
+        for (var row : rows) {
+            String name = row.get("name");
+            String email = row.get("email");
+            String password = row.get("password");
+            String phoneNumber = row.get("phoneNumber");
+
+            new Manager(name, email, password, phoneNumber, ap);
+        }
   }
 
   @author("Michael Rafferty")
