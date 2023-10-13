@@ -1,9 +1,13 @@
 package ca.mcgill.ecse.assetplus.features;
 
+import static org.junit.Assert.assertNotEquals;
+
 import java.util.List;
 import java.util.Map;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
+import ca.mcgill.ecse.assetplus.model.AssetType;
+import ca.mcgill.ecse.assetplus.model.Guest;
 import ca.mcgill.ecse.assetplus.model.Manager;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -56,8 +60,11 @@ public class DeleteGuestStepDefinitions {
   @author("Vlad Arama")
   @Then("the guest account linked to {string} shall not exist in the system \\(p8)")
   public void the_guest_account_linked_to_shall_not_exist_in_the_system_p8(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+        AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
+        List<Guest> guestsList = assetPlus.getGuests();
+        for (Guest guest : guestsList) {
+            assertNotEquals("Guest with the same email has been found in the system.", string, guest.getEmail());
+        }
   }
 
   @author("Li Yang Lei")
