@@ -15,50 +15,62 @@ public class AssetPlusFeatureSet3Controller {
     Date purchaseDate, String assetTypeName) throws Exception {
     
     try {
-        if (assetTypeName == null || assetTypeName.equals("")) {
-            throw new Exception("Asset Type not found for the given name.");
-        }
+      if (assetTypeName == null) {
+        throw new Exception("Please provide a valid Asset Type name, it cannot be null.");
+      }
 
-        AssetType assetType = AssetType.getWithName(assetTypeName);
+      if (assetTypeName.equals("")) {
+        throw new Exception("Please provide a valid Asset Type name, it cannot be empty.");
+      }
 
-        if (floorNumber < 0) {
-            throw new Exception("Floor number cannot be negative.");
-        }
+      if (floorNumber < 0) {
+          throw new Exception("The floor number cannot be negative.");
+      }
 
-        if (roomNumber < -1) {
-            throw new Exception("Room number cannot be less than -1.");
-        }
+      if (roomNumber < -1) {
+          throw new Exception("The room number cannot be less than -1.");
+      }
 
-        if (assetNumber < 1) {
-            throw new Exception("Asset number cannot be less than 1.");
-        }
+      if (assetNumber < 1) {
+          throw new Exception("The asset number cannot be less than 1.");
+      }
 
-        boolean isAdded = ap.addSpecificAsset(ap.addSpecificAsset(assetNumber, floorNumber, roomNumber, purchaseDate, assetType));
+      AssetType assetType = AssetType.getWithName(assetTypeName);
 
-        if (!isAdded) {
-            throw new Exception("Duplicate specific asset. Specific asset has not been added.");
-        }
+      boolean isAdded = ap.addSpecificAsset(ap.addSpecificAsset(assetNumber, floorNumber, roomNumber, purchaseDate, assetType));
 
-        return "";
+      if (!isAdded) {
+          throw new Exception("A duplicate specific asset was found. Specific asset has not been added. Please try again.");
+      }
+
+      return "";
     } 
     catch (Exception e) {
-        throw new Exception("An error has occurred. Please try again.");
+      throw new Exception("An error has occured, please try again: " + e);
     }
   }
 
   public static String updateSpecificAsset(int assetNumber, int newFloorNumber, int newRoomNumber,
   Date newPurchaseDate, String newAssetTypeName) throws Exception {
   try {
-      if (newAssetTypeName == null || newAssetTypeName.equals("")) {
-          throw new Exception("Asset Type not found for the given name.");
+      if (newAssetTypeName == null) {
+        throw new Exception("Please provide a valid Asset Type name, it cannot be null.");
+      }
+
+      if (newAssetTypeName.equals("")) {
+        throw new Exception("Please provide a valid Asset Type name, it cannot be empty.");
       }
 
       if (newFloorNumber < 0) {
-            throw new Exception("Floor number cannot be negative.");
-        }
+          throw new Exception("The floor number cannot be negative.");
+      }
 
       if (newRoomNumber < -1) {
-          throw new Exception("Room number cannot be less than -1.");
+          throw new Exception("The room number cannot be less than -1.");
+      }
+
+      if (assetNumber < 1) {
+          throw new Exception("The asset number cannot be less than 1.");
       }
 
       AssetType newAssetType = AssetType.getWithName(newAssetTypeName);
@@ -76,12 +88,12 @@ public class AssetPlusFeatureSet3Controller {
           }
       }
       if (isFound == false){
-        throw new Exception("No specific asset with this asset number. Please try again.");
+        throw new Exception("No specific asset with this asset number was found. Please try again.");
       }
       return "";
     } 
     catch (Exception e) {
-      throw new Exception("An error has occured. Please try again.");
+      throw new Exception("An error has occured, please try again: " + e);
     }
   }
 
@@ -98,11 +110,11 @@ public static void deleteSpecificAsset(int assetNumber) throws Exception {
           }
       }
       if (isFound == false){
-        throw new Exception("No specific asset with this asset number. Please try again.");
+        throw new Exception("No specific asset with this asset number was found. Please try again.");
       }
     } 
     catch (Exception e) {
-      throw new Exception("An error has occurred. Please try again.");
+      throw new Exception("An error has occured, please try again: " + e);
     }
   }
 }
