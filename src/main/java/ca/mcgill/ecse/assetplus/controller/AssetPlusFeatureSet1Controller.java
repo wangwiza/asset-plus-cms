@@ -24,10 +24,11 @@ public class AssetPlusFeatureSet1Controller {
   public static String addEmployeeOrGuest(String email, String password, String name, String phoneNumber,
         boolean isEmployee) {
     try {
+      boolean status;
       if (isEmployee) {
         status = ap.addEmployee(ap.addEmployee(email, name, password, phoneNumber));
       } else {
-        status = ap.addGuest(ap.addGuest(email, name, password, phoneNumber));
+        boolean status = ap.addGuest(ap.addGuest(email, name, password, phoneNumber));
       } 
       if (status==false) {
         throw new Exception("Duplicate user. User has not been added");
