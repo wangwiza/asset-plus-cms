@@ -1,5 +1,6 @@
 package ca.mcgill.ecse.assetplus.controller;
 
+import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.User;
@@ -12,45 +13,45 @@ import ca.mcgill.ecse.assetplus.model.Employee;
 public class AssetPlusFeatureSet1Controller {
   private static AssetPlus ap = AssetPlusApplication.getAssetPlus();
   private AssetPlusFeatureSet1Controller() {};
-  public static String updateManager(String password) {
+  public static String updateManager(String password) throws Exception {
     try {
       ap.getManager().setPassword(password);
-    } catch (exception e) {
-      throw new Exception("An error has occured. Please try again.");
+      return "";
+    } catch (Exception e) {
+      throw new Exception("An error has occured. Please try again: " + e);
     }
-    return "";
   }
 
   public static String addEmployeeOrGuest(String email, String password, String name, String phoneNumber,
-        boolean isEmployee) {
+        boolean isEmployee) throws Exception {
     try {
       boolean status;
       if (isEmployee) {
         status = ap.addEmployee(ap.addEmployee(email, name, password, phoneNumber));
       } else {
-        boolean status = ap.addGuest(ap.addGuest(email, name, password, phoneNumber));
+        status = ap.addGuest(ap.addGuest(email, name, password, phoneNumber));
       } 
       if (status==false) {
         throw new Exception("Duplicate user. User has not been added");
       }
-    } catch (exception e) {
+      return "";
+    } catch (Exception e) {
       throw new Exception("An error has occured. Please try again.");
     }
-    return "";
   }
 
-  public static String updateEmployeeOrGuest(String email, String newPassword, String newName, String newPhoneNumber) {
+  public static String updateEmployeeOrGuest(String email, String newPassword, String newName, String newPhoneNumber) throws Exception {
     try {
       List<Employee> employeeList = ap.getEmployees();
-      for (let i=0; i<employeeList.size; i++) {
-        if (employeeList[i].getEmail==email){
-          employeeList[i].setPassword(newPassword);
-          employeeList[i].setPhoneNumber(newPhoneNumber);
-          employeeList[i].setName(newName);
+      for (int i=0; i<employeeList.size(); i++) {
+        if (employeeList.get(i).getEmail()==email){
+          employeeList.get(i).setPassword(newPassword);
+          employeeList.get(i).setPhoneNumber(newPhoneNumber);
+          employeeList.get(i).setName(newName);
           break;
         }
       }
-    } catch (exception e) {
+    } catch (Exception e) {
       throw new Exception("An error has occured. Please try again.");
     }
     return "";
