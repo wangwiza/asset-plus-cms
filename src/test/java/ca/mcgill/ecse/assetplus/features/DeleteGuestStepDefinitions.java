@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
-import ca.mcgill.ecse.assetplus.model.AssetType;
 import ca.mcgill.ecse.assetplus.model.Guest;
 import ca.mcgill.ecse.assetplus.model.Manager;
 import io.cucumber.java.en.Given;
