@@ -1,5 +1,6 @@
 package ca.mcgill.ecse.assetplus.features;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import java.util.List;
@@ -86,8 +87,9 @@ public class DeleteGuestStepDefinitions {
    */
   @Then("the manager account linked to {string} shall exist in the system \\(p8)")
   public void the_manager_account_linked_to_shall_exist_in_the_system_p8(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    AssetPlus ap = AssetPlusApplication.getAssetPlus();
+    Manager manager = ap.getManager();
+    assertEquals("The manager account linked to " + string + " does not exist in the system.", manager.getEmail(), string);
   }
 
   /**
