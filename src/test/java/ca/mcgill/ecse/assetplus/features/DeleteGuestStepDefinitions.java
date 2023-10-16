@@ -15,9 +15,6 @@ import io.cucumber.java.en.When;
 
 public class DeleteGuestStepDefinitions {
   // "global" variables to be used in step definitions
-  private AssetPlus ap;
-  private String error;
-
   /**
    * @author William Wang
    * @param dataTable
@@ -25,6 +22,7 @@ public class DeleteGuestStepDefinitions {
   @Given("the following guests exist in the system \\(p8)")
   public void the_following_guests_exist_in_the_system_p8(
       io.cucumber.datatable.DataTable dataTable) {
+    AssetPlus ap = AssetPlusApplication.getAssetPlus();
     List<Map<String, String>> rows = dataTable.asMaps();
     for (var row : rows) {
       String email = row.get("email");
@@ -48,6 +46,7 @@ public class DeleteGuestStepDefinitions {
         // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
         // Double, Byte, Short, Long, BigInteger or BigDecimal.
         // For other transformations you can register a DataTableType.
+      AssetPlus ap = AssetPlusApplication.getAssetPlus();
       Map<String, String> row = dataTable.asMap(String.class, String.class);
       String name = row.get("name");
       String email = row.get("email");
