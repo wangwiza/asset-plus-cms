@@ -43,20 +43,24 @@ public class DeleteGuestStepDefinitions {
   @Given("the following manager exists in the system \\(p8)")
   public void the_following_manager_exists_in_the_system_p8(
       io.cucumber.datatable.DataTable dataTable) {
-        // Write code here that turns the phrase above into concrete actions
-        // For automatic transformation, change DataTable to one of
-        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-        // Double, Byte, Short, Long, BigInteger or BigDecimal.
-        // For other transformations you can register a DataTableType.
-      Map<String, String> row = dataTable.asMap(String.class, String.class);
-      String name = row.get("name");
-      String email = row.get("email");
-      String password = row.get("password");
-      String phoneNumber = row.get("phoneNumber");
-
-      Manager newManager = new Manager(name, email, password, phoneNumber, ap);
-      ap.setManager(newManager);
+        AssetPlus ap = AssetPlusApplication.getAssetPlus();
+        Map<String, String> row = dataTable.asMap(String.class, String.class);
+        
+        String name = row.get("key:name");
+        String email = row.get("key:email");
+        String password = row.get("key:password");
+        String phoneNumber = row.get("key:phoneNumber");
+        //Correct idea?
+        if (ap.hasManager()) {
+          Manager existingManager = ap.getManager();
+          existingManager.setName(name);
+          existingManager.setEmail(email);
+          existingManager.setPassword(password);
+          existingManager.setPhoneNumber(phoneNumber);
+        } else {
+          Manager newManager = new Manager(name, email, password, phoneNumber, ap);
+          ap.setManager(newManager);
+        }
   }
 
   /**
