@@ -6,8 +6,8 @@ import static org.junit.Assert.assertNotEquals;
 import java.util.List;
 import java.util.Map;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet6Controller;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
-import ca.mcgill.ecse.assetplus.model.AssetType;
 import ca.mcgill.ecse.assetplus.model.Guest;
 import ca.mcgill.ecse.assetplus.model.Manager;
 import io.cucumber.java.en.Given;
@@ -16,9 +16,6 @@ import io.cucumber.java.en.When;
 
 public class DeleteGuestStepDefinitions {
   // "global" variables to be used in step definitions
-  private AssetPlus ap;
-  private String error;
-
   /**
    * @author William Wang
    * @param dataTable
@@ -26,6 +23,7 @@ public class DeleteGuestStepDefinitions {
   @Given("the following guests exist in the system \\(p8)")
   public void the_following_guests_exist_in_the_system_p8(
       io.cucumber.datatable.DataTable dataTable) {
+    AssetPlus ap = AssetPlusApplication.getAssetPlus();
     List<Map<String, String>> rows = dataTable.asMaps();
     for (var row : rows) {
       String email = row.get("email");
@@ -69,8 +67,8 @@ public class DeleteGuestStepDefinitions {
    */
   @When("the guest attempts to delete their own account linked to the {string} \\(p8)")
   public void the_guest_attempts_to_delete_their_own_account_linked_to_the_p8(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+      AssetPlusFeatureSet6Controller.deleteEmployeeOrGuest(string);
+      
   }
 
   /**

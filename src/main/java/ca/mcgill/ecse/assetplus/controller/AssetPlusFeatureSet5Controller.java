@@ -12,8 +12,17 @@ public class AssetPlusFeatureSet5Controller {
   private AssetPlusFeatureSet5Controller() {};
 
   public static String addImageToMaintenanceTicket(String imageURL, int ticketID) {
-    // Remove this exception when you implement this method
-    throw new UnsupportedOperationException("Not Implemented!");
+    // input validation
+
+
+    // call model
+    try {
+      MaintenanceTicket ticket = ap.getMaintenanceTicket(ticketID);
+      ticket.addTicketImage(imageURL);
+    } catch (RuntimeException e) {
+      return e.getMessage();
+    }
+    return "";
   }
 
   public static void deleteImageFromMaintenanceTicket(String imageURL, int ticketID) {

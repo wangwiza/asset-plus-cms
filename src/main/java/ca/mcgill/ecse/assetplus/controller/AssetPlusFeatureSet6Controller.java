@@ -1,18 +1,95 @@
-package ca.mcgill.ecse.assetplus.controller;
 
+package ca.mcgill.ecse.assetplus.controller;
+import java.util.ArrayList;
+import java.util.List;
+import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+import ca.mcgill.ecse.assetplus.model.AssetPlus;
+import ca.mcgill.ecse.assetplus.model.AssetType;
+import ca.mcgill.ecse.assetplus.model.User;
+import ca.mcgill.ecse.assetplus.model.Employee;
+import ca.mcgill.ecse.assetplus.model.Guest;
+import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
+import ca.mcgill.ecse.assetplus.model.TicketImage;
 import java.util.List;
 
 public class AssetPlusFeatureSet6Controller {
+  
+  private static AssetPlus ap = AssetPlusApplication.getAssetPlus();
 
   public static void deleteEmployeeOrGuest(String email) {
-    // Remove this exception when you implement this method
-    throw new UnsupportedOperationException("Not Implemented!");
+    List<Employee> employeeList = ap.getEmployees();
+    List<Guest> guestList = ap.getGuests();
+    //boolean exists = false;
+    boolean isEmployee = false;
+    boolean isGuest = false;
+    User employeeOrGuest = null;
+  for (int i=0; i<employeeList.size(); i++) {
+      if (employeeList.get(i).getEmail()==email){
+        //exists = true;
+        isEmployee = true;
+        employeeOrGuest = employeeList.get(i);
+        break;
+    }
+  }
+  for (int i=0; i<guestList.size(); i++) {
+      if (guestList.get(i).getEmail()==email){
+        //exists = true;
+        isGuest = true;
+        employeeOrGuest = guestList.get(i);
+        break;
+    }
+  }
+  if (isEmployee){
+    ap.removeEmployee((Employee) employeeOrGuest);
+  }
+  if (isGuest){
+    ap.removeGuest((Guest) employeeOrGuest);
+  }
   }
 
   // returns all tickets
   public static List<TOMaintenanceTicket> getTickets() {
-    // Remove this exception when you implement this method
-    throw new UnsupportedOperationException("Not Implemented!");
-  }
+    var tickets = new ArrayList<TOMaintenanceTicket>();
 
+    for (var maintenanceticket : ap.getMaintenanceTickets()){
+      // URLS
+      List<String> imageUrls = new ArrayList<String>();
+      if (maintenanceticket.hasTicketImages()){
+      for (TicketImage ticketImage: maintenanceticket.getTicketImages()){
+        imageUrls.add(ticketImage.getImageURL());
+        }
+      }
+      // Notes
+      TOMaintenanceNote[] notes = new TOMaintenanceNote[maintenanceticket.numberOfTicketNotes()];
+      if (maintenanceticket.hasTicketNotes()){
+        int i = 0;
+      for (MaintenanceNote maintenanceNote : maintenanceticket.getTicketNotes()){
+        notes[i] = new TOMaintenanceNote(maintenanceNote.getDate(), maintenanceNote.getDescription(), maintenanceNote.getNoteTaker().getEmail());
+        i++;
+        }
+      }
+      
+      // TOMaintenanceTicket constructor for reference:
+      //public TOMaintenanceTicket(int aId, Date aRaisedOnDate, String aDescription, String aRaisedByEmail, String aAssetName, int aExpectLifeSpanInDays, Date aPurchaseDate, int aFloorNumber, int aRoomNumber, 
+      // List<String> aImageURLs, 
+      // TOMaintenanceNote... allNotes)
+
+      // List<TOMaintenanceTicket>
+      tickets.add(new TOMaintenanceTicket(
+        maintenanceticket.getId(), 
+        maintenanceticket.getRaisedOnDate(), 
+        maintenanceticket.getDescription(), 
+        maintenanceticket.getTicketRaiser().getEmail(), 
+        maintenanceticket.getAsset().getAssetType().getName(),
+        maintenanceticket.getAsset().getAssetType().getExpectedLifeSpan(),
+        maintenanceticket.getAsset().getPurchaseDate(),
+        maintenanceticket.getAsset().getFloorNumber(),
+        maintenanceticket.getAsset().getRoomNumber(),
+        imageUrls,
+        notes));
+    }
+    return tickets;
+
+  }
 }
