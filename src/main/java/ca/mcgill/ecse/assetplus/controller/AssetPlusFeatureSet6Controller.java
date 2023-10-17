@@ -56,7 +56,6 @@ public class AssetPlusFeatureSet6Controller {
   // returns all tickets
   public static List<TOMaintenanceTicket> getTickets() {
     // var tickets = new ArrayList<TOMaintenanceTicket>();
-    
     // for (var maintenanceticket : ap.getMaintenanceTickets()){
     //   List<String> imageUrls = new ArrayList<String>();
     //   for (TicketImage ticketImage: maintenanceticket.getTicketImages()){
