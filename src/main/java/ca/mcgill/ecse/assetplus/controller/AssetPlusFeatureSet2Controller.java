@@ -10,95 +10,76 @@ public class AssetPlusFeatureSet2Controller {
   private static AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 
   public static String addAssetType(String name, int expectedLifeSpanInDays) throws Exception {
-    try {
-      if (expectedLifeSpanInDays <= 0) {
-        throw new Exception("The expected life span has to be greater than 0.");
-      }
-
-      if (name == null) {
-        throw new Exception("Please provide a valid Asset Type name, it cannot be null.");
-      }
-
-      if (name.equals("")) {
-        throw new Exception("Please provide a valid Asset Type name, it cannot be empty.");
-      }
-
-      Boolean operationSuccess = assetPlus.addAssetType(assetPlus.addAssetType(name, expectedLifeSpanInDays));
-
-      if (!operationSuccess) {
-        throw new Exception("A duplicate asset type was found, please try again.");
-      }
-
-      return "";
-
-    } catch (Exception e) {
-      throw new Exception("An error has occured, please try again: " + e);
+    if (expectedLifeSpanInDays <= 0) {
+      throw new Exception("The expected life span must be greater than 0 days");
     }
+
+    if (name == null || name.equals("")) {
+      throw new Exception("The name must not be empty");
+    }
+
+    Boolean operationSuccess =
+        assetPlus.addAssetType(assetPlus.addAssetType(name, expectedLifeSpanInDays));
+
+    if (!operationSuccess) {
+      throw new Exception("The asset type already exists");
+    }
+
+    return "";
   }
 
-  public static String updateAssetType(String oldName, String newName, int newExpectedLifeSpanInDays) throws Exception {
+  public static String updateAssetType(String oldName, String newName,
+      int newExpectedLifeSpanInDays) throws Exception {
     List<AssetType> assetTypeList = assetPlus.getAssetTypes();
     Boolean updatedAssetType = false;
-    try {
-      if (newExpectedLifeSpanInDays <= 0) {
-        throw new Exception("The expected life span has to be greater than 0.");
-      }
 
-      if (oldName == null || newName == null) {
-        throw new Exception("Please provide a valid Asset Type name, it cannot be null.");
-      }
-
-      if (oldName.equals("") || newName.equals("")) {
-        throw new Exception("Please provide a valid Asset Type name, it cannot be empty.");
-      }
-
-      for (AssetType assetType : assetTypeList) {
-        if (assetType.getName().equals(oldName)) {
-          assetType.setName(newName);
-          assetType.setExpectedLifeSpan(newExpectedLifeSpanInDays);
-          updatedAssetType = true;
-          break;
-        }
-      }
-
-      if (!updatedAssetType) {
-        throw new Exception("Asset Type with the name " + oldName + " was not found.");
-      }
-
-      return "";
-
-    } catch (Exception e) {
-      throw new Exception("An error has occured, please try again: " + e);
+    if (newExpectedLifeSpanInDays <= 0) {
+      throw new Exception("The expected life span must be greater than 0 days");
     }
+
+    if (oldName == null || newName == null) {
+      throw new Exception("The name must not be empty");
+    }
+
+    if (oldName.equals("") || newName.equals("")) {
+      throw new Exception("The name must not be empty");
+    }
+
+    for (AssetType assetType : assetTypeList) {
+      if (assetType.getName().equals(oldName)) {
+        assetType.setName(newName);
+        assetType.setExpectedLifeSpan(newExpectedLifeSpanInDays);
+        updatedAssetType = true;
+        break;
+      }
+    }
+
+    if (!updatedAssetType) {
+      throw new Exception("Asset Type with the name " + oldName + " was not found.");
+    }
+
+    return "";
   }
 
   public static void deleteAssetType(String name) throws Exception {
     List<AssetType> assetTypeList = assetPlus.getAssetTypes();
     Boolean deletedAssetType = false;
-    try {
-      if (name == null) {
-        throw new Exception("Please provide a valid Asset Type name, it cannot be null.");
-      }
 
-      if (name.equals("")) {
-        throw new Exception("Please provide a valid Asset Type name, it cannot be empty.");
-      }
-
-      for (AssetType assetType : assetTypeList) {
-        if (assetType.getName().equals(name)) {
-          assetType.delete();
-          deletedAssetType = true;
-          break;
-        }
-      }
-
-      if (!deletedAssetType) {
-        throw new Exception("Asset Type with the name " + name + " was not found and could not be deleted.");
-      }
-
-    } catch (Exception e) {
-      throw new Exception("An error has occured, please try again: " + e);
+    if (name == null || name.equals("")) {
+      throw new Exception("The name must not be empty");
     }
-  }
 
+    for (AssetType assetType : assetTypeList) {
+      if (assetType.getName().equals(name)) {
+        assetType.delete();
+        deletedAssetType = true;
+        break;
+      }
+    }
+
+    if (!deletedAssetType) {
+      throw new Exception("The asset type does not exist");
+    }
+    
+  }
 }
