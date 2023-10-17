@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotEquals;
 import java.util.List;
 import java.util.Map;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet6Controller;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.Guest;
 import ca.mcgill.ecse.assetplus.model.Manager;
@@ -63,8 +64,7 @@ public class DeleteGuestStepDefinitions {
    */
   @When("the guest attempts to delete their own account linked to the {string} \\(p8)")
   public void the_guest_attempts_to_delete_their_own_account_linked_to_the_p8(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+      AssetPlusFeatureSet6Controller.deleteEmployeeOrGuest(string);
   }
 
   /**
