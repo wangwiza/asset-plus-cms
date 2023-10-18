@@ -17,16 +17,19 @@ public class AssetPlusFeatureSet6Controller {
   
   private static AssetPlus ap = AssetPlusApplication.getAssetPlus();
 
+  /**
+   * @author Michael Rafferty
+   * @param email
+   * @return void
+   */
   public static void deleteEmployeeOrGuest(String email) {
     List<Employee> employeeList = ap.getEmployees();
     List<Guest> guestList = ap.getGuests();
-    //boolean exists = false;
     boolean isEmployee = false;
     boolean isGuest = false;
     User employeeOrGuest = null;
   for (int i=0; i<employeeList.size(); i++) {
       if (employeeList.get(i).getEmail()==email){
-        //exists = true;
         isEmployee = true;
         employeeOrGuest = employeeList.get(i);
         break;
@@ -34,21 +37,23 @@ public class AssetPlusFeatureSet6Controller {
   }
   for (int i=0; i<guestList.size(); i++) {
       if (guestList.get(i).getEmail()==email){
-        //exists = true;
         isGuest = true;
         employeeOrGuest = guestList.get(i);
         break;
     }
   }
-  if (isEmployee){
-    ap.removeEmployee((Employee) employeeOrGuest);
-  }
-  if (isGuest){
+  if (isEmployee && isGuest){
     ap.removeGuest((Guest) employeeOrGuest);
+  }
+  if (isEmployee && !isGuest){
+    ap.removeEmployee((Employee) employeeOrGuest);
   }
   }
 
-  // returns all tickets
+  /**
+   * @author Michael Rafferty
+   * @return List<TOMaintenanceTicket> all tickets
+   */
   public static List<TOMaintenanceTicket> getTickets() {
     var tickets = new ArrayList<TOMaintenanceTicket>();
 
