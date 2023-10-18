@@ -65,6 +65,8 @@ public class DeleteGuestStepDefinitions {
   }
 
   /**
+   * Using an email address, attempts to delete an employee or guest's account.
+   * 
    * @author Michael Rafferty
    * @param string
    */

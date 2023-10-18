@@ -18,6 +18,8 @@ public class AssetPlusFeatureSet6Controller {
   private static AssetPlus ap = AssetPlusApplication.getAssetPlus();
 
   /**
+   * Using an email, deletes employee or guest account
+   * 
    * @author Michael Rafferty
    * @param email
    * @return void
@@ -51,6 +53,8 @@ public class AssetPlusFeatureSet6Controller {
   }
 
   /**
+   * Returns all tickets
+   * 
    * @author Michael Rafferty
    * @return List<TOMaintenanceTicket> all tickets
    */
