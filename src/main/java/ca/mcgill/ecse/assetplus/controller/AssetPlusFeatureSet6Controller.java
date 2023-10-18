@@ -81,9 +81,8 @@ public class AssetPlusFeatureSet6Controller {
       
       // TOMaintenanceTicket constructor for reference:
       //public TOMaintenanceTicket(int aId, Date aRaisedOnDate, String aDescription, String aRaisedByEmail, String aAssetName, int aExpectLifeSpanInDays, Date aPurchaseDate, int aFloorNumber, int aRoomNumber, 
-      // List<String> aImageURLs, 
-      // TOMaintenanceNote... allNotes)
-
+      // List<String> aImageURLs, TOMaintenanceNote... allNotes)
+      
       // List<TOMaintenanceTicket>
       tickets.add(new TOMaintenanceTicket(
         maintenanceticket.getId(), 

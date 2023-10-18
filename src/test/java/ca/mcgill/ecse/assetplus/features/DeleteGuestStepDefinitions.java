@@ -73,7 +73,6 @@ public class DeleteGuestStepDefinitions {
   @When("the guest attempts to delete their own account linked to the {string} \\(p8)")
   public void the_guest_attempts_to_delete_their_own_account_linked_to_the_p8(String string) {
     AssetPlusFeatureSet6Controller.deleteEmployeeOrGuest(string);
-
   }
 
   /**
