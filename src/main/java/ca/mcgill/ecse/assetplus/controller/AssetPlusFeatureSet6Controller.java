@@ -31,23 +31,29 @@ public class AssetPlusFeatureSet6Controller {
     boolean isGuest = false;
     User employeeOrGuest = null;
   for (int i=0; i<employeeList.size(); i++) {
-      if (employeeList.get(i).getEmail()==email){
+      if (employeeList.get(i).getEmail().equals(email)){
         isEmployee = true;
         employeeOrGuest = employeeList.get(i);
         break;
     }
   }
   for (int i=0; i<guestList.size(); i++) {
-      if (guestList.get(i).getEmail()==email){
+      if (guestList.get(i).getEmail().equals(email)){
         isGuest = true;
         employeeOrGuest = guestList.get(i);
         break;
     }
   }
+  if (isGuest){
+    employeeOrGuest.delete();
+    ap.removeGuest((Guest) employeeOrGuest);
+  }
   if (isEmployee && isGuest){
+    employeeOrGuest.delete();
     ap.removeGuest((Guest) employeeOrGuest);
   }
   if (isEmployee && !isGuest){
+    employeeOrGuest.delete();
     ap.removeEmployee((Employee) employeeOrGuest);
   }
   }
