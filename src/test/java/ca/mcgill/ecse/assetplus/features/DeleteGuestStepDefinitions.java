@@ -19,6 +19,8 @@ public class DeleteGuestStepDefinitions {
   private AssetPlus ap = AssetPlusApplication.getAssetPlus();
 
   /**
+   * Initiates the scenario by creating a couple test Guests.
+   * 
    * @author William Wang
    * @param dataTable
    */
