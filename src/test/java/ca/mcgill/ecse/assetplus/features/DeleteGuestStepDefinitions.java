@@ -38,27 +38,29 @@ public class DeleteGuestStepDefinitions {
   }
 
   /**
-   * @author Krasimir Kirov
+   * @author Krasimir Kirov, William Wang
    * @param dataTable
    */
   @Given("the following manager exists in the system \\(p8)")
   public void the_following_manager_exists_in_the_system_p8(
       io.cucumber.datatable.DataTable dataTable) {
-    Map<String, String> row = dataTable.asMap(String.class, String.class);
-    String name = row.get("key:name");
-    String email = row.get("key:email");
-    String password = row.get("key:password");
-    String phoneNumber = row.get("key:phoneNumber");
-    // Correct idea?
+    String email = "";
+    String password = "";
+    List<Map<String, String>> rows = dataTable.asMaps();
+    for (var row : rows) {
+      email = row.get("email");
+      password = row.get("password");
+    }
+
     if (ap.hasManager()) {
       Manager existingManager = ap.getManager();
-      existingManager.setName(name);
+      // existingManager.setName(name);
       existingManager.setEmail(email);
       existingManager.setPassword(password);
-      existingManager.setPhoneNumber(phoneNumber);
+      // existingManager.setPhoneNumber(phoneNumber);
     } else {
-      Manager newManager = new Manager(name, email, password, phoneNumber, ap);
-      ap.setManager(newManager);
+      Manager newManager = new Manager(email, null, password, null, ap);
+      // ap.setManager(newManager); // WARNING: this is redundant since the constructor above already does this through referential integrity.
     }
   }
 
