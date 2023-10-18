@@ -76,7 +76,7 @@ public class DeleteGuestStepDefinitions {
    * Verifies that the provided email is not associated with any guest in the system. This is
    * achieved by iterating through the list of guests and ensuring the provided email does not match
    * any guest's email.
-   * 
+   *
    * @author Vlad Arama
    * @param string The email address to verify against the list of guests.
    */
@@ -107,6 +107,6 @@ public class DeleteGuestStepDefinitions {
   @Then("the number of guests in the system shall be {string} \\(p8)")
   public void the_number_of_guests_in_the_system_shall_be_p8(String string) {
     // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    assertEquals("Wrong number of guests", Integer.parseInt(string), ap.getGuests().size());
   }
 }
