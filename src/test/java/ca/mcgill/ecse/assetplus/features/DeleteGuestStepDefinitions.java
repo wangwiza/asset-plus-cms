@@ -38,8 +38,10 @@ public class DeleteGuestStepDefinitions {
   }
 
   /**
+   * Initiates the scenario by creating a manager with specific email and password.
+   * 
    * @author Krasimir Kirov, William Wang
-   * @param dataTable
+   * @param dataTable The Manager's email and password
    */
   @Given("the following manager exists in the system \\(p8)")
   public void the_following_manager_exists_in_the_system_p8(
@@ -54,13 +56,10 @@ public class DeleteGuestStepDefinitions {
 
     if (ap.hasManager()) {
       Manager existingManager = ap.getManager();
-      // existingManager.setName(name);
       existingManager.setEmail(email);
       existingManager.setPassword(password);
-      // existingManager.setPhoneNumber(phoneNumber);
     } else {
-      Manager newManager = new Manager(email, null, password, null, ap);
-      // ap.setManager(newManager); // WARNING: this is redundant since the constructor above already does this through referential integrity.
+      new Manager(email, "", password, "", ap);
     }
   }
 
