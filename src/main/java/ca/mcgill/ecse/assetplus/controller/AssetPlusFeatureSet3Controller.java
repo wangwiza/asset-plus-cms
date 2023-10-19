@@ -46,6 +46,7 @@ public class AssetPlusFeatureSet3Controller {
       return "The asset number shall not be less than 1";
     }
 
+    // try adding the specific asset
     try {
       ap.addSpecificAsset(ap.addSpecificAsset(assetNumber, floorNumber, roomNumber, purchaseDate, assetType));
     } catch (RuntimeException e) {
@@ -68,10 +69,16 @@ public class AssetPlusFeatureSet3Controller {
   public static String updateSpecificAsset(int assetNumber, int newFloorNumber, int newRoomNumber,
       Date newPurchaseDate, String newAssetTypeName) {
 
+    List<SpecificAsset> specificAssetsList = ap.getSpecificAssets();
+
     AssetType newAssetType = AssetType.getWithName(newAssetTypeName);
 
     if (newAssetType == null) {
       return "The asset type does not exist";
+    }
+
+    if (assetNumber < 1) {
+      return "The asset number shall not be less than 1";
     }
 
     if (newFloorNumber < 0) {
@@ -82,8 +89,8 @@ public class AssetPlusFeatureSet3Controller {
       return "The room number shall not be less than -1";
     }
 
+    // try updating the specific asset
     try {
-      List<SpecificAsset> specificAssetsList = ap.getSpecificAssets();
       for (SpecificAsset specificAsset : specificAssetsList) {
         if (specificAsset.getAssetNumber() == assetNumber) {
           specificAsset.setFloorNumber(newFloorNumber);
@@ -108,6 +115,12 @@ public class AssetPlusFeatureSet3Controller {
    */
   public static void deleteSpecificAsset(int assetNumber) {
     List<SpecificAsset> specificAssetsList = ap.getSpecificAssets();
+    
+    if (assetNumber < 1) {
+      return;
+    }
+
+    // delete the specific asset
     for (SpecificAsset specificAsset : specificAssetsList) {
       if (specificAsset.getAssetNumber() == assetNumber) {
         specificAsset.delete();
