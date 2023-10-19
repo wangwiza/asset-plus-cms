@@ -40,7 +40,7 @@ public class DeleteGuestStepDefinitions {
   /**
    * Initiates the scenario by creating a manager with specific email and password.
    * 
-   * @author Krasimir Kirov, William Wang
+   * @author Krasimir Kirov
    * @param dataTable The Manager's email and password
    */
   @Given("the following manager exists in the system \\(p8)")
@@ -70,8 +70,8 @@ public class DeleteGuestStepDefinitions {
    * @param string
    */
   @When("the guest attempts to delete their own account linked to the {string} \\(p8)")
-  public void the_guest_attempts_to_delete_their_own_account_linked_to_the_p8(String string) {
-    AssetPlusFeatureSet6Controller.deleteEmployeeOrGuest(string);
+  public void the_guest_attempts_to_delete_their_own_account_linked_to_the_p8(String guestEmail) {
+    AssetPlusFeatureSet6Controller.deleteEmployeeOrGuest(guestEmail);
   }
 
   /**
