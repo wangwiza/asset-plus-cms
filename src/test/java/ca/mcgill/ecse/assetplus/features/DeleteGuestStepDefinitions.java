@@ -2,7 +2,7 @@ package ca.mcgill.ecse.assetplus.features;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-
+import static org.junit.Assert.assertNotNull;
 import java.util.List;
 import java.util.Map;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
@@ -93,12 +93,15 @@ public class DeleteGuestStepDefinitions {
   }
 
   /**
+   * Verifies that a manager exists and that its email matches the provided email
+   * 
    * @author Li Yang Lei
    * @param string
    */
   @Then("the manager account linked to {string} shall exist in the system \\(p8)")
   public void the_manager_account_linked_to_shall_exist_in_the_system_p8(String string) {
     Manager manager = ap.getManager();
+    assertNotNull("Manager does not exist in the system.", manager);
     assertEquals("The manager account linked to " + string + " does not exist in the system.",
         manager.getEmail(), string);
   }
