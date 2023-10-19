@@ -10,7 +10,17 @@ import ca.mcgill.ecse.assetplus.model.User;
 public class AssetPlusFeatureSet4Controller {
   private static AssetPlus ap = AssetPlusApplication.getAssetPlus();
 
-  // assetNumber -1 means that no asset is specified
+  /**
+   * Adds a ticket based on the argument
+   *
+   * @author Tim Pham
+   * @param id              Ticket's unique id
+   * @param raisedOnDate    Ticket's date
+   * @param description     Ticket's description
+   * @param email           The raiser's email
+   * @param assetNumber     ID of the specific asset with -1 means no asset
+   * @return A message indicating the status of the operation or an empty string if successful.
+   */
   public static String addMaintenanceTicket(int id, Date raisedOnDate, String description, String email, int assetNumber) {
     User g = Util.getUser(email);
     if (g.equals(null)) {
@@ -21,7 +31,17 @@ public class AssetPlusFeatureSet4Controller {
     return "";
   }
 
-  // newAssetNumber -1 means that no asset is specified
+  /**
+   * Update a ticket based on the argument
+   *
+   * @author Tim Pham
+   * @param id                 Ticket's unique id
+   * @param newRaisedOnDate    Ticket's new date
+   * @param newDescription     Ticket's new description
+   * @param newEmail           The raiser's email
+   * @param newAssetNumber     ID of the new specific asset, -1 means removing the asset
+   * @return A message indicating the status of the operation or an empty string if successful.
+   */
   public static String updateMaintenanceTicket(int id, Date newRaisedOnDate, String newDescription,
       String newEmail, int newAssetNumber) {
       MaintenanceTicket current = ap.getMaintenanceTicket(id);
@@ -43,7 +63,7 @@ public class AssetPlusFeatureSet4Controller {
       }
 
       SpecificAsset a;
-      if (newAssetNumber == 0) {
+      if (newAssetNumber == -1) {
         a = null;
       } else {
         a = ap.getSpecificAsset(newAssetNumber);
@@ -57,6 +77,12 @@ public class AssetPlusFeatureSet4Controller {
       return "";
   }
 
+  /**
+   * Delete a ticket based on id
+   *
+   * @author Tim Pham
+   * @param id                 Ticket's unique id
+   */
   public static void deleteMaintenanceTicket(int id) {
     // Remove this exception when you implement this method
     MaintenanceTicket t = ap.getMaintenanceTicket(id);

@@ -2,7 +2,7 @@ package ca.mcgill.ecse.assetplus.features;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-
+import static org.junit.Assert.assertNotNull;
 import java.util.List;
 import java.util.Map;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
@@ -38,8 +38,10 @@ public class DeleteGuestStepDefinitions {
   }
 
   /**
-   * @author Krasimir Kirov, William Wang
-   * @param dataTable
+   * Initiates the scenario by creating a manager with specific email and password.
+   * 
+   * @author Krasimir Kirov
+   * @param dataTable The Manager's email and password
    */
   @Given("the following manager exists in the system \\(p8)")
   public void the_following_manager_exists_in_the_system_p8(
@@ -54,13 +56,10 @@ public class DeleteGuestStepDefinitions {
 
     if (ap.hasManager()) {
       Manager existingManager = ap.getManager();
-      // existingManager.setName(name);
       existingManager.setEmail(email);
       existingManager.setPassword(password);
-      // existingManager.setPhoneNumber(phoneNumber);
     } else {
-      Manager newManager = new Manager(email, null, password, null, ap);
-      // ap.setManager(newManager); // WARNING: this is redundant since the constructor above already does this through referential integrity.
+      new Manager(email, "", password, "", ap);
     }
   }
 
@@ -68,11 +67,11 @@ public class DeleteGuestStepDefinitions {
    * Using an email address, attempts to delete an employee or guest's account.
    * 
    * @author Michael Rafferty
-   * @param string
+   * @param guestEmail
    */
   @When("the guest attempts to delete their own account linked to the {string} \\(p8)")
-  public void the_guest_attempts_to_delete_their_own_account_linked_to_the_p8(String string) {
-    AssetPlusFeatureSet6Controller.deleteEmployeeOrGuest(string);
+  public void the_guest_attempts_to_delete_their_own_account_linked_to_the_p8(String guestEmail) {
+    AssetPlusFeatureSet6Controller.deleteEmployeeOrGuest(guestEmail);
   }
 
   /**
@@ -81,35 +80,38 @@ public class DeleteGuestStepDefinitions {
    * any guest's email.
    *
    * @author Vlad Arama
-   * @param string The email address to verify against the list of guests.
+   * @param expectedGuestEmail The email address to verify against the list of guests.
    */
   @Then("the guest account linked to {string} shall not exist in the system \\(p8)")
-  public void the_guest_account_linked_to_shall_not_exist_in_the_system_p8(String string) {
+  public void the_guest_account_linked_to_shall_not_exist_in_the_system_p8(String expectedGuestEmail) {
     List<Guest> guestsList = ap.getGuests();
     for (Guest guest : guestsList) {
-      assertNotEquals("Guest with the same email has been found in the system.", string,
+      assertNotEquals("Guest with the same email has been found in the system.", expectedGuestEmail,
           guest.getEmail());
     }
   }
 
   /**
+   * Verifies that a manager exists and that its email matches the provided email
+   * 
    * @author Li Yang Lei
-   * @param string
+   * @param expectedManagerEmail
    */
   @Then("the manager account linked to {string} shall exist in the system \\(p8)")
-  public void the_manager_account_linked_to_shall_exist_in_the_system_p8(String string) {
+  public void the_manager_account_linked_to_shall_exist_in_the_system_p8(String expectedManagerEmail) {
     Manager manager = ap.getManager();
-    assertEquals("The manager account linked to " + string + " does not exist in the system.",
-        manager.getEmail(), string);
+    assertNotNull("Manager does not exist in the system.", manager);
+    assertEquals("The manager account linked to " + expectedManagerEmail + " does not exist in the system.",
+         expectedManagerEmail, manager.getEmail());
   }
 
   /**
    * @author Tim Pham
-   * @param string
+   * @param expectedNumberOfGuests
    */
   @Then("the number of guests in the system shall be {string} \\(p8)")
-  public void the_number_of_guests_in_the_system_shall_be_p8(String string) {
+  public void the_number_of_guests_in_the_system_shall_be_p8(String expectedNumberOfGuests) {
     // Write code here that turns the phrase above into concrete actions
-    assertEquals("Wrong number of guests", Integer.parseInt(string), ap.getGuests().size());
+    assertEquals("Wrong number of guests", Integer.parseInt(expectedNumberOfGuests), ap.getGuests().size());
   }
 }

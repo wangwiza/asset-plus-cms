@@ -9,77 +9,95 @@ public class AssetPlusFeatureSet2Controller {
 
   private static AssetPlus assetPlus = AssetPlusApplication.getAssetPlus();
 
-  public static String addAssetType(String name, int expectedLifeSpanInDays) throws Exception {
+  // controller feature set shouldn't be instantiated
+  private AssetPlusFeatureSet2Controller() {};
+
+  /**
+   * Adds an asset type based on provided parameters.
+   * 
+   * @author Vlad Arama
+   * @param name The name of the asset type.
+   * @param expectedLifeSpanInDays The expected life span of the asset type (in days).
+   * @return A message indicating the status of the operation or an empty string if successful.
+   */
+  public static String addAssetType(String name, int expectedLifeSpanInDays) {
     if (expectedLifeSpanInDays <= 0) {
-      throw new Exception("The expected life span must be greater than 0 days");
+      return ("The expected life span must be greater than 0 days");
     }
 
     if (name == null || name.equals("")) {
-      throw new Exception("The name must not be empty");
+      return ("The name must not be empty");
     }
 
-    Boolean operationSuccess =
-        assetPlus.addAssetType(assetPlus.addAssetType(name, expectedLifeSpanInDays));
-
-    if (!operationSuccess) {
-      throw new Exception("The asset type already exists");
+    // try adding the asset type
+    try {
+      assetPlus.addAssetType(assetPlus.addAssetType(name, expectedLifeSpanInDays));
+    } catch (RuntimeException e) {
+      return e.getMessage();
     }
 
     return "";
   }
 
+  /**
+   * Updates an asset type based on provided parameters.
+   * 
+   * @author Vlad Arama
+   * @param oldName The old name of the asset type.
+   * @param newName The new name of the asset type.
+   * @return A message indicating the status of the operation or an empty string if successful.
+   */
   public static String updateAssetType(String oldName, String newName,
-      int newExpectedLifeSpanInDays) throws Exception {
+      int newExpectedLifeSpanInDays) {
     List<AssetType> assetTypeList = assetPlus.getAssetTypes();
-    Boolean updatedAssetType = false;
 
     if (newExpectedLifeSpanInDays <= 0) {
-      throw new Exception("The expected life span must be greater than 0 days");
+      return ("The expected life span must be greater than 0 days");
     }
 
     if (oldName == null || newName == null) {
-      throw new Exception("The name must not be empty");
+      return ("The name must not be empty");
     }
 
     if (oldName.equals("") || newName.equals("")) {
-      throw new Exception("The name must not be empty");
+      return ("The name must not be empty");
     }
 
-    for (AssetType assetType : assetTypeList) {
-      if (assetType.getName().equals(oldName)) {
-        assetType.setName(newName);
-        assetType.setExpectedLifeSpan(newExpectedLifeSpanInDays);
-        updatedAssetType = true;
-        break;
+    // try updating the asset type
+    try {
+      for (AssetType assetType : assetTypeList) {
+        if (assetType.getName().equals(oldName)) {
+          assetType.setName(newName);
+          assetType.setExpectedLifeSpan(newExpectedLifeSpanInDays);
+          break;
+        }
       }
+    } catch (RuntimeException e) {
+      return e.getMessage();
     }
-
-    if (!updatedAssetType) {
-      throw new Exception("Asset Type with the name " + oldName + " was not found.");
-    }
-
     return "";
   }
 
-  public static void deleteAssetType(String name) throws Exception {
+  /**
+   * Deletes an asset type based on provided parameters.
+   * 
+   * @author Vlad Arama
+   * @param name The name of the asset type to delete.
+   * @return A message indicating the status of the operation or an empty string if successful.
+   */
+  public static void deleteAssetType(String name) {
     List<AssetType> assetTypeList = assetPlus.getAssetTypes();
-    Boolean deletedAssetType = false;
 
     if (name == null || name.equals("")) {
-      throw new Exception("The name must not be empty");
+      return;
     }
 
+    // delete the asset type
     for (AssetType assetType : assetTypeList) {
       if (assetType.getName().equals(name)) {
         assetType.delete();
-        deletedAssetType = true;
         break;
       }
     }
-
-    if (!deletedAssetType) {
-      throw new Exception("The asset type does not exist");
-    }
-    
   }
 }

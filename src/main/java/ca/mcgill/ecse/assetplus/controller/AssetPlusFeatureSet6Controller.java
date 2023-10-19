@@ -27,34 +27,24 @@ public class AssetPlusFeatureSet6Controller {
   public static void deleteEmployeeOrGuest(String email) {
     List<Employee> employeeList = ap.getEmployees();
     List<Guest> guestList = ap.getGuests();
-    boolean isEmployee = false;
-    boolean isGuest = false;
+    boolean exists = false;
     User employeeOrGuest = null;
   for (int i=0; i<employeeList.size(); i++) {
       if (employeeList.get(i).getEmail().equals(email)){
-        isEmployee = true;
+        exists = true;
         employeeOrGuest = employeeList.get(i);
         break;
     }
   }
   for (int i=0; i<guestList.size(); i++) {
       if (guestList.get(i).getEmail().equals(email)){
-        isGuest = true;
+        exists = true;
         employeeOrGuest = guestList.get(i);
         break;
     }
   }
-  if (isGuest){
+  if (exists){
     employeeOrGuest.delete();
-    ap.removeGuest((Guest) employeeOrGuest);
-  }
-  if (isEmployee && isGuest){
-    employeeOrGuest.delete();
-    ap.removeGuest((Guest) employeeOrGuest);
-  }
-  if (isEmployee && !isGuest){
-    employeeOrGuest.delete();
-    ap.removeEmployee((Employee) employeeOrGuest);
   }
   }
 
@@ -84,11 +74,6 @@ public class AssetPlusFeatureSet6Controller {
         i++;
         }
       }
-      
-      // TOMaintenanceTicket constructor for reference:
-      //public TOMaintenanceTicket(int aId, Date aRaisedOnDate, String aDescription, String aRaisedByEmail, String aAssetName, int aExpectLifeSpanInDays, Date aPurchaseDate, int aFloorNumber, int aRoomNumber, 
-      // List<String> aImageURLs, TOMaintenanceNote... allNotes)
-      
       // List<TOMaintenanceTicket>
       tickets.add(new TOMaintenanceTicket(
         maintenanceticket.getId(), 
