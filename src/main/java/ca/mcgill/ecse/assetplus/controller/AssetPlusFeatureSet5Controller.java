@@ -11,28 +11,6 @@ import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
 
 public class AssetPlusFeatureSet5Controller {
-  public static void main(String[] args) {
-    // testing
-    // Given
-    AssetPlus ap = AssetPlusApplication.getAssetPlus();
-    System.out.println(ap.hasEmployees());
-    ap.addEmployee("jeff@ap.com", "pass1", "Jeff", "(555)555-5555");
-    Employee smith = ap.addEmployee("smith@ap.com", "pass1", "Smith", "(555)555-5555");
-    System.out.println(ap.hasEmployees());
-    Manager manager = new Manager("manager@ap.com", null, "manager", null, ap);
-    AssetType lamp = ap.addAssetType("lamp", 1800);
-    AssetType bed = ap.addAssetType("bed", 5000);
-    SpecificAsset aLamp = ap.addSpecificAsset(1, 9, 23, new Date(2022, 3, 20), lamp);
-    SpecificAsset aBed = ap.addSpecificAsset(2, 10, 35, new Date(2022, 1, 30), bed);
-    MaintenanceTicket ticket1 = ap.addMaintenanceTicket(1, new Date(2023,7,20), "haha funny", manager);
-    MaintenanceTicket ticket2 = ap.addMaintenanceTicket(2, new Date(2023,7,10), "haha funny", smith);
-    ticket1.addTicketImage("https://imageurl.com/i.jpg");
-    ticket1.addTicketImage("http://thisimage.com/1.png");
-    // When
-    AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket("https://imageurl.com/j.jpg", 1);
-    System.out.println(ticket1.getTicketImages());
-    //Then
-  }
 
   // controller feature set shouldn't be instantiated
   private AssetPlusFeatureSet5Controller() {};
@@ -58,13 +36,14 @@ public class AssetPlusFeatureSet5Controller {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketID);
     if (ticket == null) {
       error += "Ticket does not exist. ";
-    }
-    List<TicketImage> ticketImages = ticket.getTicketImages();
-    for (TicketImage e: ticketImages) {
-      if (e.getImageURL() == imageURL) {
-        error += "Image already exists for the ticket. ";
-        break;
-      }
+    } else {
+      List<TicketImage> ticketImages = ticket.getTicketImages();
+      for (TicketImage e: ticketImages) {
+        if (e.getImageURL().equals(imageURL)) {
+          error += "Image already exists for the ticket. ";
+          break;
+        }
+      } 
     }
     if (!error.isEmpty()) {
       return error.trim(); // return error for invalid input
@@ -95,12 +74,31 @@ public class AssetPlusFeatureSet5Controller {
     if (ticket != null) {
       List<TicketImage> ticketImages = ticket.getTicketImages();
       for (TicketImage ticketImage: ticketImages) {
-        if (ticketImage.getImageURL() == imageURL) {
-          ticket.removeTicketImage(ticketImage);
+        if (ticketImage.getImageURL().equals(imageURL)) {
+          ticketImage.delete();
           break;
         }
       }
     }
+  }
+
+    public static void main(String[] args) {
+    // testing
+    // Given
+    AssetPlus ap = AssetPlusApplication.getAssetPlus();
+    ap.addEmployee("jeff@ap.com", "pass1", "Jeff", "(555)555-5555");
+    Employee smith = ap.addEmployee("smith@ap.com", "pass1", "Smith", "(555)555-5555");
+    Manager manager = new Manager("manager@ap.com", null, "manager", null, ap);
+    AssetType lamp = ap.addAssetType("lamp", 1800);
+    AssetType bed = ap.addAssetType("bed", 5000);
+    SpecificAsset aLamp = ap.addSpecificAsset(1, 9, 23, new Date(2022, 3, 20), lamp);
+    SpecificAsset aBed = ap.addSpecificAsset(2, 10, 35, new Date(2022, 1, 30), bed);
+    MaintenanceTicket ticket1 = ap.addMaintenanceTicket(1, new Date(2023,7,20), "haha funny", manager);
+    MaintenanceTicket ticket2 = ap.addMaintenanceTicket(2, new Date(2023,7,10), "haha funny", smith);
+    ticket1.addTicketImage("https://imageurl.com/i.jpg");
+    ticket1.addTicketImage("http://thisimage.com/1.png");
+    // When
+    System.out.println(AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket("https://imageurl.com/i.jpg", 1));
   }
 
 }
