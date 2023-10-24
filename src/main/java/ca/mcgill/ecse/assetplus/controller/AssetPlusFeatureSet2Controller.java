@@ -29,13 +29,12 @@ public class AssetPlusFeatureSet2Controller {
       return ("The name must not be empty");
     }
 
-    // try adding the asset type
-    try {
-      assetPlus.addAssetType(assetPlus.addAssetType(name, expectedLifeSpanInDays));
-    } catch (RuntimeException e) {
-      return e.getMessage();
+    // check if asset type already exists
+    if (AssetType.getWithName(name) != null) {
+      return ("The asset type already exists");
     }
 
+    assetPlus.addAssetType(assetPlus.addAssetType(name, expectedLifeSpanInDays));
     return "";
   }
 
@@ -63,20 +62,22 @@ public class AssetPlusFeatureSet2Controller {
       return ("The name must not be empty");
     }
 
-    // try updating the asset type
-    try {
-      for (AssetType assetType : assetTypeList) {
-        if (assetType.getName().equals(oldName)) {
-          assetType.setName(newName);
-          assetType.setExpectedLifeSpan(newExpectedLifeSpanInDays);
-          break;
-        }
-      }
-    } catch (RuntimeException e) {
-      return e.getMessage();
+    // check if asset type already exists
+    if (AssetType.getWithName(newName) != null && !newName.equals(oldName)) {
+      return ("The asset type already exists");
     }
-    return "";
+
+    // update the asset type
+    for (AssetType assetType : assetTypeList) {
+      if (assetType.getName().equals(oldName)) {
+        assetType.setName(newName);
+        assetType.setExpectedLifeSpan(newExpectedLifeSpanInDays);
+        return "";
+      }
+    }
+    return ("The asset type does not exist");
   }
+
 
   /**
    * Deletes an asset type based on provided parameters.
