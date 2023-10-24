@@ -1,11 +1,15 @@
 package ca.mcgill.ecse.assetplus.controller;
 
+import java.sql.Date;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
+import ca.mcgill.ecse.assetplus.model.AssetType;
 import ca.mcgill.ecse.assetplus.model.User;
 import ca.mcgill.ecse.assetplus.model.Manager;
+import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import ca.mcgill.ecse.assetplus.model.Guest;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.Employee;
 
 
@@ -26,16 +30,19 @@ public class AssetPlusFeatureSet1Controller {
     var error = "";
     try {
       // validates that the new password meet the requirements
-      if (password.length()<4) {
+      if (password==null || password.length()==0) {
+        error = "Password cannot be empty";
+      }
+      else if (password.length()<4) {
         error = "Password must be at least four characters long";
       }
-      if (password==password.toLowerCase()) {
+      else if (password.equals(password.toLowerCase())) {
         error = "Password must contain one upper-case character";
       }
-      if (password==password.toUpperCase()) {
+      else if (password.equals(password.toUpperCase())) {
         error = "Password must contain one lower-case character";
       }
-      if (!(password.contains("!")|| password.contains("#") || password.contains("$"))) {
+      else if (!(password.contains("!")|| password.contains("#") || password.contains("$"))) {
         error = "Password must contain one character out of !#$";
       }
       // return error for password that does not meet requirements
@@ -66,19 +73,106 @@ public class AssetPlusFeatureSet1Controller {
 
   public static String addEmployeeOrGuest(String email, String password, String name, String phoneNumber,
         boolean isEmployee) {
-    var error = "";
+          var error = "";
     try {
-      boolean status;
-      // based on isEmployee, check if the employee or guest already exists
-      // if employee/guest does not exist, then create new; otherwise, doesn't create new employee/guest
+      // check if user is an employee
       if (isEmployee) {
-        status = ap.addEmployee(ap.addEmployee(email, name, password, phoneNumber));
+        // input validation steps below
+        if (email==null ||email.length()==0) {
+          error = "Email cannot be empty";
+          return error;
+        }
+        // check if employee already exists
+        boolean employeeExists = false;
+        for (Employee e: ap.getEmployees()) {
+          if (email.equals(e.getEmail())) {
+            employeeExists = true;
+            break;
+          }
+        }
+        // validations steps for the email
+        int atCount = 0;
+        boolean dot = false;
+        boolean at = false;
+        boolean inverted = false;
+        for (int i=0; i<email.length(); i++) {
+          if (email.charAt(i)=='@') {
+            atCount++;
+            at = true;
+          }
+          if (email.charAt(i)=='.') {
+            dot = true;
+          }
+          // check if the order of @ and . is correct
+          if (dot && !at) {
+            inverted = true;
+          }
+        }
+        if (email.equals("manager@ap.com")) {
+          error = "Email cannot be manager@ap.com";
+        } else if (employeeExists) {
+          error = "Email already linked to an employee account";
+        } else if (email.contains(" ")) {
+          error = "Email must not contain any spaces";
+        } else if (atCount>1 || email.charAt(email.length()-1)=='.' || email.charAt(0)=='@' || inverted || email.indexOf('.')-email.indexOf('@')==1) {
+          error = "Invalid email";
+        } else if (!(email.substring(email.length()-7).equals("@ap.com"))) {
+          error = "Email domain must be @ap.com";
+        } else if (password == null || password.equals("")) {
+          error = "Password cannot be empty";
+        }
+        // if there is an error, return it; otherwise, add the new employee
+        if (error!="") {
+          return error;
+        }
+        ap.addEmployee(ap.addEmployee(email, name, password, phoneNumber));
       } else {
-        status = ap.addGuest(ap.addGuest(email, name, password, phoneNumber));
+        // input validation for a new guest
+        if (email==null ||email.length()==0) {
+          error = "Email cannot be empty";
+          return error;
+        }
+        boolean guestExists = false;
+        for (Guest g: ap.getGuests()) {
+          if (email.equals(g.getEmail())) {
+            guestExists = true;
+            break;
+          }
+        }
+        int atCount = 0;
+        boolean dot = false;
+        boolean at = false;
+        boolean inverted = false;
+        for (int i=0; i<email.length(); i++) {
+          if (email.charAt(i)=='@') {
+            atCount++;
+            at = true;
+          }
+          if (email.charAt(i)=='.') {
+            dot = true;
+          }
+          if (dot && !at) {
+            inverted = true;
+          }
+        }
+        if (email.equals("manager@ap.com")) {
+          error = "Email cannot be manager@ap.com";
+        } else if (guestExists) {
+          error = "Email already linked to an guest account";
+        } else if (email.contains(" ")) {
+          error = "Email must not contain any spaces";
+        } else if (atCount>1 || email.charAt(email.length()-1)=='.' || email.charAt(0)=='@' || inverted || email.indexOf('.')-email.indexOf('@')==1) {
+          error = "Invalid email";
+        } else if ((email.substring(email.length()-7).equals("@ap.com"))) {
+          error = "Email domain cannot be @ap.com";
+        } else if (password == null || password.equals("")) {
+          error = "Password cannot be empty";
+        }
+        if (error!="") {
+          return error;
+        }
+        ap.addGuest(ap.addGuest(email, name, password, phoneNumber));
       } 
-      if (status==false) {
-        error = "Duplicate user. User has not been added";
-      }
       return error;
     } catch (Exception e) {
       error = "An error has occured. Please try again: " + e.getMessage();
@@ -100,12 +194,16 @@ public class AssetPlusFeatureSet1Controller {
   public static String updateEmployeeOrGuest(String email, String newPassword, String newName, String newPhoneNumber) {
     var error = "";
     try {
+      if (newPassword==null || newPassword.length()==0) {
+        error = "Password cannot be empty";
+        return error;
+      }
       // get all the employee/guest list, and go through them to find a matching email
       List<Employee> employeeList = ap.getEmployees();
       List<Guest> guestList = ap.getGuests();
       boolean isFound = false;
       for (int i=0; i<employeeList.size(); i++) {
-        if (employeeList.get(i).getEmail()==email){
+        if (employeeList.get(i).getEmail().equals(email)){
           employeeList.get(i).setPassword(newPassword);
           employeeList.get(i).setPhoneNumber(newPhoneNumber);
           employeeList.get(i).setName(newName);
@@ -115,7 +213,7 @@ public class AssetPlusFeatureSet1Controller {
       }
       if (!isFound) {
         for (int i=0; i<guestList.size(); i++) {
-          if (guestList.get(i).getEmail()==email){
+          if (guestList.get(i).getEmail().equals(email)){
             guestList.get(i).setPassword(newPassword);
             guestList.get(i).setPhoneNumber(newPhoneNumber);
             guestList.get(i).setName(newName);
@@ -134,5 +232,4 @@ public class AssetPlusFeatureSet1Controller {
       return error;
     }
   }
-
 }
