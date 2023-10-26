@@ -152,7 +152,7 @@ public class AssetPlusFeatureSet1Controller {
         if (email.equals("manager@ap.com")) {
           error = "Email cannot be manager@ap.com";
         } else if (guestExists) {
-          error = "Email already linked to an guest account";
+          error = "Email already linked to a guest account";
         } else if (email.contains(" ")) {
           error = "Email must not contain any spaces";
         } else if (atCount>1 || email.charAt(email.length()-1)=='.' || email.charAt(0)=='@' || inverted || email.indexOf('.')-email.indexOf('@')==1) {
