@@ -1,4 +1,5 @@
 package ca.mcgill.ecse.assetplus.controller;
+
 import java.sql.Date;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
@@ -19,12 +20,12 @@ public class AssetPlusFeatureSet5Controller {
    * Adds a ticket image to a specific ticket
    * 
    * @author William Wang
-   * @param imageURL
-   * @param ticketID
-   * @return Error message from either invalid input or RuntimeException
+   * @param imageURL the url of the image to add
+   * @param ticketID the ticket to which the image should be attached
+   * @return an error message from either invalid input or RuntimeException, empty if successful
    */
   public static String addImageToMaintenanceTicket(String imageURL, int ticketID) {
-    
+
     // input validation
     var error = "";
     if (imageURL == null || imageURL.trim().isEmpty()) {
@@ -38,12 +39,12 @@ public class AssetPlusFeatureSet5Controller {
       error += "Ticket does not exist. ";
     } else {
       List<TicketImage> ticketImages = ticket.getTicketImages();
-      for (TicketImage e: ticketImages) {
+      for (TicketImage e : ticketImages) {
         if (e.getImageURL().equals(imageURL)) {
           error += "Image already exists for the ticket. ";
           break;
         }
-      } 
+      }
     }
     if (!error.isEmpty()) {
       return error.trim(); // return error for invalid input
@@ -63,17 +64,18 @@ public class AssetPlusFeatureSet5Controller {
   }
 
   /**
-   * Deletes an image from a maintenance ticket if the specified ticket exists and its ticket images contains the image to be deleted.
+   * Deletes an image from a maintenance ticket if the specified ticket exists and its ticket images
+   * contains the image to be deleted.
    * 
    * @author Willian Wang
-   * @param imageURL
-   * @param ticketID
+   * @param imageURL the url of the image to be deleted
+   * @param ticketID the ticket ID of the ticket to which the image to be deleted is attached to
    */
   public static void deleteImageFromMaintenanceTicket(String imageURL, int ticketID) {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketID);
     if (ticket != null) {
       List<TicketImage> ticketImages = ticket.getTicketImages();
-      for (TicketImage ticketImage: ticketImages) {
+      for (TicketImage ticketImage : ticketImages) {
         if (ticketImage.getImageURL().equals(imageURL)) {
           ticketImage.delete();
           break;
@@ -81,24 +83,4 @@ public class AssetPlusFeatureSet5Controller {
       }
     }
   }
-
-    public static void main(String[] args) {
-    // testing
-    // Given
-    AssetPlus ap = AssetPlusApplication.getAssetPlus();
-    ap.addEmployee("jeff@ap.com", "pass1", "Jeff", "(555)555-5555");
-    Employee smith = ap.addEmployee("smith@ap.com", "pass1", "Smith", "(555)555-5555");
-    Manager manager = new Manager("manager@ap.com", null, "manager", null, ap);
-    AssetType lamp = ap.addAssetType("lamp", 1800);
-    AssetType bed = ap.addAssetType("bed", 5000);
-    SpecificAsset aLamp = ap.addSpecificAsset(1, 9, 23, new Date(2022, 3, 20), lamp);
-    SpecificAsset aBed = ap.addSpecificAsset(2, 10, 35, new Date(2022, 1, 30), bed);
-    MaintenanceTicket ticket1 = ap.addMaintenanceTicket(1, new Date(2023,7,20), "haha funny", manager);
-    MaintenanceTicket ticket2 = ap.addMaintenanceTicket(2, new Date(2023,7,10), "haha funny", smith);
-    ticket1.addTicketImage("https://imageurl.com/i.jpg");
-    ticket1.addTicketImage("http://thisimage.com/1.png");
-    // When
-    System.out.println(AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket("https://imageurl.com/i.jpg", 1));
-  }
-
 }
