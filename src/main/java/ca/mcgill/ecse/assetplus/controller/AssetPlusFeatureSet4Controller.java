@@ -1,6 +1,8 @@
 package ca.mcgill.ecse.assetplus.controller;
 
 import java.sql.Date;
+import java.util.List;
+
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
@@ -22,13 +24,42 @@ public class AssetPlusFeatureSet4Controller {
    * @return A message indicating the status of the operation or an empty string if successful.
    */
   public static String addMaintenanceTicket(int id, Date raisedOnDate, String description, String email, int assetNumber) {
-    User g = Util.getUser(email);
-    if (g.equals(null)) {
+    User g = User.getWithEmail(email);
+    if (g == null) {
       return "The ticket raiser does not exist";
     }
+
+    if (ticketExist(id)) {
+        return "Ticket id already exists";
+    }
+
+    SpecificAsset asset;
+
+    if (assetNumber == -1) {
+        asset = null;
+    }
+    else if (!assetExist(assetNumber)) {
+        return "The asset does not exist";
+    }
+    else {
+        asset = SpecificAsset.getWithAssetNumber(assetNumber);
+    }
+
+    if (description.isBlank()) {
+        return "Ticket description cannot be empty";
+    }
+
     MaintenanceTicket t = ap.addMaintenanceTicket(id, raisedOnDate, description, g);
-    t.setAsset(ap.getSpecificAsset(assetNumber));
+    t.setAsset(asset);
     return "";
+  }
+
+  private static boolean assetExist(int id) {
+      return SpecificAsset.getWithAssetNumber(id) != null;
+  }
+
+  private static boolean ticketExist(int id) {
+      return MaintenanceTicket.getWithId(id) != null;
   }
 
   /**
@@ -44,34 +75,33 @@ public class AssetPlusFeatureSet4Controller {
    */
   public static String updateMaintenanceTicket(int id, Date newRaisedOnDate, String newDescription,
       String newEmail, int newAssetNumber) {
-      MaintenanceTicket current = ap.getMaintenanceTicket(id);
-      if (current == null) {
-        return "";
-      }
-
-      current.setRaisedOnDate(newRaisedOnDate);
+      MaintenanceTicket current = MaintenanceTicket.getWithId(id);
 
       if (newDescription.isBlank()) {
         return "Ticket description cannot be empty";
       }
 
-      current.setDescription(newDescription);
-
-      User u = Util.getUser(newEmail);
+      User u = User.getWithEmail(newEmail);
       if (u == null) {
-        return "Email does not match any guests";
+        return "The ticket raiser does not exist";
       }
 
       SpecificAsset a;
       if (newAssetNumber == -1) {
         a = null;
       } else {
-        a = ap.getSpecificAsset(newAssetNumber);
+        a = SpecificAsset.getWithAssetNumber(newAssetNumber);
         if (a == null) {
           return "The asset does not exist";
         }
       }
 
+      if (current == null) {
+          return "";
+      }
+
+      current.setDescription(newDescription);
+      current.setRaisedOnDate(newRaisedOnDate);
       current.setTicketRaiser(u);
       current.setAsset(a);
       return "";
@@ -85,7 +115,7 @@ public class AssetPlusFeatureSet4Controller {
    */
   public static void deleteMaintenanceTicket(int id) {
     // Remove this exception when you implement this method
-    MaintenanceTicket t = ap.getMaintenanceTicket(id);
+    MaintenanceTicket t = MaintenanceTicket.getWithId(id);
     if (t == null) {
       return;
     }
