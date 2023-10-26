@@ -74,6 +74,22 @@ public class AssetPlusFeatureSet6Controller {
         i++;
         }
       }
+
+      if (!maintenanceticket.hasAsset()){
+        tickets.add(new TOMaintenanceTicket(
+        maintenanceticket.getId(), 
+        maintenanceticket.getRaisedOnDate(), 
+        maintenanceticket.getDescription(), 
+        maintenanceticket.getTicketRaiser().getEmail(), 
+        null,
+        -1,
+        null,
+        -1,
+        -1,
+        imageUrls,
+        notes));
+      }
+      else{
       // List<TOMaintenanceTicket>
       tickets.add(new TOMaintenanceTicket(
         maintenanceticket.getId(), 
@@ -87,6 +103,7 @@ public class AssetPlusFeatureSet6Controller {
         maintenanceticket.getAsset().getRoomNumber(),
         imageUrls,
         notes));
+      }
     }
     return tickets;
 
