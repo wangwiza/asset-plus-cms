@@ -5,7 +5,8 @@ package ca.mcgill.ecse.assetplus.model;
 import java.util.*;
 import java.sql.Date;
 
-// line 13 "../../../../../../AssetPlus.ump"
+// line 10 "../../../../../../AssetPlusPersistence.ump"
+// line 16 "../../../../../../AssetPlus.ump"
 public abstract class User
 {
 
@@ -231,6 +232,24 @@ public abstract class User
       MaintenanceTicket aRaisedTicket = raisedTickets.get(i - 1);
       aRaisedTicket.delete();
     }
+  }
+
+
+  /**
+   * separate manager, guests, employees? Can use getAllUser from util in controller?
+   */
+  // line 12 "../../../../../../AssetPlusPersistence.ump"
+   public static  void reinitializeUniqueEmail(Manager manager, List<Employee> employees, List<Guest> guests){
+    usersByEmail.clear();
+        if (manager != null) {
+            usersByEmail.put(manager.getEmail(), manager);
+        }
+        for (Employee employee : employees) {
+            usersByEmail.put(employee.getEmail(), employee);
+        }
+        for (Guest guest : guests) {
+            usersByEmail.put(guest.getEmail(), guest);
+        }
   }
 
 

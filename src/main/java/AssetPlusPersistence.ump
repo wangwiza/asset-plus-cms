@@ -1,6 +1,6 @@
 class AssetPlus {
     public void reinitialize() {
-        User.reinitializeUniqueEmail(getUsers());
+        User.reinitializeUniqueEmail(getManager(), getEmployees(), getGuests());
         MaintenanceTicket.reinitializeUniqueId(getMaintenanceTickets());
         SpecificAsset.reinitializeUniqueAssetNumber(getSpecificAssets());
         AssetType.reinitializeUniqueName(getAssetTypes());

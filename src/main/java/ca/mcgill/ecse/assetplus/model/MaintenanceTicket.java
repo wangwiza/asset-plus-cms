@@ -5,7 +5,9 @@ package ca.mcgill.ecse.assetplus.model;
 import java.util.*;
 import java.sql.Date;
 
-// line 43 "../../../../../../AssetPlus.ump"
+// line 25 "../../../../../../AssetPlusPersistence.ump"
+// line 1 "../../../../../../AssetPlusStates.ump"
+// line 46 "../../../../../../AssetPlus.ump"
 public class MaintenanceTicket
 {
 
@@ -541,6 +543,14 @@ public class MaintenanceTicket
       this.fixApprover = null;
       placeholderFixApprover.removeTicketsForApproval(this);
     }
+  }
+
+  // line 27 "../../../../../../AssetPlusPersistence.ump"
+   public static  void reinitializeUniqueId(List<MaintenanceTicket> tickets){
+    maintenanceticketsById.clear();
+        for (MaintenanceTicket ticket : tickets) {
+            maintenanceticketsById.put(ticket.getId(), ticket);
+        }
   }
 
 
