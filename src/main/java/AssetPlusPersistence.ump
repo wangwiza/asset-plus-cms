@@ -12,3 +12,15 @@ class User { // separate manager, guests, employees?
         }
     }
 }
+
+class MaintenanceTicket {
+
+}
+
+class SpecificAsset {
+
+}
+
+class AssetType {
+    
+}
