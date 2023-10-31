@@ -1,3 +1,34 @@
 class MaintenanceTicket {
-    // write state machine umple code
+    status {
+        Open {
+            assign(HotelStaff staff, PriorityLevel priority, TimeEstimate timeToResolve, Manager manager) / {
+                doAssign(staff, priority, timeToResolve, manager);
+            } -> Assigned;
+        }
+        Assigned {
+            InProgress {
+                resolve() [requiresApproval()] -> Resolved;
+                resolve() [!requiresApproval()] -> Closed;
+            }
+            Resolved {
+                approve() -> Closed;
+                disapprove() -> InProgress;
+            }
+        }
+        Closed {
+
+        }
+    }
+
+    /**
+    * @author William Wang
+    */
+    private void doAssign(HotelStaff staff, PriorityLevel priority, TimeEstimate timeToResolve, Boolean approvalRequired) {
+        if (staff != null) {
+            setTicketFixer(staff);
+        }
+        setPriority(priority);
+        setTimeToResolve(timeToResolve);
+        setApprovalRequired(approvalRequired);
+    }
 }
