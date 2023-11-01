@@ -1,26 +1,35 @@
 package ca.mcgill.ecse.assetplus.features;
-
+import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+import ca.mcgill.ecse.assetplus.model.AssetPlus;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
+import ca.mcgill.ecse.assetplus.model.TicketImage;
+import java.util.List;
+import java.util.Map;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class MaintenanceTicketsStepDefinitions {
+
+  private static AssetPlus ap = AssetPlusApplication.getAssetPlus();
+
   /**
-   * 1
+   * @author William Wang
    * @param dataTable
    */
   @Given("the following employees exist in the system")
   public void the_following_employees_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    List<Map<String, String>> employeesToAdd = dataTable.asMaps();
+    for (Map<String, String> employee : employeesToAdd) {
+      String email = employee.get("email");
+      String name = employee.get("name");
+      String password = employee.get("password");
+      String phoneNumber = employee.get("phoneNumber");
+      ap.addEmployee(email, name, password, phoneNumber);
+    }
   }
+
   /**
    * 2
    * @param dataTable
@@ -98,6 +107,8 @@ public class MaintenanceTicketsStepDefinitions {
     // For other transformations you can register a DataTableType.
     throw new io.cucumber.java.PendingException();
   }
+
+
   /**
    * 1
    * @param dataTable
@@ -105,14 +116,12 @@ public class MaintenanceTicketsStepDefinitions {
   @Given("the following ticket images exist in the system")
   public void the_following_ticket_images_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    List<Map<String, String>> rows = dataTable.asMaps();
+    for (var row : rows) {
+      String imageUrl = row.get("imageUrl");
+      int ticketId = Integer.parseInt(row.get("ticketId"));
+      new TicketImage(imageUrl, MaintenanceTicket.getWithId(ticketId));
+    }
   }
   /**
    * 2
@@ -174,6 +183,7 @@ public class MaintenanceTicketsStepDefinitions {
   @When("the manager attempts to approve the ticket {string}")
   public void the_manager_attempts_to_approve_the_ticket(String string) {
     // Write code here that turns the phrase above into concrete actions
+    // Depends on state machine, can't implement approve yet
     throw new io.cucumber.java.PendingException();
   }
   /**
