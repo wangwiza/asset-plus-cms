@@ -1,5 +1,6 @@
 package ca.mcgill.ecse.assetplus.features;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusTicketingController;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.HotelStaff;
 import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
@@ -179,12 +180,14 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
   /**
+   * Update status of ticket to In Progress
+   * 
    * @author Li Yang Lei
    * @param string
    */
   @When("the hotel staff attempts to start the ticket {string}")
   public void the_hotel_staff_attempts_to_start_the_ticket(String string) {
-    
+    AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(string));
   }
   /**
    * 1
