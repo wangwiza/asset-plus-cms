@@ -8,6 +8,7 @@ import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.PriorityLevel;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.Status;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.TimeEstimate;
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 
 public class AssetPlusTicketingController {
   // MAKE SURE YOU READ ProcessMaintenanceTickets.feature before starting to work
@@ -52,8 +53,9 @@ public class AssetPlusTicketingController {
         return error;
       }
       ticket.disapprove(date, reason, ap.getManager());
+      AssetPlusPersistence.save();
       return error;
-    } catch (Exception e) {
+    } catch (RuntimeException e) {
       error = e.getMessage();
       return error;
     }
