@@ -821,12 +821,12 @@ public class MaintenanceTicket
 
   // line 124 "../../../../../../AssetPlusStates.ump"
    private void rejectTicketAction(String action, String reason){
-    throw new RuntimeException("Cannot " + verb + " a maintenance ticket which is " + reason + ".");
+    throw new RuntimeException("Cannot " + action + " a maintenance ticket which is " + reason + ".");
   }
 
   // line 128 "../../../../../../AssetPlusStates.ump"
    private void rejectRedundantAction(String reason){
-    throw new RuntimeException("The maintenance ticket is already " + reason + ".")
+    throw new RuntimeException("The maintenance ticket is already " + reason + ".");
   }
 
 
