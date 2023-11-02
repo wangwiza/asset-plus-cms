@@ -35,6 +35,10 @@ public class MaintenanceTicket
   private TimeEstimate timeToResolve;
   private PriorityLevel priority;
 
+  //MaintenanceTicket State Machines
+  public enum Status { Open, Assigned, InProgress, Resolved, Closed }
+  private Status status;
+
   //MaintenanceTicket Associations
   private List<MaintenanceNote> ticketNotes;
   private List<TicketImage> ticketImages;
@@ -68,6 +72,7 @@ public class MaintenanceTicket
     {
       throw new RuntimeException("Unable to create raisedTicket due to ticketRaiser. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
     }
+    setStatus(Status.Open);
   }
 
   //------------------------
@@ -158,6 +163,246 @@ public class MaintenanceTicket
   public PriorityLevel getPriority()
   {
     return priority;
+  }
+
+  public String getStatusFullName()
+  {
+    String answer = status.toString();
+    return answer;
+  }
+
+  public Status getStatus()
+  {
+    return status;
+  }
+
+  public boolean assign(HotelStaff ticketFixer,PriorityLevel priority,TimeEstimate timeToResolve,Manager fixApprover)
+  {
+    boolean wasEventProcessed = false;
+    
+    Status aStatus = status;
+    switch (aStatus)
+    {
+      case Open:
+        // line 4 "../../../../../../AssetPlusStates.ump"
+        doAssign(ticketFixer, priority, timeToResolve, fixApprover);
+        setStatus(Status.Assigned);
+        wasEventProcessed = true;
+        break;
+      case Assigned:
+        // line 25 "../../../../../../AssetPlusStates.ump"
+        rejectRedundantAction("assigned");
+        setStatus(Status.Assigned);
+        wasEventProcessed = true;
+        break;
+      case InProgress:
+        // line 44 "../../../../../../AssetPlusStates.ump"
+        rejectTicketAction("assign", "in progress");
+        setStatus(Status.InProgress);
+        wasEventProcessed = true;
+        break;
+      case Resolved:
+        // line 65 "../../../../../../AssetPlusStates.ump"
+        rejectTicketAction("assign", "resolved");
+        setStatus(Status.Resolved);
+        wasEventProcessed = true;
+        break;
+      case Closed:
+        // line 84 "../../../../../../AssetPlusStates.ump"
+        rejectTicketAction("assign", "closed");
+        setStatus(Status.Closed);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean start()
+  {
+    boolean wasEventProcessed = false;
+    
+    Status aStatus = status;
+    switch (aStatus)
+    {
+      case Open:
+        // line 8 "../../../../../../AssetPlusStates.ump"
+        rejectTicketAction("start", "open");
+        setStatus(Status.Open);
+        wasEventProcessed = true;
+        break;
+      case Assigned:
+        setStatus(Status.InProgress);
+        wasEventProcessed = true;
+        break;
+      case InProgress:
+        // line 48 "../../../../../../AssetPlusStates.ump"
+        rejectRedundantAction("in progress");
+        setStatus(Status.InProgress);
+        wasEventProcessed = true;
+        break;
+      case Resolved:
+        // line 69 "../../../../../../AssetPlusStates.ump"
+        rejectTicketAction("start", "resolved");
+        setStatus(Status.Resolved);
+        wasEventProcessed = true;
+        break;
+      case Closed:
+        // line 88 "../../../../../../AssetPlusStates.ump"
+        rejectTicketAction("start", "closed");
+        setStatus(Status.Closed);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean complete()
+  {
+    boolean wasEventProcessed = false;
+    
+    Status aStatus = status;
+    switch (aStatus)
+    {
+      case Open:
+        // line 12 "../../../../../../AssetPlusStates.ump"
+        rejectTicketAction("complete", "open");
+        setStatus(Status.Open);
+        wasEventProcessed = true;
+        break;
+      case Assigned:
+        // line 31 "../../../../../../AssetPlusStates.ump"
+        rejectTicketAction("complete", "assigned");
+        setStatus(Status.Assigned);
+        wasEventProcessed = true;
+        break;
+      case InProgress:
+        if (hasFixApprover())
+        {
+          setStatus(Status.Resolved);
+          wasEventProcessed = true;
+          break;
+        }
+        if (!(hasFixApprover()))
+        {
+          setStatus(Status.Closed);
+          wasEventProcessed = true;
+          break;
+        }
+        break;
+      case Resolved:
+        // line 73 "../../../../../../AssetPlusStates.ump"
+        rejectRedundantAction("resolved");
+        setStatus(Status.Resolved);
+        wasEventProcessed = true;
+        break;
+      case Closed:
+        // line 92 "../../../../../../AssetPlusStates.ump"
+        rejectRedundantAction("closed");
+        setStatus(Status.Closed);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean disapprove(MaintenanceNote ticketNote)
+  {
+    boolean wasEventProcessed = false;
+    
+    Status aStatus = status;
+    switch (aStatus)
+    {
+      case Open:
+        // line 16 "../../../../../../AssetPlusStates.ump"
+        rejectTicketAction("disapprove", "open");
+        setStatus(Status.Open);
+        wasEventProcessed = true;
+        break;
+      case Assigned:
+        // line 35 "../../../../../../AssetPlusStates.ump"
+        rejectTicketAction("disapprove", "assigned");
+        setStatus(Status.Assigned);
+        wasEventProcessed = true;
+        break;
+      case InProgress:
+        // line 56 "../../../../../../AssetPlusStates.ump"
+        rejectTicketAction("disapprove", "in progress");
+        setStatus(Status.InProgress);
+        wasEventProcessed = true;
+        break;
+      case Resolved:
+        // line 79 "../../../../../../AssetPlusStates.ump"
+        doDisapprove(ticketNote);
+        setStatus(Status.InProgress);
+        wasEventProcessed = true;
+        break;
+      case Closed:
+        // line 96 "../../../../../../AssetPlusStates.ump"
+        rejectTicketAction("disapprove", "closed");
+        setStatus(Status.Closed);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  public boolean approve()
+  {
+    boolean wasEventProcessed = false;
+    
+    Status aStatus = status;
+    switch (aStatus)
+    {
+      case Open:
+        // line 20 "../../../../../../AssetPlusStates.ump"
+        rejectTicketAction("approve", "open");
+        setStatus(Status.Open);
+        wasEventProcessed = true;
+        break;
+      case Assigned:
+        // line 39 "../../../../../../AssetPlusStates.ump"
+        rejectTicketAction("approve", "assigned");
+        setStatus(Status.Assigned);
+        wasEventProcessed = true;
+        break;
+      case InProgress:
+        // line 60 "../../../../../../AssetPlusStates.ump"
+        rejectTicketAction("approve", "in progress");
+        setStatus(Status.InProgress);
+        wasEventProcessed = true;
+        break;
+      case Resolved:
+        setStatus(Status.Closed);
+        wasEventProcessed = true;
+        break;
+      case Closed:
+        // line 100 "../../../../../../AssetPlusStates.ump"
+        rejectRedundantAction("closed");
+        setStatus(Status.Closed);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
+  private void setStatus(Status aStatus)
+  {
+    status = aStatus;
   }
   /* Code from template association_GetMany */
   public MaintenanceNote getTicketNote(int index)
@@ -551,6 +796,37 @@ public class MaintenanceTicket
         for (MaintenanceTicket ticket : tickets) {
             maintenanceticketsById.put(ticket.getId(), ticket);
         }
+  }
+
+
+  /**
+   * 
+   * @author William Wang
+   */
+  // line 110 "../../../../../../AssetPlusStates.ump"
+   private void doAssign(HotelStaff ticketFixer, PriorityLevel priority, TimeEstimate timeToResolve, Manager fixApprover){
+    if (ticketFixer != null) {
+            setTicketFixer(ticketFixer);
+        }
+        setPriority(priority);
+        setTimeToResolve(timeToResolve);
+        if (fixApprover != null)
+            setFixApprover(fixApprover);
+  }
+
+  // line 120 "../../../../../../AssetPlusStates.ump"
+   private void doDisapprove(MaintenanceNote ticketNote){
+    addTicketNote(ticketNote);
+  }
+
+  // line 124 "../../../../../../AssetPlusStates.ump"
+   private void rejectTicketAction(String action, String reason){
+    throw new RuntimeException("Cannot " + verb + " a maintenance ticket which is " + reason + ".");
+  }
+
+  // line 128 "../../../../../../AssetPlusStates.ump"
+   private void rejectRedundantAction(String reason){
+    throw new RuntimeException("The maintenance ticket is already " + reason + ".")
   }
 
 
