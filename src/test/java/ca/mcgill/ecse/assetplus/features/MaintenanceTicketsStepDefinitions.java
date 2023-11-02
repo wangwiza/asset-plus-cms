@@ -99,6 +99,8 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
   /**
+   * Creates new notes
+   * 
    * @author Li Yang Lei
    * @param dataTable
    */
@@ -235,6 +237,8 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
   /**
+   * Verifies that there is no maintenance ticket associated with the given ticket ID
+   * 
    * @author Li Yang Lei
    * @param string
    */
@@ -309,6 +313,8 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
   /**
+   * Verifies that the maintenance ticket has 0 notes
+   * 
    * @author Li Yang Lei
    * @param string
    */
