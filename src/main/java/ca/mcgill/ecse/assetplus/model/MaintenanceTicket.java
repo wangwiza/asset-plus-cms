@@ -314,7 +314,7 @@ public class MaintenanceTicket
     return wasEventProcessed;
   }
 
-  public boolean disapprove(MaintenanceNote ticketNote)
+  public boolean disapprove(Date date,String reason,Manager fixApprover)
   {
     boolean wasEventProcessed = false;
     
@@ -341,7 +341,7 @@ public class MaintenanceTicket
         break;
       case Resolved:
         // line 79 "../../../../../../AssetPlusStates.ump"
-        doDisapprove(ticketNote);
+        doDisapprove(date, reason, fixApprover);
         setStatus(Status.InProgress);
         wasEventProcessed = true;
         break;
@@ -815,8 +815,8 @@ public class MaintenanceTicket
   }
 
   // line 120 "../../../../../../AssetPlusStates.ump"
-   private void doDisapprove(MaintenanceNote ticketNote){
-    addTicketNote(ticketNote);
+   private void doDisapprove(Date date, String reason, Manager fixApprover){
+    addTicketNote(date, reason, fixApprover);
   }
 
   // line 124 "../../../../../../AssetPlusStates.ump"

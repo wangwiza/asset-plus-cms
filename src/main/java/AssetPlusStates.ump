@@ -76,8 +76,8 @@ class MaintenanceTicket {
 
             approve() -> Closed;
 
-            disapprove(MaintenanceNote ticketNote) / {
-                doDisapprove(ticketNote);
+            disapprove(Date date, String reason, Manager fixApprover) / {
+                doDisapprove(date, reason, fixApprover);
             } -> InProgress;
         }
         Closed {
@@ -116,8 +116,8 @@ class MaintenanceTicket {
             setFixApprover(fixApprover);
     }
 
-    private void doDisapprove(MaintenanceNote ticketNote) {
-        addTicketNote(ticketNote);
+    private void doDisapprove(Date date, String reason, Manager fixApprover) {
+        addTicketNote(date, reason, fixApprover);
     }
 
     private void rejectTicketAction(String action, String reason) {
