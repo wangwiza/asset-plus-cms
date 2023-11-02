@@ -51,28 +51,10 @@ public class AssetPlusTicketingController {
         error = "Maintenance ticket does not exist.";
         return error;
       }
-      Status status = ticket.getStatus();
-      // ticket must be resolved for the manager to disapprove it
-      if (status.equals(Status.Open)) {
-        error = "Cannot disapprove a maintenance ticket which is open.";   
-      } else if (status.equals(Status.Assigned)) {
-        error = "Cannot disapprove a maintenance ticket which is assigned.";
-      } else if (status.equals(Status.Closed)) {
-        error = "Cannot disapprove a maintenance ticket which is closed.";
-      } else if (status.equals(Status.InProgress)) {
-        error = "Cannot disapprove a maintenance ticket which is in progress.";
-      }
-      if (!error.equals("")) {
-        return error;
-      }
-      else {
-        // if the ticket is currently resolved, then create a maintenance note and disapprove the work
-        MaintenanceNote note = new MaintenanceNote(date, reason, ticket, ap.getManager());
-        ticket.disapprove(note);
-      }
+      ticket.disapprove(date, reason, ap.getManager());
       return error;
     } catch (Exception e) {
-      error = "Please try again. An error occurred: " + e.getMessage();
+      error = e.getMessage();
       return error;
     }
   }
