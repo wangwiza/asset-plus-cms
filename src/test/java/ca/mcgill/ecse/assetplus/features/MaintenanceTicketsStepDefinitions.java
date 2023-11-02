@@ -6,6 +6,8 @@ import ca.mcgill.ecse.assetplus.model.HotelStaff;
 import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.Status;
+import static java.lang.Integer.parseInt;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import java.sql.Date;
@@ -54,20 +56,18 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
   /**
-   * 3
+   * @author Krasimir Kirov
    * @param dataTable
    */
   @Given("the following asset types exist in the system")
   public void the_following_asset_types_exist_in_the_system(
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    List<Map<String, String>> rows = dataTable.asMaps();
+    for (Map<String, String> row : rows) {
+      String name = row.get("name");
+      int expectedLifeSpan = Integer.parseInt(row.get("expectedLifeSpan"));
+      ap.addAssetType(name, expectedLifeSpan);
+    }
   }
   /**
    * 4
@@ -154,8 +154,8 @@ public class MaintenanceTicketsStepDefinitions {
    */
   @Given("ticket {string} is marked as {string}")
   public void ticket_is_marked_as(String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    MaintenanceTicket thisTicket = MaintenanceTicket.getWithId(Integer.parseInt(string));
+    //thisTicket.setStatus(Status.valueOf(string2));
   }
   /**
    * 4
@@ -209,7 +209,7 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
   /**
-   * 3
+   * @author Krasimir Kirov
    * @param string
    * @param string2
    * @param string3
@@ -217,8 +217,7 @@ public class MaintenanceTicketsStepDefinitions {
   @When("the manager attempts to disapprove the ticket {string} on date {string} and with reason {string}")
   public void the_manager_attempts_to_disapprove_the_ticket_on_date_and_with_reason(String string,
       String string2, String string3) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    AssetPlusTicketingController.disapproveWorkOnMaintenanceTicket(Integer.parseInt(string), Date.valueOf(string2), string3);
   }
   /**
    * 4
@@ -274,13 +273,13 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
 /**
- * 3
+ * @author Krasimir Kirov
  * @param string
  */
   @Then("the number of tickets in the system shall be {string}")
   public void the_number_of_tickets_in_the_system_shall_be(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    int numberOfMaintenanceTickets = Integer.parseInt(string);
+    assertEquals(ap.numberOfMaintenanceTickets(), numberOfMaintenanceTickets);
   }
   /**
    * 4
