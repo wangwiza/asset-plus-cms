@@ -1,13 +1,19 @@
 package ca.mcgill.ecse.assetplus.features;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
+import ca.mcgill.ecse.assetplus.model.HotelStaff;
+import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.java.it.Ma;
 
 public class MaintenanceTicketsStepDefinitions {
 
@@ -93,19 +99,22 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
   /**
-   * 6
+   * @author Li Yang Lei
    * @param dataTable
    */
   @Given("the following notes exist in the system")
   public void the_following_notes_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    List<Map<String, String>> notes = dataTable.asMaps();
+    for (var note: notes) {
+      String email = note.get("noteTaker");
+      int ticketId = Integer.parseInt(note.get("ticketId"));
+      Date addedOnDate  = Date.valueOf(note.get("addedOnDate"));
+      String description = note.get("description");
+      MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
+      HotelStaff staff = (HotelStaff) HotelStaff.getWithEmail(email);
+      MaintenanceNote newNote = new MaintenanceNote(addedOnDate, description, ticket, staff);
+      ticket.addTicketNote(newNote);
+    }
   }
 
 
@@ -168,13 +177,12 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
   /**
-   * 6
+   * @author Li Yang Lei
    * @param string
    */
   @When("the hotel staff attempts to start the ticket {string}")
   public void the_hotel_staff_attempts_to_start_the_ticket(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    
   }
   /**
    * 1
@@ -227,13 +235,13 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
   /**
-   * 6
+   * @author Li Yang Lei
    * @param string
    */
   @Then("the ticket {string} shall not exist in the system")
   public void the_ticket_shall_not_exist_in_the_system(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    int ticketId = Integer.parseInt(string);
+    assertNull(MaintenanceTicket.getWithId(ticketId));
   }
   /**
    * 1
@@ -301,13 +309,13 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
   /**
-   * 6
+   * @author Li Yang Lei
    * @param string
    */
   @Then("the ticket with id {string} shall have no notes")
   public void the_ticket_with_id_shall_have_no_notes(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    int ticketId = Integer.parseInt(string);
+    assertEquals(MaintenanceTicket.getWithId(ticketId).numberOfTicketNotes(),0);
   }
   /**
    * 1
