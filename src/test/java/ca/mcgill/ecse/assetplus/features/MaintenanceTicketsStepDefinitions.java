@@ -5,7 +5,9 @@ import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.HotelStaff;
 import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
+import ca.mcgill.ecse.assetplus.model.Manager;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
+import ca.mcgill.ecse.assetplus.model.User;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import java.sql.Date;
@@ -38,20 +40,27 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
-   * 2
-   * @param dataTable
+   * @author Vlad Arama
+   * @param managerDataTable
    */
   @Given("the following manager exists in the system")
   public void the_following_manager_exists_in_the_system(
-      io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+      io.cucumber.datatable.DataTable managerDataTable) {
+    String email = "";
+    String password = "";
+    List<Map<String, String>> rows = managerDataTable.asMaps();
+    for (var row : rows) {
+      email = row.get("email");
+      password = row.get("password");
+    }
+
+    if (ap.hasManager()) {
+      Manager existingManager = ap.getManager();
+      existingManager.setEmail(email);
+      existingManager.setPassword(password);
+    } else {
+      new Manager(email, "", password, "", ap);
+    }
   }
   /**
    * 3
@@ -136,16 +145,17 @@ public class MaintenanceTicketsStepDefinitions {
     }
   }
   /**
-   * 2
-   * @param string
-   * @param string2
-   * @param string3
+   * @author Vlad Arama
+   * @param ticketId
+   * @param state
+   * @param requiresApproval
    */
   @Given("ticket {string} is marked as {string} with requires approval {string}")
-  public void ticket_is_marked_as_with_requires_approval(String string, String string2,
-      String string3) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void ticket_is_marked_as_with_requires_approval(String ticketId, String state,
+      String requiresApproval) {
+        // Todo
+        throw new io.cucumber.java.PendingException();
+
   }
   /**
    * 3
@@ -200,13 +210,12 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
   /**
-   * 2
-   * @param string
+   * @author Vlad Arama
+   * @param ticketId
    */
   @When("the hotel staff attempts to complete the ticket {string}")
-  public void the_hotel_staff_attempts_to_complete_the_ticket(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_hotel_staff_attempts_to_complete_the_ticket(String ticketId) {
+    AssetPlusTicketingController.completeWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
   }
   /**
    * 3
@@ -264,14 +273,15 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
   /**
-   * 2
-   * @param string
-   * @param string2
+   * @author Vlad Arama
+   * @param ticketId
+   * @param employeeEmail
    */
   @Then("the ticket {string} shall be assigned to {string}")
-  public void the_ticket_shall_be_assigned_to(String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_ticket_shall_be_assigned_to(String ticketId, String employeeEmail) {
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
+    HotelStaff ticketFixer = (HotelStaff) HotelStaff.getWithEmail(employeeEmail);
+    assertEquals(ticketFixer, ticket.getTicketFixer());
   }
 /**
  * 3
@@ -344,12 +354,12 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
   /**
-   * 2
-   * @param string
+   * @author Vlad Arama
+   * @param ticketId
    */
   @Then("the ticket with id {string} shall have no images")
-  public void the_ticket_with_id_shall_have_no_images(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_ticket_with_id_shall_have_no_images(String ticketId) {
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
+    assertEquals(0, ticket.getTicketImages().size());
   }
 }

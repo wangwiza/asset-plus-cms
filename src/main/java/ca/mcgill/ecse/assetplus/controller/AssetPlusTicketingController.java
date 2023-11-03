@@ -14,14 +14,43 @@ public class AssetPlusTicketingController {
   // MAKE SURE YOU READ ProcessMaintenanceTickets.feature before starting to work
   private static AssetPlus ap = AssetPlusApplication.getAssetPlus();
 
-  public static String assignHotelStaffToMaintenanceTicket(int ticketId, String employeeEmail, TimeEstimate timeEstimate, PriorityLevel priority, Boolean requriesApproval) {
+  public static String assignHotelStaffToMaintenanceTicket(int ticketId, String employeeEmail,
+      TimeEstimate timeEstimate, PriorityLevel priority, Boolean requriesApproval) {
     // Remove this exception when you implement this method
     throw new UnsupportedOperationException("Not Implemented!");
   }
 
+  /**
+   * Starts work on a maintenance ticket.
+   * 
+   * @author Vlad Arama
+   * @param ticketId
+   * @return an empty string if the operation was successful or an error
+   */
   public static String startWorkOnMaintenanceTicket(int ticketId) {
-    // Remove this exception when you implement this method
-    throw new UnsupportedOperationException("Not Implemented!");
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
+    if (ticket == null) {
+      return "Maintenance ticket does not exist.";
+    }
+    // state validation
+    if (ticket.getStatusFullName().equals("Open")) {
+      return "Cannot start a maintenance ticket which is open.";
+    }
+    if (ticket.getStatusFullName().equals("Resolved")) {
+      return "Cannot start a maintenance ticket which is resolved.";
+    }
+    if (ticket.getStatusFullName().equals("Closed")) {
+      return "Cannot start a maintenance ticket which is closed.";
+    }
+    if (ticket.getStatusFullName().equals("InProgress")) {
+      return "The maintenance ticket is already in progress.  ";
+    }
+    // start work on the ticket
+    Boolean result = ticket.start();
+    if (!result) {
+      return "Could not start work on maintenance ticket.";
+    }
+    return "";
   }
 
   public static String completeWorkOnMaintenanceTicket(int ticketId) {
@@ -48,7 +77,7 @@ public class AssetPlusTicketingController {
     try {
       // get the ticket and its current status
       MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
-      if (ticket==null) {
+      if (ticket == null) {
         error = "Maintenance ticket does not exist.";
         return error;
       }
