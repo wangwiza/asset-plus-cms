@@ -131,11 +131,11 @@ public class MaintenanceTicketsStepDefinitions {
    * Creates new notes
    * 
    * @author Li Yang Lei
-   * @param dataTable
+   * @param noteDataTable
    */
   @Given("the following notes exist in the system")
-  public void the_following_notes_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
-    List<Map<String, String>> notes = dataTable.asMaps();
+  public void the_following_notes_exist_in_the_system(io.cucumber.datatable.DataTable noteDataTable) {
+    List<Map<String, String>> notes = noteDataTable.asMaps();
     for (var note: notes) {
       String email = note.get("noteTaker");
       int ticketId = Integer.parseInt(note.get("ticketId"));
@@ -215,11 +215,11 @@ public class MaintenanceTicketsStepDefinitions {
    * Update status of ticket to In Progress
    * 
    * @author Li Yang Lei
-   * @param string
+   * @param ticketID
    */
   @When("the hotel staff attempts to start the ticket {string}")
-  public void the_hotel_staff_attempts_to_start_the_ticket(String string) {
-    AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(string));
+  public void the_hotel_staff_attempts_to_start_the_ticket(String ticketID) {
+    AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketID));
   }
 
   /**
@@ -275,11 +275,11 @@ public class MaintenanceTicketsStepDefinitions {
    * Verifies that there is no maintenance ticket associated with the given ticket ID
    * 
    * @author Li Yang Lei
-   * @param string
+   * @param ticket
    */
   @Then("the ticket {string} shall not exist in the system")
-  public void the_ticket_shall_not_exist_in_the_system(String string) {
-    int ticketId = Integer.parseInt(string);
+  public void the_ticket_shall_not_exist_in_the_system(String ticket) {
+    int ticketId = Integer.parseInt(ticket);
     assertNull(MaintenanceTicket.getWithId(ticketId));
   }
 
@@ -353,11 +353,11 @@ public class MaintenanceTicketsStepDefinitions {
    * Verifies that the maintenance ticket has 0 notes
    * 
    * @author Li Yang Lei
-   * @param string
+   * @param ticket
    */
   @Then("the ticket with id {string} shall have no notes")
-  public void the_ticket_with_id_shall_have_no_notes(String string) {
-    int ticketId = Integer.parseInt(string);
+  public void the_ticket_with_id_shall_have_no_notes(String ticket) {
+    int ticketId = Integer.parseInt(ticket);
     assertEquals(MaintenanceTicket.getWithId(ticketId).numberOfTicketNotes(),0);
   }
   /**
