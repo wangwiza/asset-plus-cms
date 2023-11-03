@@ -3,11 +3,13 @@ package ca.mcgill.ecse.assetplus.controller;
 import java.sql.Date;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
+import ca.mcgill.ecse.assetplus.model.HotelStaff;
 import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.PriorityLevel;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.Status;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.TimeEstimate;
+import ca.mcgill.ecse.assetplus.model.User;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 
 public class AssetPlusTicketingController {
@@ -16,8 +18,22 @@ public class AssetPlusTicketingController {
 
   public static String assignHotelStaffToMaintenanceTicket(int ticketId, String employeeEmail,
       TimeEstimate timeEstimate, PriorityLevel priority, Boolean requriesApproval) {
-    // Remove this exception when you implement this method
-    throw new UnsupportedOperationException("Not Implemented!");
+    
+    String error = "";
+    try {
+      // get the ticket
+      MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
+      if (ticket == null) {
+        error = "Maintenance ticket does not exist.";
+        return error;
+      }
+      ticket.assign((HotelStaff) (User.getWithEmail(employeeEmail)),priority,timeEstimate,ap.getManager());
+      AssetPlusPersistence.save();
+      return error;
+    } catch (RuntimeException e) {
+      error = e.getMessage();
+      return error;
+    }    
   }
 
   /**
