@@ -245,7 +245,7 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * @author William Wang
-   * @param string
+   * @param ticketId
    */
   @When("the manager attempts to approve the ticket {string}")
   public void the_manager_attempts_to_approve_the_ticket(String ticketId) {
@@ -408,10 +408,12 @@ public class MaintenanceTicketsStepDefinitions {
   public void the_ticket_with_id_shall_have_the_following_images(String ticketId,
       io.cucumber.datatable.DataTable imagesDataTable) {
     List<Map<String, String>> rows = imagesDataTable.asMaps();
-    List<String> expectedImageUrls = rows.stream().map(row -> row.get("imageUrl")).collect(Collectors.toList());
+    List<String> expectedImageUrls =
+        rows.stream().map(row -> row.get("imageUrl")).collect(Collectors.toList());
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
     assertNotNull(ticket); // necessary or not?
-    List<String> actualImageUrls = ticket.getTicketImages().stream().map(TicketImage::getImageURL).collect(Collectors.toList());
+    List<String> actualImageUrls = ticket.getTicketImages().stream().map(TicketImage::getImageURL)
+        .collect(Collectors.toList());
     assertIterableEquals(expectedImageUrls, actualImageUrls);
   }
 
