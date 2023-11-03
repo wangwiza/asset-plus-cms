@@ -3,6 +3,7 @@ package ca.mcgill.ecse.assetplus.controller;
 import java.sql.Date;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
 import ca.mcgill.ecse.assetplus.model.Employee;
@@ -53,6 +54,7 @@ public class AssetPlusFeatureSet5Controller {
     // call model
     try {
       ticket.addTicketImage(imageURL);
+      AssetPlusPersistence.save();
     } catch (RuntimeException e) {
       String caughtError = e.getMessage();
       if (caughtError.startsWith("Unable to create ticketImage due to ticket.")) {
@@ -71,7 +73,7 @@ public class AssetPlusFeatureSet5Controller {
    * @param imageURL the url of the image to be deleted
    * @param ticketID the ticket ID of the ticket to which the image to be deleted is attached to
    */
-  public static void deleteImageFromMaintenanceTicket(String imageURL, int ticketID) {
+  public static String deleteImageFromMaintenanceTicket(String imageURL, int ticketID) {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketID);
     if (ticket != null) {
       List<TicketImage> ticketImages = ticket.getTicketImages();
@@ -81,6 +83,12 @@ public class AssetPlusFeatureSet5Controller {
           break;
         }
       }
+      try {
+        AssetPlusPersistence.save();
+      } catch (RuntimeException e) {
+        return e.getMessage();
+      }
     }
+    return "";
   }
 }

@@ -21,15 +21,16 @@ import io.cucumber.java.it.Ma;
 public class MaintenanceTicketsStepDefinitions {
 
   private static AssetPlus ap = AssetPlusApplication.getAssetPlus();
+  private String errorMessage; // USE THIS TO STORE ERROR MESSAGES FROM CONTROLLER
 
   /**
    * @author William Wang
-   * @param dataTable
+   * @param employeesDataTable
    */
   @Given("the following employees exist in the system")
   public void the_following_employees_exist_in_the_system(
-      io.cucumber.datatable.DataTable dataTable) {
-    List<Map<String, String>> employeesToAdd = dataTable.asMaps();
+      io.cucumber.datatable.DataTable employeesDataTable) {
+    List<Map<String, String>> employeesToAdd = employeesDataTable.asMaps();
     for (Map<String, String> employee : employeesToAdd) {
       String email = employee.get("email");
       String name = employee.get("name");
@@ -131,19 +132,20 @@ public class MaintenanceTicketsStepDefinitions {
 
 
   /**
-   * 1
-   * @param dataTable
+   * @author William Wang
+   * @param imagesDataTable
    */
   @Given("the following ticket images exist in the system")
   public void the_following_ticket_images_exist_in_the_system(
-      io.cucumber.datatable.DataTable dataTable) {
-    List<Map<String, String>> rows = dataTable.asMaps();
+      io.cucumber.datatable.DataTable imagesDataTable) {
+    List<Map<String, String>> rows = imagesDataTable.asMaps();
     for (var row : rows) {
       String imageUrl = row.get("imageUrl");
       int ticketId = Integer.parseInt(row.get("ticketId"));
       new TicketImage(imageUrl, MaintenanceTicket.getWithId(ticketId));
     }
   }
+
   /**
    * @author Vlad Arama
    * @param ticketId
@@ -199,16 +201,16 @@ public class MaintenanceTicketsStepDefinitions {
   public void the_hotel_staff_attempts_to_start_the_ticket(String string) {
     AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(string));
   }
+
   /**
-   * 1
+   * @author William Wang
    * @param string
    */
   @When("the manager attempts to approve the ticket {string}")
-  public void the_manager_attempts_to_approve_the_ticket(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    // Depends on state machine, can't implement approve yet
-    throw new io.cucumber.java.PendingException();
+  public void the_manager_attempts_to_approve_the_ticket(String ticketId) {
+    errorMessage = AssetPlusTicketingController.approveWorkOnMaintenanceTicket(Integer.parseInt(ticketId))
   }
+
   /**
    * @author Vlad Arama
    * @param ticketId
@@ -259,18 +261,19 @@ public class MaintenanceTicketsStepDefinitions {
     int ticketId = Integer.parseInt(string);
     assertNull(MaintenanceTicket.getWithId(ticketId));
   }
+
   /**
-   * 1
+   * @author William Wang
    * @param string
    * @param string2
    * @param string3
    * @param string4
    */
   @Then("the ticket {string} shall have estimated time {string}, priority {string}, and requires approval {string}")
-  public void the_ticket_shall_have_estimated_time_priority_and_requires_approval(String string,
-      String string2, String string3, String string4) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_ticket_shall_have_estimated_time_priority_and_requires_approval(String ticketId,
+      String expectedTimeEstimate, String expectedPriority, String expectedRequiresApproval) {
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
+
   }
   /**
    * @author Vlad Arama
@@ -362,4 +365,6 @@ public class MaintenanceTicketsStepDefinitions {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
     assertEquals(0, ticket.getTicketImages().size());
   }
+
+  private static
 }
