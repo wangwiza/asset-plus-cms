@@ -1,4 +1,5 @@
 package ca.mcgill.ecse.assetplus.features;
+
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet6Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusTicketingController;
@@ -12,11 +13,17 @@ import ca.mcgill.ecse.assetplus.model.Manager;
 import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
 import ca.mcgill.ecse.assetplus.model.User;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.TimeEstimate;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.PriorityLevel;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -67,8 +74,10 @@ public class MaintenanceTicketsStepDefinitions {
       new Manager(email, "", password, "", ap);
     }
   }
+
   /**
    * 3
+   * 
    * @param dataTable
    */
   @Given("the following asset types exist in the system")
@@ -83,8 +92,10 @@ public class MaintenanceTicketsStepDefinitions {
     // For other transformations you can register a DataTableType.
     throw new io.cucumber.java.PendingException();
   }
+
   /**
    * 4
+   * 
    * @author Michael Rafferty
    * @param dataTable
    */
@@ -108,12 +119,14 @@ public class MaintenanceTicketsStepDefinitions {
       int aFloorNumber = Integer.parseInt(row.get("floorNumber"));
       int aRoomNumber = Integer.parseInt(row.get("roomNumber"));
       new SpecificAsset(aAssetNumber, aFloorNumber, aRoomNumber, aPurchaseDate, ap, aAssetType);
-      //ap.addSpecificAsset(aAssetNumber, aFloorNumber, aRoomNumber, aPurchaseDate, aAssetType);
+      // ap.addSpecificAsset(aAssetNumber, aFloorNumber, aRoomNumber, aPurchaseDate, aAssetType);
     }
-    //throw new io.cucumber.java.PendingException();
+    // throw new io.cucumber.java.PendingException();
   }
+
   /**
    * 5
+   * 
    * @param dataTable
    */
   @Given("the following tickets exist in the system")
@@ -127,6 +140,7 @@ public class MaintenanceTicketsStepDefinitions {
     // For other transformations you can register a DataTableType.
     throw new io.cucumber.java.PendingException();
   }
+
   /**
    * Creates new notes
    * 
@@ -136,10 +150,10 @@ public class MaintenanceTicketsStepDefinitions {
   @Given("the following notes exist in the system")
   public void the_following_notes_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> notes = dataTable.asMaps();
-    for (var note: notes) {
+    for (var note : notes) {
       String email = note.get("noteTaker");
       int ticketId = Integer.parseInt(note.get("ticketId"));
-      Date addedOnDate  = Date.valueOf(note.get("addedOnDate"));
+      Date addedOnDate = Date.valueOf(note.get("addedOnDate"));
       String description = note.get("description");
       MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
       HotelStaff staff = (HotelStaff) HotelStaff.getWithEmail(email);
@@ -173,12 +187,14 @@ public class MaintenanceTicketsStepDefinitions {
   @Given("ticket {string} is marked as {string} with requires approval {string}")
   public void ticket_is_marked_as_with_requires_approval(String ticketId, String state,
       String requiresApproval) {
-        // Todo
-        throw new io.cucumber.java.PendingException();
+    // Todo
+    throw new io.cucumber.java.PendingException();
 
   }
+
   /**
    * 3
+   * 
    * @param string
    * @param string2
    */
@@ -187,18 +203,22 @@ public class MaintenanceTicketsStepDefinitions {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
   }
+
   /**
    * 4
+   * 
    * @author Michael Rafferty
    */
   @When("the manager attempts to view all maintenance tickets in the system")
   public void the_manager_attempts_to_view_all_maintenance_tickets_in_the_system() {
     List<TOMaintenanceTicket> tickets = AssetPlusFeatureSet6Controller.getTickets();
     // should tickets be a private variable at the top?
-    //throw new io.cucumber.java.PendingException();
+    // throw new io.cucumber.java.PendingException();
   }
+
   /**
    * 5
+   * 
    * @param string
    * @param string2
    * @param string3
@@ -211,6 +231,7 @@ public class MaintenanceTicketsStepDefinitions {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
   }
+
   /**
    * Update status of ticket to In Progress
    * 
@@ -239,8 +260,10 @@ public class MaintenanceTicketsStepDefinitions {
   public void the_hotel_staff_attempts_to_complete_the_ticket(String ticketId) {
     AssetPlusTicketingController.completeWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
   }
+
   /**
    * 3
+   * 
    * @param string
    * @param string2
    * @param string3
@@ -251,8 +274,10 @@ public class MaintenanceTicketsStepDefinitions {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
   }
+
   /**
    * 4
+   * 
    * @author Michael Rafferty
    * @param string
    * @param string2
@@ -262,8 +287,10 @@ public class MaintenanceTicketsStepDefinitions {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
   }
+
   /**
    * 5
+   * 
    * @param string
    */
   @Then("the system shall raise the error {string}")
@@ -271,6 +298,7 @@ public class MaintenanceTicketsStepDefinitions {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
   }
+
   /**
    * Verifies that there is no maintenance ticket associated with the given ticket ID
    * 
@@ -285,17 +313,20 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * @author William Wang
-   * @param string
-   * @param string2
-   * @param string3
-   * @param string4
+   * @param ticketId
+   * @param expectedTimeEstimate
+   * @param expectedPriority
+   * @param expectedRequiresApproval
    */
   @Then("the ticket {string} shall have estimated time {string}, priority {string}, and requires approval {string}")
   public void the_ticket_shall_have_estimated_time_priority_and_requires_approval(String ticketId,
       String expectedTimeEstimate, String expectedPriority, String expectedRequiresApproval) {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
-
+    assertEquals(TimeEstimate.valueOf(expectedTimeEstimate), ticket.getTimeToResolve());
+    assertEquals(PriorityLevel.valueOf(expectedTimeEstimate), ticket.getTimeToResolve());
+    assertEquals(Boolean.valueOf(expectedRequiresApproval), ticket.hasFixApprover());
   }
+
   /**
    * @author Vlad Arama
    * @param ticketId
@@ -307,17 +338,21 @@ public class MaintenanceTicketsStepDefinitions {
     HotelStaff ticketFixer = (HotelStaff) HotelStaff.getWithEmail(employeeEmail);
     assertEquals(ticketFixer, ticket.getTicketFixer());
   }
-/**
- * 3
- * @param string
- */
+
+  /**
+   * 3
+   * 
+   * @param string
+   */
   @Then("the number of tickets in the system shall be {string}")
   public void the_number_of_tickets_in_the_system_shall_be(String string) {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
   }
+
   /**
    * 4
+   * 
    * @param dataTable
    */
   @Then("the following maintenance tickets shall be presented")
@@ -332,8 +367,10 @@ public class MaintenanceTicketsStepDefinitions {
     // For other transformations you can register a DataTableType.
     throw new io.cucumber.java.PendingException();
   }
+
   /**
    * 5
+   * 
    * @param string
    * @param dataTable
    */
@@ -349,6 +386,7 @@ public class MaintenanceTicketsStepDefinitions {
     // For other transformations you can register a DataTableType.
     throw new io.cucumber.java.PendingException();
   }
+
   /**
    * Verifies that the maintenance ticket has 0 notes
    * 
@@ -358,25 +396,25 @@ public class MaintenanceTicketsStepDefinitions {
   @Then("the ticket with id {string} shall have no notes")
   public void the_ticket_with_id_shall_have_no_notes(String string) {
     int ticketId = Integer.parseInt(string);
-    assertEquals(MaintenanceTicket.getWithId(ticketId).numberOfTicketNotes(),0);
+    assertEquals(MaintenanceTicket.getWithId(ticketId).numberOfTicketNotes(), 0);
   }
+
   /**
-   * 1
-   * @param string
-   * @param dataTable
+   * @author William Wang
+   * @param ticketId
+   * @param imagesDataTable
    */
   @Then("the ticket with id {string} shall have the following images")
-  public void the_ticket_with_id_shall_have_the_following_images(String string,
-      io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+  public void the_ticket_with_id_shall_have_the_following_images(String ticketId,
+      io.cucumber.datatable.DataTable imagesDataTable) {
+    List<Map<String, String>> rows = imagesDataTable.asMaps();
+    List<String> expectedImageUrls = rows.stream().map(row -> row.get("imageUrl")).collect(Collectors.toList());
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
+    assertNotNull(ticket); // necessary or not?
+    List<String> actualImageUrls = ticket.getTicketImages().stream().map(TicketImage::getImageURL).collect(Collectors.toList());
+    assertIterableEquals(expectedImageUrls, actualImageUrls);
   }
+
   /**
    * @author Vlad Arama
    * @param ticketId
@@ -386,6 +424,4 @@ public class MaintenanceTicketsStepDefinitions {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
     assertEquals(0, ticket.getTicketImages().size());
   }
-
-  private static
 }
