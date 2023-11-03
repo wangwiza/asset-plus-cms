@@ -1,5 +1,6 @@
 package ca.mcgill.ecse.assetplus.controller;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
@@ -73,7 +74,7 @@ public class AssetPlusFeatureSet5Controller {
    * @param imageURL the url of the image to be deleted
    * @param ticketID the ticket ID of the ticket to which the image to be deleted is attached to
    */
-  public static String deleteImageFromMaintenanceTicket(String imageURL, int ticketID) {
+  public static void deleteImageFromMaintenanceTicket(String imageURL, int ticketID) {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketID);
     if (ticket != null) {
       List<TicketImage> ticketImages = ticket.getTicketImages();
@@ -86,9 +87,8 @@ public class AssetPlusFeatureSet5Controller {
       try {
         AssetPlusPersistence.save();
       } catch (RuntimeException e) {
-        return e.getMessage();
+        throw new RuntimeException(e.getMessage());
       }
     }
-    return "";
   }
 }
