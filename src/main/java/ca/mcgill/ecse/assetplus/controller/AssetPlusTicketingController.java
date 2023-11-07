@@ -46,9 +46,14 @@ public class AssetPlusTicketingController {
       return "The maintenance ticket is already in progress.  ";
     }
     // start work on the ticket
-    Boolean result = ticket.start();
-    if (!result) {
-      return "Could not start work on maintenance ticket.";
+    try {
+      Boolean result = ticket.start();
+      if (!result) {
+        return "Could not start work on maintenance ticket.";
+      }
+      AssetPlusPersistence.save();
+    } catch (Exception e) {
+      return e.getMessage();
     }
     return "";
   }

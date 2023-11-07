@@ -187,9 +187,21 @@ public class MaintenanceTicketsStepDefinitions {
   @Given("ticket {string} is marked as {string} with requires approval {string}")
   public void ticket_is_marked_as_with_requires_approval(String ticketId, String state,
       String requiresApproval) {
-    // Todo
-    throw new io.cucumber.java.PendingException();
-
+    boolean approval;
+    if (requiresApproval.equals("true")) {
+      approval = true;
+    } else {
+      approval = false;
+    }
+    if (state.equals("InProgress")) {
+      AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(Integer.parseInt(ticketId),
+          "jeff@ap.com", TimeEstimate.ThreeToSevenDays, PriorityLevel.Low, approval);
+    }
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
+    if (ticket.getStatusFullName().equals("Assigned")) {
+      AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
+    }
+    // TO COMPLETE AND CLEAN UP
   }
 
   /**
@@ -249,7 +261,8 @@ public class MaintenanceTicketsStepDefinitions {
    */
   @When("the manager attempts to approve the ticket {string}")
   public void the_manager_attempts_to_approve_the_ticket(String ticketId) {
-    errorMessage = AssetPlusTicketingController.approveWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
+    errorMessage =
+        AssetPlusTicketingController.approveWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
   }
 
   /**
@@ -335,8 +348,15 @@ public class MaintenanceTicketsStepDefinitions {
   @Then("the ticket {string} shall be assigned to {string}")
   public void the_ticket_shall_be_assigned_to(String ticketId, String employeeEmail) {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
-    HotelStaff ticketFixer = (HotelStaff) HotelStaff.getWithEmail(employeeEmail);
-    assertEquals(ticketFixer, ticket.getTicketFixer());
+    User ticketFixer = HotelStaff.getWithEmail(employeeEmail);
+    HotelStaff hotelStaff;
+    if (ticketFixer instanceof HotelStaff) {
+      hotelStaff = (HotelStaff) ticketFixer;
+      assertEquals(hotelStaff, ticket.getTicketFixer());
+    } else {
+      assertEquals(ticketFixer, ticket.getTicketFixer());
+    }
+
   }
 
   /**
@@ -396,7 +416,7 @@ public class MaintenanceTicketsStepDefinitions {
   @Then("the ticket with id {string} shall have no notes")
   public void the_ticket_with_id_shall_have_no_notes(String ticket) {
     int ticketId = Integer.parseInt(ticket);
-    assertEquals(MaintenanceTicket.getWithId(ticketId).numberOfTicketNotes(),0);
+    assertEquals(MaintenanceTicket.getWithId(ticketId).numberOfTicketNotes(), 0);
   }
 
   /**
