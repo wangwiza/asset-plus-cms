@@ -24,20 +24,6 @@ public class AssetPlusTicketingController {
       return "Maintenance ticket does not exist.";
     }
 
-    // state validation
-    if (ticket.getStatusFullName().equals("Assigned")) {
-      return "The maintenance ticket is already assigned.";
-    }
-    if (ticket.getStatusFullName().equals("Resolved")) {
-      return "Cannot assign a maintenance ticket which is resolved.";
-    }
-    if (ticket.getStatusFullName().equals("Closed")) {
-      return "Cannot assign a maintenance ticket which is closed.";
-    }
-    if (ticket.getStatusFullName().equals("InProgress")) {
-      return "Cannot assign a maintenance ticket which is in progress.  ";
-    }
-
     //employee validation
     User ticketFixer = HotelStaff.getWithEmail(employeeEmail);
     HotelStaff hotelStaff;
@@ -47,15 +33,11 @@ public class AssetPlusTicketingController {
       return "Staff to assign does not exist.";
     }
 
-
     // assign the ticket
     try {
-      Boolean result = ticket.assign(hotelStaff, priority, timeEstimate, ap.getManager());
-      if (!result) {
-        return "Could not assign maintenance ticket.";
-      }
+      ticket.assign(hotelStaff, priority, timeEstimate, ap.getManager());
       AssetPlusPersistence.save();
-    } catch (Exception e) {
+    } catch (RuntimeException e) {
       return e.getMessage();
     }
     return "";
