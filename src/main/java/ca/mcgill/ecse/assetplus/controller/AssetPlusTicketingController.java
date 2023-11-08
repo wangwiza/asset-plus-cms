@@ -19,23 +19,48 @@ public class AssetPlusTicketingController {
   public static String assignHotelStaffToMaintenanceTicket(int ticketId, String employeeEmail,
       TimeEstimate timeEstimate, PriorityLevel priority, Boolean requriesApproval) {
     
-    String error = "";
-    try {
-      // get the ticket
-      MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
-      if (ticket == null) {
-        error = "Maintenance ticket does not exist.";
-        return error;
-      }
-      ticket.assign((HotelStaff) (User.getWithEmail(employeeEmail)),priority,timeEstimate,ap.getManager());
-      AssetPlusPersistence.save();
-      return error;
-    } catch (RuntimeException e) {
-      error = e.getMessage();
-      return error;
-    }    
-  }
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
+    if (ticket == null) {
+      return "Maintenance ticket does not exist.";
+    }
 
+    // state validation
+    if (ticket.getStatusFullName().equals("Assigned")) {
+      return "The maintenance ticket is already assigned.";
+    }
+    if (ticket.getStatusFullName().equals("Resolved")) {
+      return "Cannot assign a maintenance ticket which is resolved.";
+    }
+    if (ticket.getStatusFullName().equals("Closed")) {
+      return "Cannot assign a maintenance ticket which is closed.";
+    }
+    if (ticket.getStatusFullName().equals("InProgress")) {
+      return "Cannot assign a maintenance ticket which is in progress.  ";
+    }
+
+    //employee validation
+    User ticketFixer = HotelStaff.getWithEmail(employeeEmail);
+    HotelStaff hotelStaff;
+    if (ticketFixer instanceof HotelStaff) {
+      hotelStaff = (HotelStaff) ticketFixer;
+    } else {
+      return "Staff to assign does not exist.";
+    }
+
+
+    // assign the ticket
+    try {
+      Boolean result = ticket.assign(hotelStaff, priority, timeEstimate, ap.getManager());
+      if (!result) {
+        return "Could not assign maintenance ticket.";
+      }
+      AssetPlusPersistence.save();
+    } catch (Exception e) {
+      return e.getMessage();
+    }
+    return "";
+  } 
+  
   /**
    * Starts work on a maintenance ticket.
    * 
