@@ -15,7 +15,7 @@ import ca.mcgill.ecse.assetplus.model.TicketImage;
 import ca.mcgill.ecse.assetplus.model.User;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.TimeEstimate;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.PriorityLevel;
-
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.Status;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
@@ -94,22 +94,12 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
-   * 4
-   * 
    * @author Michael Rafferty
    * @param dataTable
    */
   @Given("the following assets exist in the system")
   public void the_following_assets_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
     AssetPlus ap = AssetPlusApplication.getAssetPlus();
-
     List<Map<String, String>> rows = dataTable.asMaps();
 
     for (var row : rows) {
@@ -118,10 +108,9 @@ public class MaintenanceTicketsStepDefinitions {
       Date aPurchaseDate = Date.valueOf(row.get("purchaseDate"));
       int aFloorNumber = Integer.parseInt(row.get("floorNumber"));
       int aRoomNumber = Integer.parseInt(row.get("roomNumber"));
-      new SpecificAsset(aAssetNumber, aFloorNumber, aRoomNumber, aPurchaseDate, ap, aAssetType);
-      // ap.addSpecificAsset(aAssetNumber, aFloorNumber, aRoomNumber, aPurchaseDate, aAssetType);
+      //new SpecificAsset(aAssetNumber, aFloorNumber, aRoomNumber, aPurchaseDate, ap, aAssetType);
+      ap.addSpecificAsset(aAssetNumber, aFloorNumber, aRoomNumber, aPurchaseDate, aAssetType);
     }
-    // throw new io.cucumber.java.PendingException();
   }
 
   /**
@@ -217,15 +206,12 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
-   * 4
-   * 
    * @author Michael Rafferty
    */
   @When("the manager attempts to view all maintenance tickets in the system")
   public void the_manager_attempts_to_view_all_maintenance_tickets_in_the_system() {
     List<TOMaintenanceTicket> tickets = AssetPlusFeatureSet6Controller.getTickets();
-    // should tickets be a private variable at the top?
-    // throw new io.cucumber.java.PendingException();
+    // should this be a private variable at the top?
   }
 
   /**
@@ -289,16 +275,15 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
-   * 4
-   * 
    * @author Michael Rafferty
-   * @param string
-   * @param string2
+   * @param ticketID represents the ticketID
+   * @param ticketStatus represented the status of the ticket
    */
   @Then("the ticket {string} shall be marked as {string}")
-  public void the_ticket_shall_be_marked_as(String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_ticket_shall_be_marked_as(String ticketID, String ticketStatus) {
+    MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(Integer.parseInt(ticketID)); 
+    Status theStatus = maintenanceTicket.getStatus();
+    assertEquals(ticketStatus, theStatus.name());
   }
 
   /**
