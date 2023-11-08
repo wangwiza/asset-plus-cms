@@ -148,13 +148,13 @@ public class MaintenanceTicketsStepDefinitions {
     throw new io.cucumber.java.PendingException();
   }
   /**
-   * 3
+   * @author Krasimir Kirov
    * @param string
    * @param string2
    */
   @Given("ticket {string} is marked as {string}")
-  public void ticket_is_marked_as(String string, String string2) {
-    MaintenanceTicket thisTicket = MaintenanceTicket.getWithId(Integer.parseInt(string));
+  public void ticket_is_marked_as(String ticketId, String string2) {
+    MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(Integer.parseInt(ticketID)); 
     //thisTicket.setStatus(Status.valueOf(string2));
   }
   /**
