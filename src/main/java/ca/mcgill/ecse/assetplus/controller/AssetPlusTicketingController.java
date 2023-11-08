@@ -16,6 +16,17 @@ public class AssetPlusTicketingController {
   // MAKE SURE YOU READ ProcessMaintenanceTickets.feature before starting to work
   private static AssetPlus ap = AssetPlusApplication.getAssetPlus();
 
+  /**
+   * Assigns a hotel staff member to a maintenance ticket based on provided parameters.
+   *  
+   * @author Krasimir Kirov
+   * @param ticketId The unique identifier of the maintenance ticket to be assigned.
+   * @param employeeEmail The email address of the hotel staff member to be assigned to the maintenance ticket.
+   * @param timeEstimate The estimated time required to complete the maintenance work.
+   * @param priority The priority level of the maintenance ticket.
+   * @param requiresApproval A Boolean indicating whether the assignment requires approval.
+   * @return An empty string if the operation was successful, or an error message string describing why the operation failed.
+   */
   public static String assignHotelStaffToMaintenanceTicket(int ticketId, String employeeEmail,
       TimeEstimate timeEstimate, PriorityLevel priority, Boolean requriesApproval) {
     
