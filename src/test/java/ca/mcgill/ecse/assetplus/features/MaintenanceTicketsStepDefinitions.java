@@ -33,6 +33,8 @@ public class MaintenanceTicketsStepDefinitions {
 
   private static AssetPlus ap = AssetPlusApplication.getAssetPlus();
   private String errorMessage; // USE THIS TO STORE ERROR MESSAGES FROM CONTROLLER
+  private List<TOMaintenanceTicket> tickets;
+
 
   /**
    * @author William Wang
@@ -101,7 +103,6 @@ public class MaintenanceTicketsStepDefinitions {
   public void the_following_assets_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
     AssetPlus ap = AssetPlusApplication.getAssetPlus();
     List<Map<String, String>> rows = dataTable.asMaps();
-
     for (var row : rows) {
       int aAssetNumber = Integer.parseInt(row.get("assetNumber"));
       AssetType aAssetType = AssetType.getWithName(row.get("type"));
@@ -210,8 +211,7 @@ public class MaintenanceTicketsStepDefinitions {
    */
   @When("the manager attempts to view all maintenance tickets in the system")
   public void the_manager_attempts_to_view_all_maintenance_tickets_in_the_system() {
-    List<TOMaintenanceTicket> tickets = AssetPlusFeatureSet6Controller.getTickets();
-    // should this be a private variable at the top?
+    tickets = AssetPlusFeatureSet6Controller.getTickets();
   }
 
   /**
@@ -282,6 +282,7 @@ public class MaintenanceTicketsStepDefinitions {
   @Then("the ticket {string} shall be marked as {string}")
   public void the_ticket_shall_be_marked_as(String ticketID, String ticketStatus) {
     MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(Integer.parseInt(ticketID)); 
+    assertNotNull(maintenanceTicket);
     Status theStatus = maintenanceTicket.getStatus();
     assertEquals(ticketStatus, theStatus.name());
   }
@@ -356,21 +357,52 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
-   * 4
-   * 
-   * @param dataTable
+   * @author Michael Rafferty
+   * @param dataTable Cucumber DataTable containing the id, ticketRaiser, raisedOnDate, description, assetName, expectedLifeSpan, purchaseDate, floorNumber and roomNumber of the tickets shown.
    */
   @Then("the following maintenance tickets shall be presented")
   public void the_following_maintenance_tickets_shall_be_presented(
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    List<Map<String, String>> rows = dataTable.asMaps();
+    int i = 0;
+    for (var row : rows) {
+      TOMaintenanceTicket currTicket = tickets.get(i);
+      int id = Integer.parseInt(row.get("id"));
+      assertEquals(id, currTicket.getId());
+      String ticketRaiserEmail = row.get("ticketRaiser");
+      assertEquals(ticketRaiserEmail, currTicket.getRaisedByEmail());
+      Date raisedOnDate = Date.valueOf(row.get("raisedOnDate"));
+      assertEquals(raisedOnDate, currTicket.getRaisedOnDate());
+      String description = row.get("description");
+      assertEquals(description, currTicket.getDescription());
+      String assetName = row.get("assetName");
+      assertEquals(assetName, currTicket.getAssetName());
+      String expectLifeSpanStr = row.get("expectLifeSpan");
+      int expectLifeSpan = -1;
+      if (expectLifeSpanStr != null) {
+        expectLifeSpan = Integer.parseInt(expectLifeSpanStr);
+      }
+      assertEquals(expectLifeSpan, currTicket.getExpectLifeSpanInDays());
+      String purchaseDateStr = row.get("purchaseDate");
+      Date purchaseDate = null;
+      if (purchaseDateStr != null) {
+        purchaseDate = Date.valueOf(purchaseDateStr);
+      }
+      assertEquals(purchaseDate, currTicket.getPurchaseDate());
+      String floorNumberStr = row.get("floorNumber");
+      int floorNumber = -1;
+      if (floorNumberStr != null) {
+        floorNumber = Integer.parseInt(floorNumberStr);
+      }
+      assertEquals(floorNumber, currTicket.getFloorNumber());
+      String roomNumberStr = row.get("roomNumber");
+      int roomNumber = -1;
+      if (roomNumberStr != null) {
+        roomNumber = Integer.parseInt(roomNumberStr);
+      }
+      assertEquals(roomNumber, currTicket.getRoomNumber());
+      i++;
+    }
   }
 
   /**
