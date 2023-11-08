@@ -3,23 +3,57 @@ package ca.mcgill.ecse.assetplus.controller;
 import java.sql.Date;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
+import ca.mcgill.ecse.assetplus.model.HotelStaff;
 import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.PriorityLevel;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.Status;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.TimeEstimate;
+import ca.mcgill.ecse.assetplus.model.User;
 import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 
 public class AssetPlusTicketingController {
   // MAKE SURE YOU READ ProcessMaintenanceTickets.feature before starting to work
   private static AssetPlus ap = AssetPlusApplication.getAssetPlus();
 
+  /**
+   * Assigns a hotel staff member to a maintenance ticket based on provided parameters.
+   *  
+   * @author Krasimir Kirov
+   * @param ticketId The unique identifier of the maintenance ticket to be assigned.
+   * @param employeeEmail The email address of the hotel staff member to be assigned to the maintenance ticket.
+   * @param timeEstimate The estimated time required to complete the maintenance work.
+   * @param priority The priority level of the maintenance ticket.
+   * @param requiresApproval A Boolean indicating whether the assignment requires approval.
+   * @return An empty string if the operation was successful, or an error message string describing why the operation failed.
+   */
   public static String assignHotelStaffToMaintenanceTicket(int ticketId, String employeeEmail,
       TimeEstimate timeEstimate, PriorityLevel priority, Boolean requriesApproval) {
-    // Remove this exception when you implement this method
-    throw new UnsupportedOperationException("Not Implemented!");
-  }
+    
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
+    if (ticket == null) {
+      return "Maintenance ticket does not exist.";
+    }
 
+    //employee validation
+    User ticketFixer = HotelStaff.getWithEmail(employeeEmail);
+    HotelStaff hotelStaff;
+    if (ticketFixer instanceof HotelStaff) {
+      hotelStaff = (HotelStaff) ticketFixer;
+    } else {
+      return "Staff to assign does not exist.";
+    }
+
+    // assign the ticket
+    try {
+      ticket.assign(hotelStaff, priority, timeEstimate, ap.getManager());
+      AssetPlusPersistence.save();
+    } catch (RuntimeException e) {
+      return e.getMessage();
+    }
+    return "";
+  } 
+  
   /**
    * Starts work on a maintenance ticket.
    * 
