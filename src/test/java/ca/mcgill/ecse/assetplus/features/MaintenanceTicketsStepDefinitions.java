@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -142,7 +141,6 @@ public class MaintenanceTicketsStepDefinitions {
               t.get("description"),
               User.getWithEmail(t.get("ticketRaiser"))
       );
-      AssetPlusPersistence.save();
     }
   }
 
