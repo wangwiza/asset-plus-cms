@@ -49,6 +49,11 @@ public class AssetPlusFeatureSet6Controller {
   }
   if (exists){
     employeeOrGuest.delete();
+    try {
+      AssetPlusPersistence.save();
+    } catch (RuntimeException e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
   }
 
