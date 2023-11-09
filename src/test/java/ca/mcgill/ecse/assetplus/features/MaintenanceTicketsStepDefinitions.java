@@ -37,6 +37,8 @@ public class MaintenanceTicketsStepDefinitions {
 
 
   /**
+   * Initializes some employees into the application
+   * 
    * @author William Wang
    * @param employeesDataTable
    */
@@ -154,6 +156,8 @@ public class MaintenanceTicketsStepDefinitions {
 
 
   /**
+   * Initializes some ticket images in the application
+   * 
    * @author William Wang
    * @param imagesDataTable
    */
@@ -242,6 +246,8 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
+   * Calls the controller to approve work on a maintenance ticket.
+   * 
    * @author William Wang
    * @param ticketId
    */
@@ -295,6 +301,7 @@ public class MaintenanceTicketsStepDefinitions {
   @Then("the system shall raise the error {string}")
   public void the_system_shall_raise_the_error(String string) {
     // Write code here that turns the phrase above into concrete actions
+    // hey timmy, just letting you know that there's an errorMessage attribute you can use
     throw new io.cucumber.java.PendingException();
   }
 
@@ -311,6 +318,8 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
+   * Validates that the ticket's estimated time, priority, and approval requirement are correct
+   * 
    * @author William Wang
    * @param ticketId
    * @param expectedTimeEstimate
@@ -437,6 +446,8 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
+   * Validates that a specific ticket contains the expected images.
+   * 
    * @author William Wang
    * @param ticketId
    * @param imagesDataTable
