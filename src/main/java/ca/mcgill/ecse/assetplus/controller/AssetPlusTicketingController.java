@@ -91,7 +91,14 @@ public class AssetPlusTicketingController {
     }
     return "";
   }
-
+  
+  /**
+   * Completes work on a maintenance ticket
+   * 
+   * @author Michael Rafferty
+   * @param ticketId
+   * @return an empty string if the operation was successful or an error
+   */
   public static String completeWorkOnMaintenanceTicket(int ticketId) {
    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
     if (ticket == null) {
