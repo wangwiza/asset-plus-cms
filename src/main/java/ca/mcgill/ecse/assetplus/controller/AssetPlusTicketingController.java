@@ -66,19 +66,6 @@ public class AssetPlusTicketingController {
     if (ticket == null) {
       return "Maintenance ticket does not exist.";
     }
-    // state validation
-    if (ticket.getStatusFullName().equals("Open")) {
-      return "Cannot start a maintenance ticket which is open.";
-    }
-    if (ticket.getStatusFullName().equals("Resolved")) {
-      return "Cannot start a maintenance ticket which is resolved.";
-    }
-    if (ticket.getStatusFullName().equals("Closed")) {
-      return "Cannot start a maintenance ticket which is closed.";
-    }
-    if (ticket.getStatusFullName().equals("InProgress")) {
-      return "The maintenance ticket is already in progress.  ";
-    }
     // start work on the ticket
     try {
       Boolean result = ticket.start();
@@ -86,7 +73,7 @@ public class AssetPlusTicketingController {
         return "Could not start work on maintenance ticket.";
       }
       AssetPlusPersistence.save();
-    } catch (Exception e) {
+    } catch (RuntimeException e) {
       return e.getMessage();
     }
     return "";
