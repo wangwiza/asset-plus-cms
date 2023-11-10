@@ -17,7 +17,6 @@ import static java.lang.Integer.parseInt;
 import ca.mcgill.ecse.assetplus.model.User;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.TimeEstimate;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.PriorityLevel;
-import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.Status;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
