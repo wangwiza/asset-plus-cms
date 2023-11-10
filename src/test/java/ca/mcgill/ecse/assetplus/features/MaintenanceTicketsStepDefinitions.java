@@ -89,7 +89,7 @@ public class MaintenanceTicketsStepDefinitions {
   @Given("the following asset types exist in the system")
   public void the_following_asset_types_exist_in_the_system(
       io.cucumber.datatable.DataTable assetTypesDataTable) {
-    List<Map<String, String>> rows = dataTable.asMaps();
+    List<Map<String, String>> rows = assetTypesDataTable.asMaps();
     for (Map<String, String> row : rows) {
       String name = row.get("name");
       int expectedLifeSpan = Integer.parseInt(row.get("expectedLifeSpan"));
@@ -205,7 +205,6 @@ public class MaintenanceTicketsStepDefinitions {
     if (ticket.getStatusFullName().equals("Assigned")) {
       errorMessage = AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
     }
-    // TO COMPLETE AND CLEAN UP
   }
 
   /**
