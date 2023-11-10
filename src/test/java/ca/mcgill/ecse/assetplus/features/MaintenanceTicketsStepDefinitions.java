@@ -218,8 +218,6 @@ public class MaintenanceTicketsStepDefinitions {
    */
   @Given("ticket {string} is marked as {string}")
   public void ticket_is_marked_as(String ticketId, String state) {
-    MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId)); 
-    
     switch (state) {
       case "Assigned":
           AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(Integer.parseInt(ticketId),
