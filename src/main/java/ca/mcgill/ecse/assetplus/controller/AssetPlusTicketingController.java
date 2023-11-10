@@ -28,7 +28,7 @@ public class AssetPlusTicketingController {
    * @return An empty string if the operation was successful, or an error message string describing why the operation failed.
    */
   public static String assignHotelStaffToMaintenanceTicket(int ticketId, String employeeEmail,
-      TimeEstimate timeEstimate, PriorityLevel priority, Boolean requriesApproval) {
+      TimeEstimate timeEstimate, PriorityLevel priority, Boolean requiresApproval) {
     
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
     if (ticket == null) {
@@ -90,19 +90,6 @@ public class AssetPlusTicketingController {
    MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
     if (ticket == null) {
       return "Maintenance ticket does not exist.";
-    }
-    // State validation
-    if (ticket.getStatusFullName().equals("Open")) {
-      return "Cannot complete a maintenance ticket which is open.";
-    }
-    if (ticket.getStatusFullName().equals("Assigned")) {
-      return "Cannot complete a maintenance ticket which is assigned.";
-    }
-    if (ticket.getStatusFullName().equals("Closed")) {
-      return "The maintenance ticket is already closed.";
-    }
-    if (ticket.getStatusFullName().equals("Resolved")) {
-      return "The maintenance ticket is already resolved.";
     }
     // Complete the ticket
     try {

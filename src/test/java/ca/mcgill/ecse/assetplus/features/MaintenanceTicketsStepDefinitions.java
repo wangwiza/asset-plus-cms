@@ -198,12 +198,12 @@ public class MaintenanceTicketsStepDefinitions {
       approval = false;
     }
     if (state.equals("InProgress")) {
-      AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(Integer.parseInt(ticketId),
+      errorMessage = AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(Integer.parseInt(ticketId),
           "jeff@ap.com", TimeEstimate.ThreeToSevenDays, PriorityLevel.Low, approval);
     }
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
     if (ticket.getStatusFullName().equals("Assigned")) {
-      AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
+      errorMessage = AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
     }
     // TO COMPLETE AND CLEAN UP
   }
@@ -215,7 +215,7 @@ public class MaintenanceTicketsStepDefinitions {
    */
   @Given("ticket {string} is marked as {string}")
   public void ticket_is_marked_as(String ticketId, String string2) {
-    MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(Integer.parseInt(ticketID)); 
+    MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId)); 
     //thisTicket.setStatus(Status.valueOf(string2));
   }
 
@@ -277,7 +277,7 @@ public class MaintenanceTicketsStepDefinitions {
    */
   @When("the hotel staff attempts to complete the ticket {string}")
   public void the_hotel_staff_attempts_to_complete_the_ticket(String ticketId) {
-    AssetPlusTicketingController.completeWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
+    errorMessage = AssetPlusTicketingController.completeWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
   }
 
   /**
