@@ -288,7 +288,7 @@ public class MaintenanceTicketsStepDefinitions {
   @When("the manager attempts to disapprove the ticket {string} on date {string} and with reason {string}")
   public void the_manager_attempts_to_disapprove_the_ticket_on_date_and_with_reason(String string,
       String string2, String string3) {
-    AssetPlusTicketingController.disapproveWorkOnMaintenanceTicket(Integer.parseInt(string), Date.valueOf(string2), string3);
+    errorMessage = AssetPlusTicketingController.disapproveWorkOnMaintenanceTicket(Integer.parseInt(string), Date.valueOf(string2), string3);
   }
 
   /**
