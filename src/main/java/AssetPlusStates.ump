@@ -78,7 +78,7 @@ class MaintenanceTicket {
 
             disapprove(Date date, String reason, Manager fixApprover) / {
                 doDisapprove(date, reason, fixApprover);
-            } -> Assigned;
+            } -> InProgress;
         }
         Closed {
             assign(HotelStaff ticketFixer, PriorityLevel priority, TimeEstimate timeToResolve, Manager fixApprover) / {

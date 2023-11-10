@@ -342,7 +342,7 @@ public class MaintenanceTicket
       case Resolved:
         // line 79 "../../../../../../AssetPlusStates.ump"
         doDisapprove(date, reason, fixApprover);
-        setStatus(Status.Assigned);
+        setStatus(Status.InProgress);
         wasEventProcessed = true;
         break;
       case Closed:
