@@ -1,0 +1,229 @@
+{
+  "AssetPlus": {
+    "employees": [
+      {
+        "Employee": [
+          {
+            "email": "jeff@ap.com",
+            "name": "Jeff",
+            "password": "pass1",
+            "phoneNumber": "(555)555-5555",
+            "raisedTickets": [
+              {
+                "MaintenanceTicket": {
+                  "id": 2,
+                  "raisedOnDate": "2023-07-10",
+                  "description": "The lamp is sometimes flickering",
+                  "timeToResolve": "ThreeToSevenDays",
+                  "priority": "Low",
+                  "status": "Resolved",
+                  "ticketNotes": [
+                    ""
+                  ],
+                  "ticketImages": [
+                    ""
+                  ],
+                  "assetPlus": {
+                    "@reference": "../../../../.."
+                  },
+                  "ticketRaiser": {
+                    "@class": "Employee",
+                    "@reference": "../../.."
+                  },
+                  "ticketFixer": {
+                    "@class": "Employee",
+                    "@reference": "../../.."
+                  },
+                  "fixApprover": {
+                    "email": "manager@ap.com",
+                    "name": "",
+                    "password": "manager",
+                    "phoneNumber": "",
+                    "raisedTickets": [
+                      {
+                        "MaintenanceTicket": {
+                          "id": 1,
+                          "raisedOnDate": "2023-07-20",
+                          "description": "The bed needs replacement",
+                          "status": "Open",
+                          "ticketNotes": [
+                            ""
+                          ],
+                          "ticketImages": [
+                            ""
+                          ],
+                          "assetPlus": {
+                            "@reference": "../../../../../../../.."
+                          },
+                          "ticketRaiser": {
+                            "@class": "Manager",
+                            "@reference": "../../.."
+                          }
+                        }
+                      }
+                    ],
+                    "maintenanceNotes": [
+                      ""
+                    ],
+                    "maintenanceTasks": [
+                      ""
+                    ],
+                    "assetPlus": {
+                      "@reference": "../../../../../.."
+                    },
+                    "ticketsForApproval": [
+                      {
+                        "MaintenanceTicket": {
+                          "@reference": "../../.."
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            ],
+            "maintenanceNotes": [
+              ""
+            ],
+            "maintenanceTasks": [
+              {
+                "MaintenanceTicket": {
+                  "@reference": "../../raisedTickets/MaintenanceTicket"
+                }
+              }
+            ],
+            "assetPlus": {
+              "@reference": "../../.."
+            }
+          },
+          {
+            "email": "smith@ap.com",
+            "name": "Smith",
+            "password": "pass2",
+            "phoneNumber": "(555)555-5555",
+            "raisedTickets": [
+              ""
+            ],
+            "maintenanceNotes": [
+              ""
+            ],
+            "maintenanceTasks": [
+              ""
+            ],
+            "assetPlus": {
+              "@reference": "../../.."
+            }
+          }
+        ]
+      }
+    ],
+    "guests": [
+      ""
+    ],
+    "manager": {
+      "@reference": "../employees/Employee/raisedTickets/MaintenanceTicket/fixApprover"
+    },
+    "maintenanceTickets": [
+      {
+        "MaintenanceTicket": [
+          {
+            "@reference": "../../employees/Employee/raisedTickets/MaintenanceTicket/fixApprover/raisedTickets/MaintenanceTicket"
+          },
+          {
+            "@reference": "../../employees/Employee/raisedTickets/MaintenanceTicket"
+          }
+        ]
+      }
+    ],
+    "assetTypes": [
+      {
+        "AssetType": [
+          {
+            "name": "lamp",
+            "expectedLifeSpan": 1800,
+            "assetPlus": {
+              "@reference": "../../.."
+            },
+            "specificAssets": [
+              {
+                "SpecificAsset": {
+                  "assetNumber": 1,
+                  "floorNumber": 9,
+                  "roomNumber": 23,
+                  "purchaseDate": "2022-03-20",
+                  "assetPlus": {
+                    "@reference": "../../../../.."
+                  },
+                  "maintenanceTickets": [
+                    ""
+                  ],
+                  "assetType": {
+                    "@reference": "../../.."
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "bed",
+            "expectedLifeSpan": 5000,
+            "assetPlus": {
+              "@reference": "../../.."
+            },
+            "specificAssets": [
+              {
+                "SpecificAsset": [
+                  {
+                    "assetNumber": 2,
+                    "floorNumber": 10,
+                    "roomNumber": 35,
+                    "purchaseDate": "2010-01-30",
+                    "assetPlus": {
+                      "@reference": "../../../../.."
+                    },
+                    "maintenanceTickets": [
+                      ""
+                    ],
+                    "assetType": {
+                      "@reference": "../../.."
+                    }
+                  },
+                  {
+                    "assetNumber": 3,
+                    "floorNumber": 1,
+                    "roomNumber": 35,
+                    "purchaseDate": "2010-01-30",
+                    "assetPlus": {
+                      "@reference": "../../../../.."
+                    },
+                    "maintenanceTickets": [
+                      ""
+                    ],
+                    "assetType": {
+                      "@reference": "../../.."
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "specificAssets": [
+      {
+        "SpecificAsset": [
+          {
+            "@reference": "../../assetTypes/AssetType/specificAssets/SpecificAsset"
+          },
+          {
+            "@reference": "../../assetTypes/AssetType[2]/specificAssets/SpecificAsset"
+          },
+          {
+            "@reference": "../../assetTypes/AssetType[2]/specificAssets/SpecificAsset[2]"
+          }
+        ]
+      }
+    ]
+  }
+}

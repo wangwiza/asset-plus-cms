@@ -215,7 +215,7 @@ public class MaintenanceTicketsStepDefinitions {
    */
   @Given("ticket {string} is marked as {string}")
   public void ticket_is_marked_as(String ticketId, String string2) {
-    MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(Integer.parseInt(ticketID)); 
+    MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId)); 
     //thisTicket.setStatus(Status.valueOf(string2));
   }
 
@@ -256,7 +256,7 @@ public class MaintenanceTicketsStepDefinitions {
    */
   @When("the hotel staff attempts to start the ticket {string}")
   public void the_hotel_staff_attempts_to_start_the_ticket(String ticketID) {
-    AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketID));
+    errorMessage = AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketID));
   }
 
   /**
