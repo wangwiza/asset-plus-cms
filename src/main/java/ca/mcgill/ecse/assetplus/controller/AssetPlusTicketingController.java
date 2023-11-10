@@ -129,7 +129,7 @@ public class AssetPlusTicketingController {
    * @param ticketId
    * @param date
    * @param reason
-   * @return
+   * @return empty string if operation was successful and error if it was unsuccessful
    */
   public static String disapproveWorkOnMaintenanceTicket(int ticketId, Date date, String reason) {
     String error = "";
