@@ -140,6 +140,9 @@ public class MaintenanceTicketsStepDefinitions {
               t.get("description"),
               User.getWithEmail(t.get("ticketRaiser"))
       );
+      if (t.get("assetNumber") != null) {
+        ticket.setAsset(SpecificAsset.getWithAssetNumber(Integer.parseInt(t.get("assetNumber"))));
+      }
     }
   }
 
