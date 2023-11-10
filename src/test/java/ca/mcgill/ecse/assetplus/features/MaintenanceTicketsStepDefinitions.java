@@ -198,12 +198,12 @@ public class MaintenanceTicketsStepDefinitions {
       approval = false;
     }
     if (state.equals("InProgress")) {
-      AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(Integer.parseInt(ticketId),
+      errorMessage = AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(Integer.parseInt(ticketId),
           "jeff@ap.com", TimeEstimate.ThreeToSevenDays, PriorityLevel.Low, approval);
     }
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
     if (ticket.getStatusFullName().equals("Assigned")) {
-      AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
+      errorMessage = AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
     }
     // TO COMPLETE AND CLEAN UP
   }
@@ -281,7 +281,7 @@ public class MaintenanceTicketsStepDefinitions {
    */
   @When("the hotel staff attempts to start the ticket {string}")
   public void the_hotel_staff_attempts_to_start_the_ticket(String ticketID) {
-    AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketID));
+    errorMessage = AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketID));
   }
 
   /**
@@ -302,7 +302,7 @@ public class MaintenanceTicketsStepDefinitions {
    */
   @When("the hotel staff attempts to complete the ticket {string}")
   public void the_hotel_staff_attempts_to_complete_the_ticket(String ticketId) {
-    AssetPlusTicketingController.completeWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
+    errorMessage = AssetPlusTicketingController.completeWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
   }
 
   /**
@@ -367,7 +367,7 @@ public class MaintenanceTicketsStepDefinitions {
       String expectedTimeEstimate, String expectedPriority, String expectedRequiresApproval) {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
     assertEquals(TimeEstimate.valueOf(expectedTimeEstimate), ticket.getTimeToResolve());
-    assertEquals(PriorityLevel.valueOf(expectedTimeEstimate), ticket.getTimeToResolve());
+    assertEquals(PriorityLevel.valueOf(expectedPriority), ticket.getPriority());
     assertEquals(Boolean.valueOf(expectedRequiresApproval), ticket.hasFixApprover());
   }
 
