@@ -91,19 +91,6 @@ public class AssetPlusTicketingController {
     if (ticket == null) {
       return "Maintenance ticket does not exist.";
     }
-    // State validation
-    if (ticket.getStatusFullName().equals("Open")) {
-      return "Cannot complete a maintenance ticket which is open.";
-    }
-    if (ticket.getStatusFullName().equals("Assigned")) {
-      return "Cannot complete a maintenance ticket which is assigned.";
-    }
-    if (ticket.getStatusFullName().equals("Closed")) {
-      return "The maintenance ticket is already closed.";
-    }
-    if (ticket.getStatusFullName().equals("Resolved")) {
-      return "The maintenance ticket is already resolved.";
-    }
     // Complete the ticket
     try {
       Boolean result = ticket.complete();
