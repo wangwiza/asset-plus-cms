@@ -82,12 +82,13 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
+   * Initializes asset types into the application
    * @author Krasimir Kirov
-   * @param dataTable
+   * @param assetTypesDataTable
    */
   @Given("the following asset types exist in the system")
   public void the_following_asset_types_exist_in_the_system(
-      io.cucumber.datatable.DataTable dataTable) {
+      io.cucumber.datatable.DataTable assetTypesDataTable) {
     List<Map<String, String>> rows = dataTable.asMaps();
     for (Map<String, String> row : rows) {
       String name = row.get("name");
@@ -208,15 +209,40 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
+   * Marks ticket with ticketId as the given state
    * @author Krasimir Kirov
-   * @param string
-   * @param string2
+   * @param ticketId
+   * @param state
    */
   @Given("ticket {string} is marked as {string}")
-  public void ticket_is_marked_as(String ticketId, String string2) {
+  public void ticket_is_marked_as(String ticketId, String state) {
     MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId)); 
-    //thisTicket.setStatus(Status.valueOf(string2));
+    
+    switch (state) {
+      case "Assigned":
+          AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(Integer.parseInt(ticketId),
+          "jeff@ap.com", TimeEstimate.ThreeToSevenDays, PriorityLevel.Low, true);
+          break;
+      case "InProgress":
+          AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(Integer.parseInt(ticketId),
+          "jeff@ap.com", TimeEstimate.ThreeToSevenDays, PriorityLevel.Low, true);
+          AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
+          break;
+      case "Resolved":
+          AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(Integer.parseInt(ticketId),
+          "jeff@ap.com", TimeEstimate.ThreeToSevenDays, PriorityLevel.Low, true);
+          AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
+          AssetPlusTicketingController.completeWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
+          break;
+      case "Closed":
+          AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(Integer.parseInt(ticketId),
+          "jeff@ap.com", TimeEstimate.ThreeToSevenDays, PriorityLevel.Low, true);
+          AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
+          AssetPlusTicketingController.completeWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
+          AssetPlusTicketingController.approveWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
+          break;
   }
+}
 
   /**
    * @author Michael Rafferty
@@ -280,15 +306,16 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
+   * Manager attempts to disaprove the ticket on a date and with a reason
    * @author Krasimir Kirov
-   * @param string
-   * @param string2
-   * @param string3
+   * @param ticketId 
+   * @param date
+   * @param reason
    */
   @When("the manager attempts to disapprove the ticket {string} on date {string} and with reason {string}")
-  public void the_manager_attempts_to_disapprove_the_ticket_on_date_and_with_reason(String string,
-      String string2, String string3) {
-    AssetPlusTicketingController.disapproveWorkOnMaintenanceTicket(Integer.parseInt(string), Date.valueOf(string2), string3);
+  public void the_manager_attempts_to_disapprove_the_ticket_on_date_and_with_reason(String ticketId,
+      String date, String reason) {
+    AssetPlusTicketingController.disapproveWorkOnMaintenanceTicket(Integer.parseInt(ticketId), Date.valueOf(date), reason);
   }
 
   /**
@@ -364,12 +391,13 @@ public class MaintenanceTicketsStepDefinitions {
   }
   
 /**
+ * Asserts the number of tickets in the system
  * @author Krasimir Kirov
- * @param string
+ * @param number
  */
   @Then("the number of tickets in the system shall be {string}")
-  public void the_number_of_tickets_in_the_system_shall_be(String string) {
-    int numberOfMaintenanceTickets = Integer.parseInt(string);
+  public void the_number_of_tickets_in_the_system_shall_be(String number) {
+    int numberOfMaintenanceTickets = Integer.parseInt(number);
     assertEquals(ap.numberOfMaintenanceTickets(), numberOfMaintenanceTickets);
   }
 
