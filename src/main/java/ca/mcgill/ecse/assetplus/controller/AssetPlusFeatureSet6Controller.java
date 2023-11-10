@@ -1,6 +1,7 @@
 
 package ca.mcgill.ecse.assetplus.controller;
 import java.util.ArrayList;
+//import java.util.Date;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
@@ -10,7 +11,11 @@ import ca.mcgill.ecse.assetplus.model.Employee;
 import ca.mcgill.ecse.assetplus.model.Guest;
 import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.PriorityLevel;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.Status;
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
+import java.sql.Date;
 import java.util.List;
 
 public class AssetPlusFeatureSet6Controller {
@@ -44,7 +49,12 @@ public class AssetPlusFeatureSet6Controller {
     }
   }
   if (exists){
-    employeeOrGuest.delete();
+    try {
+      employeeOrGuest.delete();
+      AssetPlusPersistence.save();
+    } catch (RuntimeException e) {
+      throw new RuntimeException(e.getMessage());
+    }
   }
   }
 
@@ -56,8 +66,40 @@ public class AssetPlusFeatureSet6Controller {
    */
   public static List<TOMaintenanceTicket> getTickets() {
     var tickets = new ArrayList<TOMaintenanceTicket>();
-
     for (var maintenanceticket : ap.getMaintenanceTickets()){
+      // Preparing parameters for the TOMaintenanceTicket object
+      Status status = maintenanceticket.getStatus();
+      String theStatus = status.name();
+      /**
+       * the following three attributes are set to null if no one has been assigned yet to fix the ticket
+       */
+      String fixerEmail = null;
+      String timeToResolve = null;
+      PriorityLevel priority = null; 
+      String thePriority = null;
+      if (maintenanceticket.hasTicketFixer()){
+        fixerEmail = maintenanceticket.getTicketFixer().getEmail(); 
+        timeToResolve = null;
+        priority = maintenanceticket.getPriority(); 
+        thePriority = priority.name();
+      }
+      // Does having a fix approver imply approval is required. I'm assuming so because .hasFixApprover() returns a boolean.
+      boolean approvalRequired = maintenanceticket.hasFixApprover(); 
+      /**
+       *  if no asset is specified for the ticket, the following 5 attributes are set to null (String/Date) / -1 (Integer)
+       */ 
+      String assetName = null;
+      int lifeSpan = -1;
+      Date purchaseDate = null;
+      int floorNumber = -1;
+      int roomNumber = -1;
+      if (maintenanceticket.hasAsset()){
+        assetName = maintenanceticket.getAsset().getAssetType().getName(); 
+        lifeSpan = maintenanceticket.getAsset().getAssetType().getExpectedLifeSpan(); 
+        purchaseDate = maintenanceticket.getAsset().getPurchaseDate();
+        floorNumber = maintenanceticket.getAsset().getFloorNumber(); 
+        roomNumber = maintenanceticket.getAsset().getRoomNumber();
+      }
       // URLS
       List<String> imageUrls = new ArrayList<String>();
       if (maintenanceticket.hasTicketImages()){
@@ -75,35 +117,26 @@ public class AssetPlusFeatureSet6Controller {
         }
       }
 
-      if (!maintenanceticket.hasAsset()){
-        tickets.add(new TOMaintenanceTicket(
-        maintenanceticket.getId(), 
-        maintenanceticket.getRaisedOnDate(), 
-        maintenanceticket.getDescription(), 
-        maintenanceticket.getTicketRaiser().getEmail(), 
-        null,
-        -1,
-        null,
-        -1,
-        -1,
-        imageUrls,
-        notes));
-      }
-      else{
-      // List<TOMaintenanceTicket>
+      // Making the list of tickets
       tickets.add(new TOMaintenanceTicket(
         maintenanceticket.getId(), 
         maintenanceticket.getRaisedOnDate(), 
         maintenanceticket.getDescription(), 
         maintenanceticket.getTicketRaiser().getEmail(), 
-        maintenanceticket.getAsset().getAssetType().getName(),
-        maintenanceticket.getAsset().getAssetType().getExpectedLifeSpan(),
-        maintenanceticket.getAsset().getPurchaseDate(),
-        maintenanceticket.getAsset().getFloorNumber(),
-        maintenanceticket.getAsset().getRoomNumber(),
+        theStatus,
+        fixerEmail,
+        timeToResolve,
+        thePriority, 
+        approvalRequired, 
+        assetName,
+        lifeSpan,
+        purchaseDate,
+        floorNumber,
+        roomNumber,
         imageUrls,
-        notes));
-      }
+        notes
+        ));
+
     }
     return tickets;
 

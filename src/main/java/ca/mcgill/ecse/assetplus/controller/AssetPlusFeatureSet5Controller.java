@@ -1,8 +1,10 @@
 package ca.mcgill.ecse.assetplus.controller;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
 import ca.mcgill.ecse.assetplus.model.Employee;
@@ -53,6 +55,7 @@ public class AssetPlusFeatureSet5Controller {
     // call model
     try {
       ticket.addTicketImage(imageURL);
+      AssetPlusPersistence.save();
     } catch (RuntimeException e) {
       String caughtError = e.getMessage();
       if (caughtError.startsWith("Unable to create ticketImage due to ticket.")) {
@@ -80,6 +83,11 @@ public class AssetPlusFeatureSet5Controller {
           ticketImage.delete();
           break;
         }
+      }
+      try {
+        AssetPlusPersistence.save();
+      } catch (RuntimeException e) {
+        throw new RuntimeException(e.getMessage());
       }
     }
   }

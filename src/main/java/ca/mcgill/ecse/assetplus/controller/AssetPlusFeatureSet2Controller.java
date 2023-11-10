@@ -3,6 +3,7 @@ package ca.mcgill.ecse.assetplus.controller;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 import java.util.List;
 
 public class AssetPlusFeatureSet2Controller {
@@ -34,7 +35,12 @@ public class AssetPlusFeatureSet2Controller {
       return ("The asset type already exists");
     }
 
-    assetPlus.addAssetType(assetPlus.addAssetType(name, expectedLifeSpanInDays));
+    try {
+      assetPlus.addAssetType(assetPlus.addAssetType(name, expectedLifeSpanInDays));
+      AssetPlusPersistence.save();
+    } catch (RuntimeException e) {
+      return e.getMessage();
+    }
     return "";
   }
 
@@ -68,12 +74,17 @@ public class AssetPlusFeatureSet2Controller {
     }
 
     // update the asset type
-    for (AssetType assetType : assetTypeList) {
-      if (assetType.getName().equals(oldName)) {
-        assetType.setName(newName);
-        assetType.setExpectedLifeSpan(newExpectedLifeSpanInDays);
-        return "";
+    try {
+      for (AssetType assetType : assetTypeList) {
+        if (assetType.getName().equals(oldName)) {
+          assetType.setName(newName);
+          assetType.setExpectedLifeSpan(newExpectedLifeSpanInDays);
+          AssetPlusPersistence.save();
+          return "";
+        }
       }
+    } catch (RuntimeException e) {
+      return e.getMessage();
     }
     return ("The asset type does not exist");
   }
@@ -94,11 +105,16 @@ public class AssetPlusFeatureSet2Controller {
     }
 
     // delete the asset type
-    for (AssetType assetType : assetTypeList) {
-      if (assetType.getName().equals(name)) {
-        assetType.delete();
-        break;
+    try {
+      for (AssetType assetType : assetTypeList) {
+        if (assetType.getName().equals(name)) {
+          assetType.delete();
+          AssetPlusPersistence.save();
+          break;
+        }
       }
+    } catch (RuntimeException e) {
+      throw new RuntimeException(e.getMessage());
     }
   }
 }

@@ -1,18 +1,32 @@
 package ca.mcgill.ecse.assetplus.features;
+
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet6Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusTicketingController;
+import ca.mcgill.ecse.assetplus.controller.TOMaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
+import ca.mcgill.ecse.assetplus.model.AssetType;
 import ca.mcgill.ecse.assetplus.model.HotelStaff;
 import ca.mcgill.ecse.assetplus.model.MaintenanceNote;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
+import ca.mcgill.ecse.assetplus.model.Manager;
+import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import ca.mcgill.ecse.assetplus.model.TicketImage;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.Status;
 import static java.lang.Integer.parseInt;
+import ca.mcgill.ecse.assetplus.model.User;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.TimeEstimate;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.PriorityLevel;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.Status;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -21,15 +35,20 @@ import io.cucumber.java.it.Ma;
 public class MaintenanceTicketsStepDefinitions {
 
   private static AssetPlus ap = AssetPlusApplication.getAssetPlus();
+  private String errorMessage; // USE THIS TO STORE ERROR MESSAGES FROM CONTROLLER
+  private List<TOMaintenanceTicket> tickets;
+
 
   /**
+   * Initializes some employees into the application
+   * 
    * @author William Wang
-   * @param dataTable
+   * @param employeesDataTable
    */
   @Given("the following employees exist in the system")
   public void the_following_employees_exist_in_the_system(
-      io.cucumber.datatable.DataTable dataTable) {
-    List<Map<String, String>> employeesToAdd = dataTable.asMaps();
+      io.cucumber.datatable.DataTable employeesDataTable) {
+    List<Map<String, String>> employeesToAdd = employeesDataTable.asMaps();
     for (Map<String, String> employee : employeesToAdd) {
       String email = employee.get("email");
       String name = employee.get("name");
@@ -40,21 +59,29 @@ public class MaintenanceTicketsStepDefinitions {
   }
 
   /**
-   * 2
-   * @param dataTable
+   * @author Vlad Arama
+   * @param managerDataTable
    */
   @Given("the following manager exists in the system")
   public void the_following_manager_exists_in_the_system(
-      io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+      io.cucumber.datatable.DataTable managerDataTable) {
+    String email = "";
+    String password = "";
+    List<Map<String, String>> rows = managerDataTable.asMaps();
+    for (var row : rows) {
+      email = row.get("email");
+      password = row.get("password");
+    }
+
+    if (ap.hasManager()) {
+      Manager existingManager = ap.getManager();
+      existingManager.setEmail(email);
+      existingManager.setPassword(password);
+    } else {
+      new Manager(email, "", password, "", ap);
+    }
   }
+
   /**
    * @author Krasimir Kirov
    * @param dataTable
@@ -69,24 +96,30 @@ public class MaintenanceTicketsStepDefinitions {
       ap.addAssetType(name, expectedLifeSpan);
     }
   }
+
   /**
-   * 4
+   * @author Michael Rafferty
    * @param dataTable
    */
   @Given("the following assets exist in the system")
   public void the_following_assets_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    AssetPlus ap = AssetPlusApplication.getAssetPlus();
+    List<Map<String, String>> rows = dataTable.asMaps();
+    for (var row : rows) {
+      int aAssetNumber = Integer.parseInt(row.get("assetNumber"));
+      AssetType aAssetType = AssetType.getWithName(row.get("type"));
+      Date aPurchaseDate = Date.valueOf(row.get("purchaseDate"));
+      int aFloorNumber = Integer.parseInt(row.get("floorNumber"));
+      int aRoomNumber = Integer.parseInt(row.get("roomNumber"));
+      //new SpecificAsset(aAssetNumber, aFloorNumber, aRoomNumber, aPurchaseDate, ap, aAssetType);
+      ap.addSpecificAsset(aAssetNumber, aFloorNumber, aRoomNumber, aPurchaseDate, aAssetType);
+    }
   }
+
   /**
    * 5
-   * @param dataTable
+   * @author Tim Pham
+   * @param dataTable test parameter from cucumber
    */
   @Given("the following tickets exist in the system")
   public void the_following_tickets_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
@@ -97,21 +130,32 @@ public class MaintenanceTicketsStepDefinitions {
     // Double, Byte, Short, Long, BigInteger or BigDecimal.
     //
     // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    List<Map<String, String>> tickets = dataTable.asMaps();
+    MaintenanceTicket ticket;
+    for (var t : tickets) {
+      //Status is open by default
+      ticket = ap.addMaintenanceTicket(
+              Integer.parseInt(t.get("id")),
+              Date.valueOf(t.get("raisedOnDate")),
+              t.get("description"),
+              User.getWithEmail(t.get("ticketRaiser"))
+      );
+    }
   }
+
   /**
    * Creates new notes
    * 
    * @author Li Yang Lei
-   * @param dataTable
+   * @param noteDataTable
    */
   @Given("the following notes exist in the system")
   public void the_following_notes_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
     List<Map<String, String>> notes = dataTable.asMaps();
-    for (var note: notes) {
+    for (var note : notes) {
       String email = note.get("noteTaker");
       int ticketId = Integer.parseInt(note.get("ticketId"));
-      Date addedOnDate  = Date.valueOf(note.get("addedOnDate"));
+      Date addedOnDate = Date.valueOf(note.get("addedOnDate"));
       String description = note.get("description");
       MaintenanceTicket ticket = MaintenanceTicket.getWithId(ticketId);
       HotelStaff staff = (HotelStaff) HotelStaff.getWithEmail(email);
@@ -122,31 +166,48 @@ public class MaintenanceTicketsStepDefinitions {
 
 
   /**
-   * 1
-   * @param dataTable
+   * Initializes some ticket images in the application
+   * 
+   * @author William Wang
+   * @param imagesDataTable
    */
   @Given("the following ticket images exist in the system")
   public void the_following_ticket_images_exist_in_the_system(
-      io.cucumber.datatable.DataTable dataTable) {
-    List<Map<String, String>> rows = dataTable.asMaps();
+      io.cucumber.datatable.DataTable imagesDataTable) {
+    List<Map<String, String>> rows = imagesDataTable.asMaps();
     for (var row : rows) {
       String imageUrl = row.get("imageUrl");
       int ticketId = Integer.parseInt(row.get("ticketId"));
       new TicketImage(imageUrl, MaintenanceTicket.getWithId(ticketId));
     }
   }
+
   /**
-   * 2
-   * @param string
-   * @param string2
-   * @param string3
+   * @author Vlad Arama
+   * @param ticketId
+   * @param state
+   * @param requiresApproval
    */
   @Given("ticket {string} is marked as {string} with requires approval {string}")
-  public void ticket_is_marked_as_with_requires_approval(String string, String string2,
-      String string3) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void ticket_is_marked_as_with_requires_approval(String ticketId, String state,
+      String requiresApproval) {
+    boolean approval;
+    if (requiresApproval.equals("true")) {
+      approval = true;
+    } else {
+      approval = false;
+    }
+    if (state.equals("InProgress")) {
+      AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(Integer.parseInt(ticketId),
+          "jeff@ap.com", TimeEstimate.ThreeToSevenDays, PriorityLevel.Low, approval);
+    }
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
+    if (ticket.getStatusFullName().equals("Assigned")) {
+      AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
+    }
+    // TO COMPLETE AND CLEAN UP
   }
+
   /**
    * @author Krasimir Kirov
    * @param string
@@ -157,57 +218,68 @@ public class MaintenanceTicketsStepDefinitions {
     MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(Integer.parseInt(ticketID)); 
     //thisTicket.setStatus(Status.valueOf(string2));
   }
+
   /**
-   * 4
+   * @author Michael Rafferty
    */
   @When("the manager attempts to view all maintenance tickets in the system")
   public void the_manager_attempts_to_view_all_maintenance_tickets_in_the_system() {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    tickets = AssetPlusFeatureSet6Controller.getTickets();
   }
+
   /**
    * 5
-   * @param string
-   * @param string2
-   * @param string3
-   * @param string4
-   * @param string5
+   * 
+   * @param string id
+   * @param string2 employeeEmail
+   * @param string3 timeEstimate
+   * @param string4 priorityLevel
+   * @param string5 requiresApproval
    */
   @When("the manager attempts to assign the ticket {string} to {string} with estimated time {string}, priority {string}, and requires approval {string}")
   public void the_manager_attempts_to_assign_the_ticket_to_with_estimated_time_priority_and_requires_approval(
       String string, String string2, String string3, String string4, String string5) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+      errorMessage = AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(
+              Integer.parseInt(string),
+              string2,
+              MaintenanceTicket.TimeEstimate.valueOf(string3),
+              MaintenanceTicket.PriorityLevel.valueOf(string4),
+              Boolean.valueOf(string5)
+      );
   }
+
   /**
    * Update status of ticket to In Progress
    * 
    * @author Li Yang Lei
-   * @param string
+   * @param ticketID
    */
   @When("the hotel staff attempts to start the ticket {string}")
-  public void the_hotel_staff_attempts_to_start_the_ticket(String string) {
-    AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(string));
+  public void the_hotel_staff_attempts_to_start_the_ticket(String ticketID) {
+    AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketID));
   }
+
   /**
-   * 1
-   * @param string
+   * Calls the controller to approve work on a maintenance ticket.
+   * 
+   * @author William Wang
+   * @param ticketId
    */
   @When("the manager attempts to approve the ticket {string}")
-  public void the_manager_attempts_to_approve_the_ticket(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    // Depends on state machine, can't implement approve yet
-    throw new io.cucumber.java.PendingException();
+  public void the_manager_attempts_to_approve_the_ticket(String ticketId) {
+    errorMessage =
+        AssetPlusTicketingController.approveWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
   }
+
   /**
-   * 2
-   * @param string
+   * @author Vlad Arama
+   * @param ticketId
    */
   @When("the hotel staff attempts to complete the ticket {string}")
-  public void the_hotel_staff_attempts_to_complete_the_ticket(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_hotel_staff_attempts_to_complete_the_ticket(String ticketId) {
+    AssetPlusTicketingController.completeWorkOnMaintenanceTicket(Integer.parseInt(ticketId));
   }
+
   /**
    * @author Krasimir Kirov
    * @param string
@@ -219,59 +291,79 @@ public class MaintenanceTicketsStepDefinitions {
       String string2, String string3) {
     AssetPlusTicketingController.disapproveWorkOnMaintenanceTicket(Integer.parseInt(string), Date.valueOf(string2), string3);
   }
+
   /**
-   * 4
-   * @param string
-   * @param string2
+   * @author Michael Rafferty
+   * @param ticketID represents the ticketID
+   * @param ticketStatus represented the status of the ticket
    */
   @Then("the ticket {string} shall be marked as {string}")
-  public void the_ticket_shall_be_marked_as(String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_ticket_shall_be_marked_as(String ticketID, String ticketStatus) {
+    MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(Integer.parseInt(ticketID)); 
+    assertNotNull(maintenanceTicket);
+    Status theStatus = maintenanceTicket.getStatus();
+    assertEquals(ticketStatus, theStatus.name());
   }
+
   /**
    * 5
-   * @param string
+   * @author Tim Pham
+   * @param string Expected error message
    */
   @Then("the system shall raise the error {string}")
   public void the_system_shall_raise_the_error(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+    assertEquals("Incorrect error message", string, errorMessage);
   }
+
   /**
    * Verifies that there is no maintenance ticket associated with the given ticket ID
    * 
    * @author Li Yang Lei
-   * @param string
+   * @param ticket
    */
   @Then("the ticket {string} shall not exist in the system")
-  public void the_ticket_shall_not_exist_in_the_system(String string) {
-    int ticketId = Integer.parseInt(string);
+  public void the_ticket_shall_not_exist_in_the_system(String ticket) {
+    int ticketId = Integer.parseInt(ticket);
     assertNull(MaintenanceTicket.getWithId(ticketId));
   }
+
   /**
-   * 1
-   * @param string
-   * @param string2
-   * @param string3
-   * @param string4
+   * Validates that the ticket's estimated time, priority, and approval requirement are correct
+   * 
+   * @author William Wang
+   * @param ticketId
+   * @param expectedTimeEstimate
+   * @param expectedPriority
+   * @param expectedRequiresApproval
    */
   @Then("the ticket {string} shall have estimated time {string}, priority {string}, and requires approval {string}")
-  public void the_ticket_shall_have_estimated_time_priority_and_requires_approval(String string,
-      String string2, String string3, String string4) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_ticket_shall_have_estimated_time_priority_and_requires_approval(String ticketId,
+      String expectedTimeEstimate, String expectedPriority, String expectedRequiresApproval) {
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
+    assertEquals(TimeEstimate.valueOf(expectedTimeEstimate), ticket.getTimeToResolve());
+    assertEquals(PriorityLevel.valueOf(expectedTimeEstimate), ticket.getTimeToResolve());
+    assertEquals(Boolean.valueOf(expectedRequiresApproval), ticket.hasFixApprover());
   }
+
   /**
-   * 2
-   * @param string
-   * @param string2
+   * @author Vlad Arama
+   * @param ticketId
+   * @param employeeEmail
    */
   @Then("the ticket {string} shall be assigned to {string}")
-  public void the_ticket_shall_be_assigned_to(String string, String string2) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_ticket_shall_be_assigned_to(String ticketId, String employeeEmail) {
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
+    User ticketFixer = HotelStaff.getWithEmail(employeeEmail);
+    HotelStaff hotelStaff;
+    if (ticketFixer instanceof HotelStaff) {
+      hotelStaff = (HotelStaff) ticketFixer;
+      assertEquals(hotelStaff, ticket.getTicketFixer());
+    } else {
+      assertEquals(ticketFixer, ticket.getTicketFixer());
+    }
+
   }
+  
 /**
  * @author Krasimir Kirov
  * @param string
@@ -281,24 +373,59 @@ public class MaintenanceTicketsStepDefinitions {
     int numberOfMaintenanceTickets = Integer.parseInt(string);
     assertEquals(ap.numberOfMaintenanceTickets(), numberOfMaintenanceTickets);
   }
+
   /**
-   * 4
-   * @param dataTable
+   * @author Michael Rafferty
+   * @param dataTable Cucumber DataTable containing the id, ticketRaiser, raisedOnDate, description, assetName, expectedLifeSpan, purchaseDate, floorNumber and roomNumber of the tickets shown.
    */
   @Then("the following maintenance tickets shall be presented")
   public void the_following_maintenance_tickets_shall_be_presented(
       io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    List<Map<String, String>> rows = dataTable.asMaps();
+    int i = 0;
+    for (var row : rows) {
+      TOMaintenanceTicket currTicket = tickets.get(i);
+      int id = Integer.parseInt(row.get("id"));
+      assertEquals(id, currTicket.getId());
+      String ticketRaiserEmail = row.get("ticketRaiser");
+      assertEquals(ticketRaiserEmail, currTicket.getRaisedByEmail());
+      Date raisedOnDate = Date.valueOf(row.get("raisedOnDate"));
+      assertEquals(raisedOnDate, currTicket.getRaisedOnDate());
+      String description = row.get("description");
+      assertEquals(description, currTicket.getDescription());
+      String assetName = row.get("assetName");
+      assertEquals(assetName, currTicket.getAssetName());
+      String expectLifeSpanStr = row.get("expectLifeSpan");
+      int expectLifeSpan = -1;
+      if (expectLifeSpanStr != null) {
+        expectLifeSpan = Integer.parseInt(expectLifeSpanStr);
+      }
+      assertEquals(expectLifeSpan, currTicket.getExpectLifeSpanInDays());
+      String purchaseDateStr = row.get("purchaseDate");
+      Date purchaseDate = null;
+      if (purchaseDateStr != null) {
+        purchaseDate = Date.valueOf(purchaseDateStr);
+      }
+      assertEquals(purchaseDate, currTicket.getPurchaseDate());
+      String floorNumberStr = row.get("floorNumber");
+      int floorNumber = -1;
+      if (floorNumberStr != null) {
+        floorNumber = Integer.parseInt(floorNumberStr);
+      }
+      assertEquals(floorNumber, currTicket.getFloorNumber());
+      String roomNumberStr = row.get("roomNumber");
+      int roomNumber = -1;
+      if (roomNumberStr != null) {
+        roomNumber = Integer.parseInt(roomNumberStr);
+      }
+      assertEquals(roomNumber, currTicket.getRoomNumber());
+      i++;
+    }
   }
+
   /**
    * 5
+   * 
    * @param string
    * @param dataTable
    */
@@ -312,43 +439,60 @@ public class MaintenanceTicketsStepDefinitions {
     // Double, Byte, Short, Long, BigInteger or BigDecimal.
     //
     // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    var notes = dataTable.asMaps();
+    MaintenanceTicket t = MaintenanceTicket.getWithId(Integer.parseInt(string));
+    int matched = 0;
+    for (var tNote: t.getTicketNotes()) {
+      for (var note: notes) {
+        if (tNote.getDescription().equals(note.get("description"))
+          && tNote.getDate().equals(Date.valueOf(note.get("addedOnDate")))
+          && tNote.getNoteTaker().getEmail().equals(note.get("noteTaker"))) {
+          matched += 1;
+        }
+      }
+    }
+    assertEquals("Incorrect number of matched notes", notes.size(), matched);
   }
+
   /**
    * Verifies that the maintenance ticket has 0 notes
    * 
    * @author Li Yang Lei
-   * @param string
+   * @param ticket
    */
   @Then("the ticket with id {string} shall have no notes")
-  public void the_ticket_with_id_shall_have_no_notes(String string) {
-    int ticketId = Integer.parseInt(string);
-    assertEquals(MaintenanceTicket.getWithId(ticketId).numberOfTicketNotes(),0);
+  public void the_ticket_with_id_shall_have_no_notes(String ticket) {
+    int ticketId = Integer.parseInt(ticket);
+    assertEquals(MaintenanceTicket.getWithId(ticketId).numberOfTicketNotes(), 0);
   }
+
   /**
-   * 1
-   * @param string
-   * @param dataTable
+   * Validates that a specific ticket contains the expected images.
+   * 
+   * @author William Wang
+   * @param ticketId
+   * @param imagesDataTable
    */
   @Then("the ticket with id {string} shall have the following images")
-  public void the_ticket_with_id_shall_have_the_following_images(String string,
-      io.cucumber.datatable.DataTable dataTable) {
-    // Write code here that turns the phrase above into concrete actions
-    // For automatic transformation, change DataTable to one of
-    // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-    // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-    // Double, Byte, Short, Long, BigInteger or BigDecimal.
-    //
-    // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+  public void the_ticket_with_id_shall_have_the_following_images(String ticketId,
+      io.cucumber.datatable.DataTable imagesDataTable) {
+    List<Map<String, String>> rows = imagesDataTable.asMaps();
+    List<String> expectedImageUrls =
+        rows.stream().map(row -> row.get("imageUrl")).collect(Collectors.toList());
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
+    assertNotNull(ticket); // necessary or not?
+    List<String> actualImageUrls = ticket.getTicketImages().stream().map(TicketImage::getImageURL)
+        .collect(Collectors.toList());
+    assertIterableEquals(expectedImageUrls, actualImageUrls);
   }
+
   /**
-   * 2
-   * @param string
+   * @author Vlad Arama
+   * @param ticketId
    */
   @Then("the ticket with id {string} shall have no images")
-  public void the_ticket_with_id_shall_have_no_images(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+  public void the_ticket_with_id_shall_have_no_images(String ticketId) {
+    MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
+    assertEquals(0, ticket.getTicketImages().size());
   }
 }

@@ -8,9 +8,10 @@ import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import ca.mcgill.ecse.assetplus.model.User;
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 
 public class AssetPlusFeatureSet4Controller {
-  private static AssetPlus ap = AssetPlusApplication.getAssetPlus();
+  private static final AssetPlus ap = AssetPlusApplication.getAssetPlus();
 
   /**
    * Adds a ticket based on the argument
@@ -49,8 +50,13 @@ public class AssetPlusFeatureSet4Controller {
         return "Ticket description cannot be empty";
     }
 
-    MaintenanceTicket t = ap.addMaintenanceTicket(id, raisedOnDate, description, g);
-    t.setAsset(asset);
+    try {
+        MaintenanceTicket t = ap.addMaintenanceTicket(id, raisedOnDate, description, g);
+        t.setAsset(asset);
+        AssetPlusPersistence.save();
+    } catch (RuntimeException e) {
+        return e.getMessage();
+    }
     return "";
   }
 
@@ -100,10 +106,15 @@ public class AssetPlusFeatureSet4Controller {
           return "";
       }
 
-      current.setDescription(newDescription);
-      current.setRaisedOnDate(newRaisedOnDate);
-      current.setTicketRaiser(u);
-      current.setAsset(a);
+      try {
+          current.setDescription(newDescription);
+          current.setRaisedOnDate(newRaisedOnDate);
+          current.setTicketRaiser(u);
+          current.setAsset(a);
+          AssetPlusPersistence.save();
+      } catch (RuntimeException e) {
+          return e.getMessage();
+      }
       return "";
   }
 
@@ -120,5 +131,6 @@ public class AssetPlusFeatureSet4Controller {
       return;
     }
     t.delete();
+    AssetPlusPersistence.save();
   }
 }

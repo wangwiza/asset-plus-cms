@@ -342,7 +342,7 @@ public class MaintenanceTicket
       case Resolved:
         // line 79 "../../../../../../AssetPlusStates.ump"
         doDisapprove(date, reason, fixApprover);
-        setStatus(Status.InProgress);
+        setStatus(Status.Assigned);
         wasEventProcessed = true;
         break;
       case Closed:
@@ -801,30 +801,61 @@ public class MaintenanceTicket
 
   /**
    * 
+   * Assigns a ticket to a hotel staff with a priority level and time estimate, and optionally a
+   * manager as fix approver
+   * 
    * @author William Wang
+   * @param ticketFixer
+   * @param priority
+   * @param timeToResolve
+   * @param fixApprover
    */
-  // line 110 "../../../../../../AssetPlusStates.ump"
+  // line 117 "../../../../../../AssetPlusStates.ump"
    private void doAssign(HotelStaff ticketFixer, PriorityLevel priority, TimeEstimate timeToResolve, Manager fixApprover){
-    if (ticketFixer != null) {
-            setTicketFixer(ticketFixer);
-        }
+    setTicketFixer(ticketFixer);
         setPriority(priority);
         setTimeToResolve(timeToResolve);
-        if (fixApprover != null)
-            setFixApprover(fixApprover);
+        setFixApprover(fixApprover);
   }
 
-  // line 120 "../../../../../../AssetPlusStates.ump"
+
+  /**
+   * 
+   * Disapprove a ticket fix, adding a maintenance note to the ticket
+   * 
+   * @author William Wang
+   * @param date
+   * @param reason
+   * @param fixApprover
+   */
+  // line 132 "../../../../../../AssetPlusStates.ump"
    private void doDisapprove(Date date, String reason, Manager fixApprover){
     addTicketNote(date, reason, fixApprover);
   }
 
-  // line 124 "../../../../../../AssetPlusStates.ump"
+
+  /**
+   * 
+   * Rejects an event trigger because it shouldn't happen in a specific state
+   * 
+   * @author William Wang
+   * @param action the event called that shouldn't happen
+   * @param reason the state in which the event shouldn't happen
+   */
+  // line 143 "../../../../../../AssetPlusStates.ump"
    private void rejectTicketAction(String action, String reason){
     throw new RuntimeException("Cannot " + action + " a maintenance ticket which is " + reason + ".");
   }
 
-  // line 128 "../../../../../../AssetPlusStates.ump"
+
+  /**
+   * 
+   * Rejects an event trigger because the wanted state is already the current state
+   * 
+   * @author William Wang
+   * @param reason why the event doesn't do anything
+   */
+  // line 153 "../../../../../../AssetPlusStates.ump"
    private void rejectRedundantAction(String reason){
     throw new RuntimeException("The maintenance ticket is already " + reason + ".");
   }
