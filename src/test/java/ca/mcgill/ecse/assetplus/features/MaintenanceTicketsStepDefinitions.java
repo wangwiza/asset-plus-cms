@@ -17,7 +17,6 @@ import static java.lang.Integer.parseInt;
 import ca.mcgill.ecse.assetplus.model.User;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.TimeEstimate;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.PriorityLevel;
-import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.Status;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
@@ -256,7 +255,7 @@ public class MaintenanceTicketsStepDefinitions {
    */
   @When("the hotel staff attempts to start the ticket {string}")
   public void the_hotel_staff_attempts_to_start_the_ticket(String ticketID) {
-    AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketID));
+    errorMessage = AssetPlusTicketingController.startWorkOnMaintenanceTicket(Integer.parseInt(ticketID));
   }
 
   /**
