@@ -340,7 +340,7 @@ public class MaintenanceTicketsStepDefinitions {
       String expectedTimeEstimate, String expectedPriority, String expectedRequiresApproval) {
     MaintenanceTicket ticket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId));
     assertEquals(TimeEstimate.valueOf(expectedTimeEstimate), ticket.getTimeToResolve());
-    assertEquals(PriorityLevel.valueOf(expectedTimeEstimate), ticket.getTimeToResolve());
+    assertEquals(PriorityLevel.valueOf(expectedPriority), ticket.getTimeToResolve());
     assertEquals(Boolean.valueOf(expectedRequiresApproval), ticket.hasFixApprover());
   }
 
