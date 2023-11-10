@@ -46,7 +46,11 @@ public class AssetPlusTicketingController {
 
     // assign the ticket
     try {
-      ticket.assign(hotelStaff, priority, timeEstimate, ap.getManager());
+      if (requiresApproval) {
+        ticket.assign(hotelStaff, priority, timeEstimate, ap.getManager());
+      } else {
+        ticket.assign(hotelStaff, priority, timeEstimate, null);
+      }
       AssetPlusPersistence.save();
     } catch (RuntimeException e) {
       return e.getMessage();
