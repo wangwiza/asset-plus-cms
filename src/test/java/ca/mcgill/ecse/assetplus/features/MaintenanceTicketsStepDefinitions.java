@@ -24,6 +24,7 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -118,8 +119,8 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * 5
-   * 
-   * @param dataTable
+   * @author Tim Pham
+   * @param dataTable test parameter from cucumber
    */
   @Given("the following tickets exist in the system")
   public void the_following_tickets_exist_in_the_system(io.cucumber.datatable.DataTable dataTable) {
@@ -130,7 +131,17 @@ public class MaintenanceTicketsStepDefinitions {
     // Double, Byte, Short, Long, BigInteger or BigDecimal.
     //
     // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    List<Map<String, String>> tickets = dataTable.asMaps();
+    MaintenanceTicket ticket;
+    for (var t : tickets) {
+      //Status is open by default
+      ticket = ap.addMaintenanceTicket(
+              Integer.parseInt(t.get("id")),
+              Date.valueOf(t.get("raisedOnDate")),
+              t.get("description"),
+              User.getWithEmail(t.get("ticketRaiser"))
+      );
+    }
   }
 
   /**
@@ -221,17 +232,22 @@ public class MaintenanceTicketsStepDefinitions {
   /**
    * 5
    * 
-   * @param string
-   * @param string2
-   * @param string3
-   * @param string4
-   * @param string5
+   * @param string id
+   * @param string2 employeeEmail
+   * @param string3 timeEstimate
+   * @param string4 priorityLevel
+   * @param string5 requiresApproval
    */
   @When("the manager attempts to assign the ticket {string} to {string} with estimated time {string}, priority {string}, and requires approval {string}")
   public void the_manager_attempts_to_assign_the_ticket_to_with_estimated_time_priority_and_requires_approval(
       String string, String string2, String string3, String string4, String string5) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
+      errorMessage = AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(
+              Integer.parseInt(string),
+              string2,
+              MaintenanceTicket.TimeEstimate.valueOf(string3),
+              MaintenanceTicket.PriorityLevel.valueOf(string4),
+              Boolean.valueOf(string5)
+      );
   }
 
   /**
@@ -295,14 +311,12 @@ public class MaintenanceTicketsStepDefinitions {
 
   /**
    * 5
-   * 
-   * @param string
+   * @author Tim Pham
+   * @param string Expected error message
    */
   @Then("the system shall raise the error {string}")
   public void the_system_shall_raise_the_error(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    // hey timmy, just letting you know that there's an errorMessage attribute you can use
-    throw new io.cucumber.java.PendingException();
+    assertEquals("Incorrect error message", string, errorMessage);
   }
 
   /**
@@ -430,7 +444,19 @@ public class MaintenanceTicketsStepDefinitions {
     // Double, Byte, Short, Long, BigInteger or BigDecimal.
     //
     // For other transformations you can register a DataTableType.
-    throw new io.cucumber.java.PendingException();
+    var notes = dataTable.asMaps();
+    MaintenanceTicket t = MaintenanceTicket.getWithId(Integer.parseInt(string));
+    int matched = 0;
+    for (var tNote: t.getTicketNotes()) {
+      for (var note: notes) {
+        if (tNote.getDescription().equals(note.get("description"))
+          && tNote.getDate().equals(Date.valueOf(note.get("addedOnDate")))
+          && tNote.getNoteTaker().getEmail().equals(note.get("noteTaker"))) {
+          matched += 1;
+        }
+      }
+    }
+    assertEquals("Incorrect number of matched notes", notes.size(), matched);
   }
 
   /**

@@ -117,9 +117,27 @@ public class AssetPlusTicketingController {
     return "";
   }
 
+  /**
+   * Disapprove work and include a maintenance note explaining the reason.
+   *
+   * @author Tim Pham
+   * @param ticketId
+   * @return error message
+   */
   public static String approveWorkOnMaintenanceTicket(int ticketId) {
     // Remove this exception when you implement this method
-    throw new UnsupportedOperationException("Not Implemented!");
+    MaintenanceTicket t = MaintenanceTicket.getWithId(ticketId);
+    if (t == null) {
+      return "Maintenance ticket does not exist.";
+    }
+
+    try {
+      t.approve();
+      AssetPlusPersistence.save();
+    } catch (RuntimeException e){
+      return e.getMessage();
+    }
+    return "";
   }
 
   /**
