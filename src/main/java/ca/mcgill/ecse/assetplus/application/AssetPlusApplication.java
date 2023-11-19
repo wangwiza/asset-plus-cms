@@ -7,6 +7,8 @@ public class AssetPlusApplication {
 
   private static AssetPlus assetPlus;
 
+  public static final boolean DARK_MODE = true;
+
   public static void main(String[] args) {
     // TODO Start the application user interface here
   }
