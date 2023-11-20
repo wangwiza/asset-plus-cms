@@ -11,7 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
+// import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 
 public class AssetPlusFxmlView extends Application {
 
@@ -24,7 +24,7 @@ public class AssetPlusFxmlView extends Application {
     instance = this;
     try {
       var root = (Pane) FXMLLoader.load(getClass().getResource("MainPage.fxml"));
-      root.setStyle(AssetPlusApplication.DARK_MODE ? "-fx-base: rgba(20, 20, 20, 255);" : "");
+      // root.setStyle(AssetPlusApplication.DARK_MODE ? "-fx-base: rgba(20, 20, 20, 255);" : "");
       var scene = new Scene(root);
       primaryStage.setScene(scene);
       primaryStage.setMinWidth(800);
