@@ -4,6 +4,7 @@ import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.Guest;
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 import ca.mcgill.ecse.assetplus.model.Employee;
 
 
@@ -45,6 +46,7 @@ public class AssetPlusFeatureSet1Controller {
       }
       // otherwise, set update the password
       ap.getManager().setPassword(password);
+      AssetPlusPersistence.save();
       return error;
     } catch (Exception e) {
       error = "An error has occured. Please try again: " + e.getMessage();
@@ -166,7 +168,8 @@ public class AssetPlusFeatureSet1Controller {
           return error;
         }
         ap.addGuest(ap.addGuest(email, name, password, phoneNumber));
-      } 
+      }
+      AssetPlusPersistence.save();
       return error;
     } catch (Exception e) {
       error = "An error has occured. Please try again: " + e.getMessage();
@@ -220,6 +223,7 @@ public class AssetPlusFeatureSet1Controller {
       if (!isFound) {
         error = "The email address does not match any user in our system. No update has been made.";
       }
+      AssetPlusPersistence.save();
       return error;
     } catch (Exception e) {
       error = "An error has occured. Please try again: " + e.getMessage();

@@ -14,9 +14,7 @@
                   "id": 2,
                   "raisedOnDate": "2023-07-10",
                   "description": "The lamp is sometimes flickering",
-                  "timeToResolve": "ThreeToSevenDays",
-                  "priority": "Low",
-                  "status": "Resolved",
+                  "status": "Open",
                   "ticketNotes": [
                     ""
                   ],
@@ -29,12 +27,33 @@
                   "ticketRaiser": {
                     "@class": "Employee",
                     "@reference": "../../.."
+                  }
+                }
+              }
+            ],
+            "maintenanceNotes": [
+              ""
+            ],
+            "maintenanceTasks": [
+              {
+                "MaintenanceTicket": {
+                  "id": 1,
+                  "raisedOnDate": "2023-07-20",
+                  "description": "The bed needs replacement",
+                  "timeToResolve": "ThreeToSevenDays",
+                  "priority": "Low",
+                  "status": "InProgress",
+                  "ticketNotes": [
+                    ""
+                  ],
+                  "ticketImages": [
+                    ""
+                  ],
+                  "assetPlus": {
+                    "@reference": "../../../../.."
                   },
-                  "ticketFixer": {
-                    "@class": "Employee",
-                    "@reference": "../../.."
-                  },
-                  "fixApprover": {
+                  "ticketRaiser": {
+                    "@class": "Manager",
                     "email": "manager@ap.com",
                     "name": "",
                     "password": "manager",
@@ -42,23 +61,7 @@
                     "raisedTickets": [
                       {
                         "MaintenanceTicket": {
-                          "id": 1,
-                          "raisedOnDate": "2023-07-20",
-                          "description": "The bed needs replacement",
-                          "status": "Open",
-                          "ticketNotes": [
-                            ""
-                          ],
-                          "ticketImages": [
-                            ""
-                          ],
-                          "assetPlus": {
-                            "@reference": "../../../../../../../.."
-                          },
-                          "ticketRaiser": {
-                            "@class": "Manager",
-                            "@reference": "../../.."
-                          }
+                          "@reference": "../../.."
                         }
                       }
                     ],
@@ -78,17 +81,14 @@
                         }
                       }
                     ]
+                  },
+                  "ticketFixer": {
+                    "@class": "Employee",
+                    "@reference": "../../.."
+                  },
+                  "fixApprover": {
+                    "@reference": "../ticketRaiser"
                   }
-                }
-              }
-            ],
-            "maintenanceNotes": [
-              ""
-            ],
-            "maintenanceTasks": [
-              {
-                "MaintenanceTicket": {
-                  "@reference": "../../raisedTickets/MaintenanceTicket"
                 }
               }
             ],
@@ -121,13 +121,13 @@
       ""
     ],
     "manager": {
-      "@reference": "../employees/Employee/raisedTickets/MaintenanceTicket/fixApprover"
+      "@reference": "../employees/Employee/maintenanceTasks/MaintenanceTicket/ticketRaiser"
     },
     "maintenanceTickets": [
       {
         "MaintenanceTicket": [
           {
-            "@reference": "../../employees/Employee/raisedTickets/MaintenanceTicket/fixApprover/raisedTickets/MaintenanceTicket"
+            "@reference": "../../employees/Employee/maintenanceTasks/MaintenanceTicket"
           },
           {
             "@reference": "../../employees/Employee/raisedTickets/MaintenanceTicket"
