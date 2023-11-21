@@ -140,6 +140,9 @@ public class MaintenanceTicketsStepDefinitions {
               t.get("description"),
               User.getWithEmail(t.get("ticketRaiser"))
       );
+      if (t.get("assetNumber") != null) {
+        ticket.setAsset(SpecificAsset.getWithAssetNumber(Integer.parseInt(t.get("assetNumber"))));
+      }
     }
   }
 
@@ -215,8 +218,6 @@ public class MaintenanceTicketsStepDefinitions {
    */
   @Given("ticket {string} is marked as {string}")
   public void ticket_is_marked_as(String ticketId, String state) {
-    MaintenanceTicket maintenanceTicket = MaintenanceTicket.getWithId(Integer.parseInt(ticketId)); 
-    
     switch (state) {
       case "Assigned":
           AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(Integer.parseInt(ticketId),
@@ -243,7 +244,8 @@ public class MaintenanceTicketsStepDefinitions {
   }
 }
 
-  /**
+  /* | Open   |
+      |  2 | jeff@ap.com    |   2023-07-10 | The lamp is sometimes flickering |           1 | Open   |*
    * @author Michael Rafferty
    */
   @When("the manager attempts to view all maintenance tickets in the system")
@@ -254,21 +256,21 @@ public class MaintenanceTicketsStepDefinitions {
   /**
    * 5
    * 
-   * @param string id
-   * @param string2 employeeEmail
-   * @param string3 timeEstimate
-   * @param string4 priorityLevel
-   * @param string5 requiresApproval
+   * @param id id
+   * @param employeeEmail employeeEmail
+   * @param timeEstimate timeEstimate
+   * @param priorityLevel priorityLevel
+   * @param requiresApproval requiresApproval
    */
   @When("the manager attempts to assign the ticket {string} to {string} with estimated time {string}, priority {string}, and requires approval {string}")
   public void the_manager_attempts_to_assign_the_ticket_to_with_estimated_time_priority_and_requires_approval(
-      String string, String string2, String string3, String string4, String string5) {
+      String id, String employeeEmail, String timeEstimate, String priorityLevel, String requiresApproval) {
       errorMessage = AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(
-              Integer.parseInt(string),
-              string2,
-              MaintenanceTicket.TimeEstimate.valueOf(string3),
-              MaintenanceTicket.PriorityLevel.valueOf(string4),
-              Boolean.valueOf(string5)
+              Integer.parseInt(id),
+              employeeEmail,
+              MaintenanceTicket.TimeEstimate.valueOf(timeEstimate),
+              MaintenanceTicket.PriorityLevel.valueOf(priorityLevel),
+              Boolean.valueOf(requiresApproval)
       );
   }
 
@@ -333,11 +335,11 @@ public class MaintenanceTicketsStepDefinitions {
   /**
    * 5
    * @author Tim Pham
-   * @param string Expected error message
+   * @param errorMsg Expected error message
    */
   @Then("the system shall raise the error {string}")
-  public void the_system_shall_raise_the_error(String string) {
-    assertEquals("Incorrect error message", string, errorMessage);
+  public void the_system_shall_raise_the_error(String errorMsg) {
+    assertEquals("Incorrect error message", errorMsg, errorMessage);
   }
 
   /**
