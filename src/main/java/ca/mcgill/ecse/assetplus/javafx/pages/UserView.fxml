@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.UserViewController">
    <children>
       <VBox layoutX="0.5" layoutY="12.666666984558105" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -25,8 +25,8 @@
                 <RowConstraints maxHeight="55.333343505859375" minHeight="10.0" prefHeight="43.333343505859375" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button contentDisplay="CENTER" mnemonicParsing="false" text="Add User" GridPane.columnIndex="2" />
-                  <Button mnemonicParsing="false" text="Update Password" GridPane.columnIndex="1" />
+                  <Button fx:id="addUser" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addUserClicked" text="Add User" GridPane.columnIndex="2" />
+                  <Button fx:id="updatePassword" mnemonicParsing="false" onAction="#updatePasswordClicked" text="Update Password" GridPane.columnIndex="1" />
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="74.0" prefWidth="250.0" text="User Management" textAlignment="CENTER">
                      <font>
                         <Font size="24.0" />
@@ -34,7 +34,7 @@
                   </Label>
                </children>
             </GridPane>
-            <TableView editable="true" prefHeight="355.0" prefWidth="600.0">
+            <TableView fx:id="userTableView" editable="true" prefHeight="355.0" prefWidth="600.0">
               <columns>
                 <TableColumn prefWidth="76.00006353855133" text="Last Name" />
                 <TableColumn prefWidth="69.33330535888672" text="First Name" />
