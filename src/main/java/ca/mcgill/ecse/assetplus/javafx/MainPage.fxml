@@ -1,52 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="851.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TabPane prefHeight="109.0" prefWidth="851.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Users">
-               <!-- <content>
-                  <fx:include source="pages/ImagesPage.fxml" />
-               </content> -->
-          </Tab>
-          <Tab text="Asset Types">
-               <!-- <content>
-                  <fx:include source="pages/ModificationPage.fxml" />
-               </content> -->
-          </Tab>
-            <Tab text="Assets">
-               <!-- <content>
-                  <fx:include source="pages/AssignmentPage.fxml" />
-               </content> -->
-            </Tab>
-            <Tab text="Tickets">
-               <!-- <content>
-                  <fx:include source="pages/SchedulePage.fxml" />
-               </content> -->
-            </Tab>
-          <Tab text="Images">
-               <!-- <content>
-                  <fx:include source="pages/ImagesPage.fxml" />
-               </content> -->
-          </Tab>
-          <Tab text="All Status">
-               <!-- <content>
-                  <fx:include source="pages/ImagesPage.fxml" />
-               </content> -->
-          </Tab>
-          <Tab text="Maitenance">
-               <!-- <content>
-                  <fx:include source="pages/ImagesPage.fxml" />
-               </content> -->
-          </Tab>
-        </tabs>
-      </TabPane>
-      <Separator prefWidth="200.0" />
-      <!-- <fx:include maxWidth="1.7976931348623157E308" source="pages/ViewAssignmentPage.fxml" /> -->
+      <BorderPane prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <VBox prefHeight="720.0" prefWidth="250.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane prefHeight="67.0" prefWidth="1280.0">
+                     <children>
+                        <Label alignment="CENTER" layoutX="100.0" layoutY="25.0" text="AssetPlus" />
+                     </children>
+                  </AnchorPane>
+                  <ToggleButton mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" text="Users" />
+                  <ToggleButton mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" text="Assets" />
+                  <ToggleButton mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" text="Tickets" />
+                  <ToggleButton mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" text="ToggleButton" />
+                  <ToggleButton mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" text="ToggleButton" />
+               </children>
+            </VBox>
+         </left>
+         <center>
+            <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
+         <bottom>
+            <VBox prefHeight="30.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Separator prefWidth="200.0" />
+                  <Label text="McGill ECSE 223 P8, 2023 ©" />
+               </children>
+            </VBox>
+         </bottom>
+      </BorderPane>
    </children>
-</VBox>
+</AnchorPane>
