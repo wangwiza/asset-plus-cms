@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="userViewAnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.UserViewController">
+<AnchorPane fx:id="userViewAnchorPane" prefHeight="700.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.UserViewController">
    <children>
       <VBox layoutX="0.5" layoutY="12.666666984558105" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -34,16 +34,14 @@
                   </Label>
                </children>
             </GridPane>
-            <TableView fx:id="userTableView" editable="true" prefHeight="355.0" prefWidth="600.0">
+            <TableView fx:id="userTableView" editable="true" prefHeight="655.0" prefWidth="1030.0">
               <columns>
-                <TableColumn prefWidth="76.00006353855133" text="Last Name" />
-                <TableColumn prefWidth="69.33330535888672" text="First Name" />
-                  <TableColumn prefWidth="90.6666259765625" text="Employee ID" />
-                  <TableColumn prefWidth="111.99995422363281" text="Email" />
-                  <TableColumn prefWidth="56.00006103515625" text="Password" />
-                  <TableColumn prefWidth="93.33331298828125" text="Phone Number" />
-                  <TableColumn prefWidth="57.333282470703125" />
-                  <TableColumn prefWidth="43.33331298828125" />
+                <TableColumn prefWidth="147.0" text="Name" />
+                  <TableColumn prefWidth="165.0" text="Email" />
+                  <TableColumn prefWidth="146.0" text="Password" />
+                  <TableColumn prefWidth="168.0" text="Phone Number" />
+                  <TableColumn prefWidth="84.0" />
+                  <TableColumn prefWidth="84.0" />
               </columns>
             </TableView>
          </children>
