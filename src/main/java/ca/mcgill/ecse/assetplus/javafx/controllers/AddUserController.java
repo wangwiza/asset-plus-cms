@@ -2,10 +2,12 @@ package ca.mcgill.ecse.assetplus.javafx.controllers;
 
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet1Controller;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.successful;
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 public class AddUserController {
 
@@ -28,6 +30,9 @@ public class AddUserController {
     private Button cancelAddUser;
 
     @FXML
+    private AnchorPane addUserAnchorPane;
+
+    @FXML
     void addUserClicked(ActionEvent event) {
         String name = AddEmail.getText();
         String email = AddEmail.getText();
@@ -38,8 +43,8 @@ public class AddUserController {
             AddName.setText("");
             AddPassword.setText("");
             AddPhone.setText("");
+            sceneSwitch(addUserAnchorPane, "../pages/UserView.fxml");
         }
-        // NEED TO RETURN TO USER VIEW PAGE, IF APPLICABLE
 
     }
 
@@ -49,7 +54,7 @@ public class AddUserController {
             AddName.setText("");
             AddPassword.setText("");
             AddPhone.setText("");
-            // NEED TO RETURN TO USER VIEW PAGE
+            sceneSwitch(addUserAnchorPane, "../pages/UserView.fxml");
     }
 
 }

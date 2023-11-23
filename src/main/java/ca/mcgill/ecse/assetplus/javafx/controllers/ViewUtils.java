@@ -1,13 +1,19 @@
 package ca.mcgill.ecse.assetplus.javafx.controllers;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import ca.mcgill.ecse.assetplus.javafx.AssetPlusFxmlView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -62,4 +68,16 @@ public class ViewUtils {
   public static void showError(String message) {
     makePopupWindow("Error", message);
   }
+
+  public static void sceneSwitch(AnchorPane currentAnchorPane, String newFxml) {
+    try {
+      AnchorPane nextAnchorPane = (AnchorPane) FXMLLoader.load(ViewUtils.class.getResource(newFxml));
+      currentAnchorPane.getChildren().removeAll();
+      currentAnchorPane.getChildren().setAll(nextAnchorPane);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+
 }
