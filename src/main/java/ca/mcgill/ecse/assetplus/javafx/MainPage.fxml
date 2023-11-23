@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
@@ -23,18 +24,21 @@
                            </font></Label>
                      </children>
                   </AnchorPane>
-                  <ToggleButton mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" selected="true" text="Users" />
-                  <ToggleButton mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" text="Assets" />
-                  <ToggleButton mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" text="Tickets" />
-                  <ToggleButton mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" text="ToggleButton" />
-                  <ToggleButton mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" text="ToggleButton" />
+                  <ToggleButton fx:id="dashboardUsersButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" selected="true" text="Users">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="dashboardGroup" />
+                     </toggleGroup></ToggleButton>
+                  <ToggleButton fx:id="dashboardAssetsButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" text="Assets" toggleGroup="$dashboardGroup" />
+                  <ToggleButton fx:id="dashboardTicketsButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" text="Tickets" toggleGroup="$dashboardGroup" />
+                  <ToggleButton fx:id="dashboardImagesButtom" mnemonicParsing="false" prefHeight="60.0" prefWidth="260.0" text="Images" toggleGroup="$dashboardGroup" />
                </children>
             </VBox>
          </left>
          <center>
             <StackPane BorderPane.alignment="CENTER">
                <children>
-                  <fx:include source="pages/UserView.fxml" StackPane.alignment="TOP_CENTER" />
+                  <fx:include fx:id="imagesPane" source="pages/ImagesPage.fxml" />
+                  <fx:include fx:id="usersPane" source="pages/UserView.fxml" StackPane.alignment="TOP_CENTER" />
                </children></StackPane>
          </center>
          <bottom>
