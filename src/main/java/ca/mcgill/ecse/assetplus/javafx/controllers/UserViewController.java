@@ -1,5 +1,6 @@
 package ca.mcgill.ecse.assetplus.javafx.controllers;
 
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,7 +28,7 @@ public class UserViewController {
 
     @FXML
     void updatePasswordClicked(ActionEvent event) {
-        
+        sceneSwitch(userViewAnchorPane, "../pages/UpdatePassword.fxml");
     }
 
 }

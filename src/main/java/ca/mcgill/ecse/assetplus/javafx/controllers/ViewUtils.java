@@ -69,9 +69,9 @@ public class ViewUtils {
     makePopupWindow("Error", message);
   }
 
-  public void sceneSwitch(AnchorPane currentAnchorPane, String newFxml) {
+  public static void sceneSwitch(AnchorPane currentAnchorPane, String newFxml) {
     try {
-      AnchorPane nextAnchorPane = (AnchorPane) FXMLLoader.load(getClass().getResource(newFxml));
+      AnchorPane nextAnchorPane = (AnchorPane) FXMLLoader.load(ViewUtils.class.getResource(newFxml));
       currentAnchorPane.getChildren().removeAll();
       currentAnchorPane.getChildren().setAll(nextAnchorPane);
     } catch (IOException e) {
