@@ -23,7 +23,7 @@ public class UserViewController {
 
     @FXML
     void addUserClicked(ActionEvent event) {
-
+        sceneSwitch(userViewAnchorPane, "../pages/AddUser.fxml");
     }
 
     @FXML

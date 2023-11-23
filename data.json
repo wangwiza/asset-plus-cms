@@ -113,6 +113,24 @@
             "assetPlus": {
               "@reference": "../../.."
             }
+          },
+          {
+            "email": "realman@ap.com",
+            "name": "realman@ap.com",
+            "password": "realpassword",
+            "phoneNumber": "realphonenumber",
+            "raisedTickets": [
+              ""
+            ],
+            "maintenanceNotes": [
+              ""
+            ],
+            "maintenanceTasks": [
+              ""
+            ],
+            "assetPlus": {
+              "@reference": "../../.."
+            }
           }
         ]
       }
