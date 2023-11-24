@@ -56,7 +56,7 @@
                     "@class": "Manager",
                     "email": "manager@ap.com",
                     "name": "",
-                    "password": "manager",
+                    "password": "Managerr!",
                     "phoneNumber": "",
                     "raisedTickets": [
                       {
@@ -113,30 +113,25 @@
             "assetPlus": {
               "@reference": "../../.."
             }
-          },
-          {
-            "email": "realman@ap.com",
-            "name": "realman@ap.com",
-            "password": "realpassword",
-            "phoneNumber": "realphonenumber",
-            "raisedTickets": [
-              ""
-            ],
-            "maintenanceNotes": [
-              ""
-            ],
-            "maintenanceTasks": [
-              ""
-            ],
-            "assetPlus": {
-              "@reference": "../../.."
-            }
           }
         ]
       }
     ],
     "guests": [
-      ""
+      {
+        "Guest": {
+          "email": "meat@gmail.com",
+          "name": "chickenman",
+          "password": "real passs",
+          "phoneNumber": "888-888-8888",
+          "raisedTickets": [
+            ""
+          ],
+          "assetPlus": {
+            "@reference": "../../.."
+          }
+        }
+      }
     ],
     "manager": {
       "@reference": "../employees/Employee/maintenanceTasks/MaintenanceTicket/ticketRaiser"

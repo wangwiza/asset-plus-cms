@@ -40,6 +40,7 @@ public class UpdatePasswordController {
         } else if (successful(AssetPlusFeatureSet1Controller.updateManager(password))) {
             newPassword.setText("");
             newPasswordConfirm.setText("");
+            sceneSwitch(updatePasswordAnchorPane, "../pages/UserView.fxml");
         }
     }
 

@@ -5,6 +5,7 @@ import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.successful;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -30,21 +31,35 @@ public class AddUserController {
     private Button cancelAddUser;
 
     @FXML
+    private CheckBox isEmployeeCheckBox;
+
+    @FXML
     private AnchorPane addUserAnchorPane;
 
     @FXML
     void addUserClicked(ActionEvent event) {
-        String name = AddEmail.getText();
+        String name = AddName.getText();
         String email = AddEmail.getText();
         String password = AddPassword.getText();
         String phone = AddPhone.getText();
-        if (successful(AssetPlusFeatureSet1Controller.addEmployeeOrGuest(email, password, name, phone, true))) {
-            AddEmail.setText("");
-            AddName.setText("");
-            AddPassword.setText("");
-            AddPhone.setText("");
-            sceneSwitch(addUserAnchorPane, "../pages/UserView.fxml");
+        if (isEmployeeCheckBox.isSelected()) {
+            if (successful(AssetPlusFeatureSet1Controller.addEmployeeOrGuest(email, password, name, phone, true))) {
+                AddEmail.setText("");
+                AddName.setText("");
+                AddPassword.setText("");
+                AddPhone.setText("");
+                sceneSwitch(addUserAnchorPane, "../pages/UserView.fxml");
+            }
+        } else {
+            if (successful(AssetPlusFeatureSet1Controller.addEmployeeOrGuest(email, password, name, phone, false))) {
+                AddEmail.setText("");
+                AddName.setText("");
+                AddPassword.setText("");
+                AddPhone.setText("");
+                sceneSwitch(addUserAnchorPane, "../pages/UserView.fxml");
+            }
         }
+        
 
     }
 
