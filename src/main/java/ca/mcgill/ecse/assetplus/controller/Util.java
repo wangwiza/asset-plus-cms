@@ -1,13 +1,17 @@
 package ca.mcgill.ecse.assetplus.controller;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.Employee;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import ca.mcgill.ecse.assetplus.model.User;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.PriorityLevel;
+import javafx.scene.layout.Priority;
 
 public class Util {
   private static AssetPlus ap = AssetPlusApplication.getAssetPlus();
@@ -35,6 +39,18 @@ public class Util {
     }
     return null;
   }
+
+  public static List<PriorityLevel> getPriorities() {
+    return  Arrays.asList(MaintenanceTicket.PriorityLevel.values());
+    // return new ArrayList<>(Arrays.asList("Urgent", "Normal", "Low"));
+  }
+
+  public static ArrayList<String> getTimeEstimate() {
+    return new ArrayList<>(Arrays.asList("LessThanADay", "OneToThreeDays", "ThreeToSevenDays", "OneToThreeWeeks", "ThreeOrMoreWeeks"));
+  }
+
+
+
   // public static ArrayList<User> getAllUsers() {
   //   ArrayList<User> allUsers = new java.util.ArrayList<User>(Collections.emptyList());
   //   allUsers.addAll(ap.getGuests());

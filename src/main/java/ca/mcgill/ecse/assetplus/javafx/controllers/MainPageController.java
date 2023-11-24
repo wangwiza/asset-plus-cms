@@ -25,6 +25,8 @@ public class MainPageController {
   private Pane usersPane;
   @FXML
   private Pane imagesPane;
+  @FXML
+  private Pane ticketsPane;
 
   @FXML
   public void initialize() {
@@ -43,6 +45,11 @@ public class MainPageController {
   @FXML
   public void dashboardImagesSelected(ActionEvent event) {
     imagesPane.toFront();
+  }
+
+  @FXML
+  public void dashboardTicketsSelected(ActionEvent event) {
+    ticketsPane.toFront();
   }
 
 }

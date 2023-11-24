@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.AssignController">
    <children>
       <BorderPane prefHeight="100.0" prefWidth="1030.0" AnchorPane.bottomAnchor="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -31,7 +31,7 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button layoutX="905.0" layoutY="33.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="79.0" text="Update">
+            <Button fx:id="assign" layoutX="905.0" layoutY="33.0" mnemonicParsing="false" onAction="#assignClicked" prefHeight="31.0" prefWidth="79.0" text="Update">
                <font>
                   <Font size="16.0" />
                </font>
@@ -107,7 +107,7 @@
                               <Font size="28.0" />
                            </font>
                         </Text>
-                        <ChoiceBox layoutX="250.0" layoutY="24.0" prefHeight="26.0" prefWidth="221.0" />
+                        <ChoiceBox fx:id="assignedHotelStaffSelect" layoutX="250.0" layoutY="24.0" prefHeight="26.0" prefWidth="221.0" />
                      </children>
                   </Pane>
                   <Pane layoutY="145.0" prefHeight="73.0" prefWidth="505.0">
@@ -117,7 +117,7 @@
                               <Font size="28.0" />
                            </font>
                         </Text>
-                        <ChoiceBox layoutX="250.0" layoutY="24.0" prefHeight="26.0" prefWidth="221.0" />
+                        <ChoiceBox fx:id="prioritySelect" layoutX="250.0" layoutY="24.0" prefHeight="26.0" prefWidth="221.0" />
                      </children>
                   </Pane>
                   <Pane layoutY="224.0" prefHeight="73.0" prefWidth="494.0">
@@ -127,7 +127,7 @@
                               <Font size="28.0" />
                            </font>
                         </Text>
-                        <ChoiceBox layoutX="252.0" layoutY="31.0" prefHeight="26.0" prefWidth="221.0" />
+                        <ChoiceBox fx:id="timeEstimateSelect" layoutX="252.0" layoutY="31.0" prefHeight="26.0" prefWidth="221.0" />
                      </children>
                   </Pane>
                   <Pane layoutY="304.0" prefHeight="90.0" prefWidth="505.0">
@@ -140,7 +140,7 @@
                         <ListView layoutX="250.0" layoutY="-2.0" prefHeight="158.0" prefWidth="221.0" />
                      </children>
                   </Pane>
-                  <CheckBox layoutX="278.0" layoutY="477.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="192.0" text="Manger Approval">
+                  <CheckBox fx:id="requireApprovalSelect" layoutX="278.0" layoutY="477.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="192.0" text="Manger Approval">
                      <font>
                         <Font size="21.0" />
                      </font>

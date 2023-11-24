@@ -45,6 +45,13 @@ public class TOUser
 
   }
   
+  // public static ArrayList<String> getAllHotelStaffNames() {
+  //   ArrayList<String> userList = new ArrayList<String>();
+  //   for (var user: ap.getEmployees()) {
+  //     userList.add(user.getName());
+  //   }
+  // }
+
   // public static Boolean removeUser(TOUser user) {
   //   ArrayList<User> allUsers = new java.util.ArrayList<>(Collections.emptyList());
   //   allUsers.addAll(ap.getGuests());
@@ -116,10 +123,6 @@ public class TOUser
 
   public String toString()
   {
-    return super.toString() + "["+
-            "email" + ":" + getEmail()+ "," +
-            "name" + ":" + getName()+ "," +
-            "password" + ":" + getPassword()+ "," +
-            "phoneNumber" + ":" + getPhoneNumber()+ "]";
+    return getName();
   }
 }
