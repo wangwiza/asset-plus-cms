@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane prefHeight="100.0" prefWidth="1030.0" AnchorPane.bottomAnchor="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Update Maintance Ticket" wrappingWidth="328.93603515625" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+         </center>
+      </BorderPane>
+      <Pane layoutX="1.0" layoutY="610.0" prefHeight="90.0" prefWidth="1030.0">
+         <children>
+            <Button layoutX="804.0" layoutY="33.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="79.0" text="Cancel">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button layoutX="905.0" layoutY="33.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="79.0" text="Update">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <SplitPane dividerPositions="0.5057544757033248" layoutX="1.0" layoutY="100.0" prefHeight="526.0" prefWidth="1030.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="580.0" prefWidth="591.0">
+               <children>
+                  <Pane prefHeight="83.0" prefWidth="516.0">
+                     <children>
+                        <Text layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Raised:" textAlignment="CENTER" wrappingWidth="192.48876953125">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
+                        <DatePicker layoutX="275.0" layoutY="29.0" prefHeight="31.0" prefWidth="207.0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutY="80.0" prefHeight="73.0" prefWidth="516.0">
+                     <children>
+                        <Text layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Location:" textAlignment="CENTER" wrappingWidth="192.48876953125">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
+                        <ChoiceBox layoutX="278.0" layoutY="21.0" prefHeight="26.0" prefWidth="192.0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutY="148.0" prefHeight="61.0" prefWidth="516.0">
+                     <children>
+                        <Text layoutX="7.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Asset:" textAlignment="CENTER" wrappingWidth="167.0">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
+                        <ChoiceBox layoutX="277.0" layoutY="14.0" prefHeight="26.0" prefWidth="192.0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutX="19.0" layoutY="210.0" prefHeight="41.0" prefWidth="351.0">
+                     <children>
+                        <Text layoutX="144.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" textAlignment="CENTER" wrappingWidth="192.48876953125">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+                  <TextField layoutX="11.0" layoutY="251.0" prefHeight="242.0" prefWidth="494.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Pane prefHeight="90.0" prefWidth="505.0">
+                     <children>
+                        <Text layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Image:" textAlignment="CENTER" wrappingWidth="250.48876953125">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="253.0" layoutY="29.0" mnemonicParsing="false" text="Add Image">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
+                  <Pane layoutY="72.0" prefHeight="73.0" prefWidth="494.0">
+                     <children>
+                        <Text layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assigned:" textAlignment="CENTER" wrappingWidth="250.48876953125">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
+                        <ChoiceBox layoutX="250.0" layoutY="24.0" prefHeight="26.0" prefWidth="221.0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutY="145.0" prefHeight="73.0" prefWidth="505.0">
+                     <children>
+                        <Text layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Priority:" textAlignment="CENTER" wrappingWidth="250.48876953125">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
+                        <ChoiceBox layoutX="250.0" layoutY="24.0" prefHeight="26.0" prefWidth="221.0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutY="224.0" prefHeight="73.0" prefWidth="494.0">
+                     <children>
+                        <Text layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Estimate:" textAlignment="CENTER" wrappingWidth="250.48876953125">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
+                        <ChoiceBox layoutX="252.0" layoutY="31.0" prefHeight="26.0" prefWidth="221.0" />
+                     </children>
+                  </Pane>
+                  <Pane layoutY="304.0" prefHeight="90.0" prefWidth="505.0">
+                     <children>
+                        <Text layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notes:" textAlignment="CENTER" wrappingWidth="250.48876953125">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
+                        <ListView layoutX="250.0" layoutY="-2.0" prefHeight="158.0" prefWidth="221.0" />
+                     </children>
+                  </Pane>
+                  <CheckBox layoutX="278.0" layoutY="477.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="192.0" text="Manger Approval">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </CheckBox>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

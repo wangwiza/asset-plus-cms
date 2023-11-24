@@ -11,3 +11,4 @@ bin
 */**/__pycache__
 
 **/*.class
+.DS_store
