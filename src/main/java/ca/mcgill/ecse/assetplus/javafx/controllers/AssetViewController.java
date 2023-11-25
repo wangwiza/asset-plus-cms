@@ -97,7 +97,8 @@ public class AssetViewController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../pages/UpdateAsset.fxml"));
             AnchorPane nextAnchorPane = (AnchorPane) loader.load();
             UpdateAssetController updateAssetController = loader.getController();
-            updateAssetController.setAssetType(assetTableView.getSelectionModel().getSelectedItem().toString(assetTableView.getSelectionModel().getSelectedItem().getAssetType()));
+            updateAssetController.setAssetNumber((assetTableView.getSelectionModel().getSelectedItem()).getAssetNumber());
+            updateAssetController.setAssetType((assetTableView.getSelectionModel().getSelectedItem()).getAssetType());
             updateAssetController.setFloorNumber((assetTableView.getSelectionModel().getSelectedItem()).getFloorNumber());
             updateAssetController.setRoomNumber((assetTableView.getSelectionModel().getSelectedItem()).getRoomNumber());
             updateAssetController.setPurchaseDate((assetTableView.getSelectionModel().getSelectedItem()).getPurchaseDate());
