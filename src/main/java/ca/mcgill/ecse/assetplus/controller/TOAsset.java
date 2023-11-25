@@ -9,6 +9,8 @@ import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet3Controller;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
 import ca.mcgill.ecse.assetplus.model.SpecificAsset;
+import java.util.Comparator;
+import java.util.List;
 
 // line 10 "../../../../../../AssetPlusPersistence.ump"
 // line 16 "../../../../../../AssetPlus.ump"
@@ -38,8 +40,17 @@ public class TOAsset
       assetList.add(new TOAsset(asset.getAssetNumber(), asset.getAssetType().getName(), asset.getFloorNumber(), asset.getRoomNumber(), asset.getPurchaseDate()));
     }
     return assetList;
-
   }
+
+  public static Integer getNextAssetNumber() {
+    List<TOAsset> assets = getAllAssets();
+    if (assets.isEmpty()) {
+        return 1; // Start with 1 if no assets exist
+    } else {
+        // Finding the maximum asset number and incrementing it by one
+        return Collections.max(assets, Comparator.comparing(TOAsset::getAssetNumber)).getAssetNumber() + 1;
+    }
+}
   
   public boolean setAssetType(String aAssetType)
   {
