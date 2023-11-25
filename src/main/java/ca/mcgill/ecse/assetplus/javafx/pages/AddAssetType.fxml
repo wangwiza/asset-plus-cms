@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="updateAssetAnchorPane" prefHeight="700.0" prefWidth="1030.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.UpdateAssetController">
+<AnchorPane fx:id="addAssetTypeAnchorPane" prefHeight="700.0" prefWidth="1030.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.AddAssetTypeController">
    <children>
-      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1030.0">
+      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -26,12 +26,7 @@
             <RowConstraints maxHeight="220.00003051757812" minHeight="10.0" prefHeight="63.33335367838538" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Room Number: " GridPane.halignment="RIGHT" GridPane.rowIndex="3">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label text="Update Asset" GridPane.halignment="LEFT">
+            <Label text="Add Asset Type" GridPane.halignment="LEFT">
                <font>
                   <Font size="24.0" />
                </font>
@@ -39,35 +34,28 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Asset Type: " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+            <Label text="Asset Type Name: " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label text="Floor Number: " GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <Label text="Expected Lifespan: " GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label text="Purchase Date: " GridPane.halignment="RIGHT" GridPane.rowIndex="4">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Button fx:id="cancelUpdateAsset" mnemonicParsing="false" onAction="#cancelUpdateAssetClicked" text="Cancel" GridPane.rowIndex="5">
+            <Button fx:id="cancelAddAssetType" mnemonicParsing="false" onAction="#cancelAddAssetTypeClicked" text="Cancel" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="updateAsset" mnemonicParsing="false" onAction="#updateAssetClicked" text="Update" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+            <Button fx:id="AddAssetType" mnemonicParsing="false" onAction="#addAssetTypeClicked" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <TextField fx:id="UpdateAssetType" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="UpdateRoomNumber" layoutX="310.0" layoutY="357.0" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="UpdatePurchaseDate" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="UpdateFloorNumber" layoutX="525.0" layoutY="120.0" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="AddAssetType" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="AddExpectedLifespan" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </children>
