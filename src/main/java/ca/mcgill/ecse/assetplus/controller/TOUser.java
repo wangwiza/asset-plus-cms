@@ -20,59 +20,40 @@ public class TOUser
   private String name;
   private String password;
   private String phoneNumber;
+  private String userType;
 
-  public TOUser(String aEmail, String aName, String aPassword, String aPhoneNumber)
+  public TOUser(String aEmail, String aName, String aPassword, String aPhoneNumber, String aEmployee)
   {
     name = aName;
     password = aPassword;
     phoneNumber = aPhoneNumber;
     email = aEmail;
+    userType = aEmployee;
   }
 
   public static ArrayList<TOUser> getAllUsers() {
     ArrayList<TOUser> userList = new ArrayList<TOUser>();
     for (var user: ap.getEmployees()) {
-      userList.add(new TOUser(user.getEmail(), user.getName(), user.getPassword(), user.getPhoneNumber()));
+      userList.add(new TOUser(user.getEmail(), user.getName(), user.getPassword(), user.getPhoneNumber(), "Employee"));
     }
     for (var user: ap.getGuests()) {
-      userList.add(new TOUser(user.getEmail(), user.getName(), user.getPassword(), user.getPhoneNumber()));
+      userList.add(new TOUser(user.getEmail(), user.getName(), user.getPassword(), user.getPhoneNumber(), "Guest"));
     }
     if (ap.getManager()!=null) {
       var user = ap.getManager();
-      userList.add(new TOUser(user.getEmail(), user.getName(), user.getPassword(), user.getPhoneNumber()));
+      userList.add(new TOUser(user.getEmail(), user.getName(), user.getPassword(), user.getPhoneNumber(), "Manager"));
     }
     return userList;
 
   }
   
-  // public static ArrayList<String> getAllHotelStaffNames() {
-  //   ArrayList<String> userList = new ArrayList<String>();
-  //   for (var user: ap.getEmployees()) {
-  //     userList.add(user.getName());
-  //   }
-  // }
-
-  // public static Boolean removeUser(TOUser user) {
-  //   ArrayList<User> allUsers = new java.util.ArrayList<>(Collections.emptyList());
-  //   allUsers.addAll(ap.getGuests());
-  //   allUsers.addAll(ap.getEmployees());
-  //   allUsers.add(ap.getManager());
-
-  //   for (Employee e: ap.getEmployees()) {
-  //     if (e.getEmail().equals(user.getEmail())) {
-  //       Boolean status = ap.removeEmployee(e);
-  //       return status;
-  //     }
-  //   }
-
-  //   for (Guest g: ap.getGuests()) {
-  //     if (g.getEmail().equals(user.getEmail())) {
-  //       Boolean status = AssetPlusFeatureSet6Controller.deleteEmployeeOrGuest(g);
-  //       return status;
-  //     }
-  //   }
-  //   return false;
-  // }
+  public boolean setUserType(String aUserType)
+  {
+    boolean wasSet = false;
+    userType = aUserType;
+    wasSet = true;
+    return wasSet;
+  }
 
   public boolean setName(String aName)
   {
@@ -96,6 +77,11 @@ public class TOUser
     phoneNumber = aPhoneNumber;
     wasSet = true;
     return wasSet;
+  }
+
+  public String getUserType()
+  {
+    return userType;
   }
 
   public String getEmail()

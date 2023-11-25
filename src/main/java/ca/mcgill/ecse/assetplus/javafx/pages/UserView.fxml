@@ -40,8 +40,7 @@
                   <TableColumn fx:id="email" prefWidth="165.0" text="Email" />
                   <TableColumn fx:id="password" prefWidth="146.0" text="Password" />
                   <TableColumn fx:id="phone" prefWidth="168.0" text="Phone Number" />
-                  <TableColumn prefWidth="84.0" />
-                  <TableColumn prefWidth="84.0" />
+                  <TableColumn fx:id="userType" prefWidth="84.0" text="Type" />
               </columns>
             </TableView>
             <GridPane prefHeight="60.0" prefWidth="1030.0">

@@ -38,6 +38,9 @@ public class UserViewController {
     private TableColumn<TOUser, String> phone;
 
     @FXML
+    private TableColumn<TOUser, String> userType;
+
+    @FXML
     private Button addUser;
 
     @FXML
@@ -64,6 +67,7 @@ public class UserViewController {
         name.setCellValueFactory(new PropertyValueFactory<TOUser, String>("name"));
         password.setCellValueFactory(new PropertyValueFactory<TOUser, String>("password"));
         phone.setCellValueFactory(new PropertyValueFactory<TOUser, String>("phoneNumber"));
+        userType.setCellValueFactory(new PropertyValueFactory<TOUser, String>("userType"));
         userTableView.setItems(userList);
     }
 
@@ -107,10 +111,6 @@ public class UserViewController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // AnchorPane nextAnchorPane = sceneSwitch(userViewAnchorPane, "../pages/UpdateUser.fxml");
-        // UpdateUserController updateUserController = nextAnchorPane.getController();
-        //UpdateUserController.class.setEmail(selectedUser.getEmail());
     }
 
 }

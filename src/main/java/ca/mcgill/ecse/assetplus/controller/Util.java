@@ -11,6 +11,7 @@ import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import ca.mcgill.ecse.assetplus.model.User;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.PriorityLevel;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket.TimeEstimate;
 import javafx.scene.layout.Priority;
 
 public class Util {
@@ -40,13 +41,45 @@ public class Util {
     return null;
   }
 
-  public static List<PriorityLevel> getPriorities() {
-    return  Arrays.asList(MaintenanceTicket.PriorityLevel.values());
+  public static List<String> getPriorities() {
+    List<PriorityLevel> priorities = Arrays.asList(MaintenanceTicket.PriorityLevel.values());
+    List<String> stringPriorities = new ArrayList<String>();
+    for (PriorityLevel p: priorities) {
+      stringPriorities.add(p.toString());
+    }
+    return stringPriorities;
     // return new ArrayList<>(Arrays.asList("Urgent", "Normal", "Low"));
   }
 
-  public static ArrayList<String> getTimeEstimate() {
-    return new ArrayList<>(Arrays.asList("LessThanADay", "OneToThreeDays", "ThreeToSevenDays", "OneToThreeWeeks", "ThreeOrMoreWeeks"));
+
+  public static void ticketAssignment(int ticketId, String employeeEmail, String timeEstimate, String priority, Boolean requiresApproval) {
+    PriorityLevel selectedPriority = PriorityLevel.Low; //RANDOM INITIALIZATION VALUE (TO NOT HAVE RED ERROR SQUIGGLY LINES BELOW). DOES NOT MATTER BECAUSE ACTUAL VALUE IS SET IN THE FOR LOOP.
+    TimeEstimate selectedTimeEstimate = TimeEstimate.LessThanADay;
+    List<PriorityLevel> priorities = Arrays.asList(MaintenanceTicket.PriorityLevel.values());
+    List<TimeEstimate> timeEstimates = Arrays.asList(MaintenanceTicket.TimeEstimate.values());
+    for (PriorityLevel p: priorities) {
+      if (p.toString().equals(priority)) {
+        selectedPriority = p;
+        break;
+      }
+    }
+    for (TimeEstimate te: timeEstimates) {
+      if (te.toString().equals(timeEstimate)) {
+        selectedTimeEstimate = te;
+        break;
+      }
+    }
+    AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(ticketId, employeeEmail, selectedTimeEstimate, selectedPriority, requiresApproval);
+  }
+
+  public static List<String> getTimeEstimate() {
+    List<TimeEstimate> timeEstimates = Arrays.asList(MaintenanceTicket.TimeEstimate.values());
+    List<String> stringTimeEstimates = new ArrayList<String>();
+    for (TimeEstimate te:timeEstimates) {
+      stringTimeEstimates.add(te.toString());
+    }
+    return stringTimeEstimates;
+    //return new ArrayList<>(Arrays.asList("LessThanADay", "OneToThreeDays", "ThreeToSevenDays", "OneToThreeWeeks", "ThreeOrMoreWeeks"));
   }
 
 

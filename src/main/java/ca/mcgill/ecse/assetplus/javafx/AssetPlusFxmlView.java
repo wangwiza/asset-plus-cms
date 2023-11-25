@@ -11,7 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-// import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 
 public class AssetPlusFxmlView extends Application {
 
