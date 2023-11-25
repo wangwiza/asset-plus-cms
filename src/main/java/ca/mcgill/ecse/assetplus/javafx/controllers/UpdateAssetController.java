@@ -44,6 +44,7 @@ public class UpdateAssetController {
 
     @FXML
     void updateAssetClicked(ActionEvent event) {
+        Integer assetNumber = 0;
         String assetType = UpdateAssetType.getText();
         Integer floorNumber = Integer.parseInt(UpdateFloorNumber.getText());
         Integer roomNumber = Integer.parseInt(UpdateRoomNumber.getText());

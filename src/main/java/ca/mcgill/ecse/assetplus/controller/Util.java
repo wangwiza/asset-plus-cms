@@ -72,6 +72,14 @@ public class Util {
     AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(ticketId, employeeEmail, selectedTimeEstimate, selectedPriority, requiresApproval);
   }
 
+  public static void startTicket(int ticketId) {
+    AssetPlusTicketingController.startWorkOnMaintenanceTicket(ticketId);
+  }
+
+  public static void completeTicket(int ticketId) {
+    AssetPlusTicketingController.completeWorkOnMaintenanceTicket(ticketId);
+  }
+
   public static List<String> getTimeEstimate() {
     List<TimeEstimate> timeEstimates = Arrays.asList(MaintenanceTicket.TimeEstimate.values());
     List<String> stringTimeEstimates = new ArrayList<String>();
