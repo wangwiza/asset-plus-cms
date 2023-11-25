@@ -37,6 +37,7 @@ public class AddAssetController {
 
     @FXML
     void addAssetClicked(ActionEvent event) {
+        Integer assetNumber = 0;
         String assetType = AddAssetType.getText();
         Integer floorNumber = Integer.parseInt(AddFloorNumber.getText());
         Integer roomNumber = Integer.parseInt(AddRoomNumber.getText());
