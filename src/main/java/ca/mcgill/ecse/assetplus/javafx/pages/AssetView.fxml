@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AssetViewAnchorPane" prefHeight="700.0" prefWidth="1030.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.AssetViewController">
+<AnchorPane fx:id="assetViewAnchorPane" prefHeight="700.0" prefWidth="1030.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.AssetViewController">
    <children>
       <VBox layoutX="0.5" layoutY="12.666666984558105" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -35,12 +35,11 @@
             </GridPane>
             <TableView fx:id="assetTableView" editable="true" prefHeight="590.0" prefWidth="1030.0">
               <columns>
-                  <TableColumn fx:id="assetId" prefWidth="174.39999389648438" text="Asset Id" />
-                  <TableColumn fx:id="floorNumber" prefWidth="163.99993896484375" text="Floor Number" />
-                  <TableColumn fx:id="roomNumber" prefWidth="151.199951171875" text="Room Number" />
-                  <TableColumn fx:id="assetType" prefWidth="166.39996337890625" text="Asset Type" />
-                  <TableColumn fx:id="purchaseDate" prefWidth="168.79998779296875" text="Purchase Date" />
-                  <TableColumn minWidth="0.0" prefWidth="0.0" />
+                <TableColumn fx:id="assetNumber" prefWidth="147.0" text="Asset Number" />
+                  <TableColumn fx:id="floorNumber" prefWidth="165.0" text="Floor Number" />
+                  <TableColumn fx:id="roomNumber" prefWidth="146.0" text="Room Number" />
+                  <TableColumn fx:id="assetType" prefWidth="168.0" text="Asset Type" />
+                  <TableColumn fx:id="purchaseDate" prefWidth="167.199951171875" text="Purchase Date" />
               </columns>
             </TableView>
             <GridPane prefHeight="60.0" prefWidth="1030.0">
@@ -52,8 +51,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="updateSelectedAsset" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateSelectedAssetClicked" text="Update Selected Asset" textAlignment="CENTER" />
-                  <Button fx:id="deleteSelectedAsset" mnemonicParsing="false" onAction="#deleteSelectedAssetClicked" text="Delete Selected Asset" GridPane.columnIndex="1" />
+                  <Button fx:id="updateAsset" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateAssetClicked" text="Update Selected Asset" textAlignment="CENTER" />
+                  <Button fx:id="deleteAsset" mnemonicParsing="false" onAction="#deleteAssetClicked" text="Delete Selected Asset" GridPane.columnIndex="1" />
                </children>
             </GridPane>
          </children>

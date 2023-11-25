@@ -32,7 +32,7 @@ public class AssetViewController {
     private TableColumn<TOAsset, Integer> assetNumber;
 
     @FXML
-    private TableColumn<TOAsset, AssetType> assetType;
+    private TableColumn<TOAsset, String> assetType;
 
     @FXML
     private TableColumn<TOAsset, Integer> floorNumber;
@@ -47,10 +47,10 @@ public class AssetViewController {
     private Button addAsset;
 
     @FXML
-    private Button deleteSelectedAsset;
+    private Button deleteAsset;
 
     @FXML
-    private Button updateSelectedAsset;
+    private Button updateAsset;
 
     @FXML
     private TableView<TOAsset> assetTableView;
@@ -64,7 +64,7 @@ public class AssetViewController {
 
     public void refresh() {
         assetNumber.setCellValueFactory(new PropertyValueFactory<TOAsset, Integer>("assetNumber"));
-        assetType.setCellValueFactory(new PropertyValueFactory<TOAsset, AssetType>("assetType"));
+        assetType.setCellValueFactory(new PropertyValueFactory<TOAsset, String>("assetType"));
         floorNumber.setCellValueFactory(new PropertyValueFactory<TOAsset, Integer>("floorNumber"));
         roomNumber.setCellValueFactory(new PropertyValueFactory<TOAsset, Integer>("roomNumber"));
         purchaseDate.setCellValueFactory(new PropertyValueFactory<TOAsset, Date>("purchaseDate"));
@@ -83,7 +83,7 @@ public class AssetViewController {
 
     
     @FXML
-    void deleteSelectedAssetClicked(ActionEvent event) {
+    void deleteAssetClicked(ActionEvent event) {
         TOAsset selectedAsset = assetTableView.getSelectionModel().getSelectedItem();
         //System.out.println(selectedAsset.getAssetNumber());
         AssetPlusFeatureSet3Controller.deleteSpecificAsset(selectedAsset.getAssetNumber());
@@ -92,7 +92,7 @@ public class AssetViewController {
 
     
     @FXML
-    void updateSelectedAssetClicked(ActionEvent event) {
+    void updateAssetClicked(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../pages/UpdateAsset.fxml"));
             AnchorPane nextAnchorPane = (AnchorPane) loader.load();

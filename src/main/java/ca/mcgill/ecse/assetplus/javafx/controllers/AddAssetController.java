@@ -15,19 +15,19 @@ import javafx.scene.layout.AnchorPane;
 public class AddAssetController {
 
     @FXML
-    private TextField AddAssetType;
+    private TextField addAssetType;
 
     @FXML
-    private TextField AddFloorNumber;
+    private TextField addFloorNumber;
 
     @FXML
-    private TextField AddRoomNumber;
+    private TextField addRoomNumber;
 
     @FXML
-    private TextField AddPurchaseDate;
+    private TextField addPurchaseDate;
 
     @FXML
-    private Button AddAsset;
+    private Button addAsset;
 
     @FXML
     private Button cancelAddAsset;
@@ -37,27 +37,26 @@ public class AddAssetController {
 
     @FXML
     void addAssetClicked(ActionEvent event) {
-        Integer assetNumber = 0;
-        String assetType = AddAssetType.getText();
-        Integer floorNumber = Integer.parseInt(AddFloorNumber.getText());
-        Integer roomNumber = Integer.parseInt(AddRoomNumber.getText());
-        Date purchaseDate = Date.valueOf(AddPurchaseDate.getText());
+        String assetType = addAssetType.getText();
+        Integer floorNumber = Integer.parseInt(addFloorNumber.getText());
+        Integer roomNumber = Integer.parseInt(addRoomNumber.getText());
+        Date purchaseDate = Date.valueOf(addPurchaseDate.getText());
         if (successful(AssetPlusFeatureSet3Controller.addSpecificAsset(1, floorNumber, roomNumber,
                 purchaseDate, assetType))) {
-                AddAssetType.setText("");
-                AddFloorNumber.setText("");
-                AddRoomNumber.setText("");
-                AddPurchaseDate.setText("");
+                addAssetType.setText("");
+                addFloorNumber.setText("");
+                addRoomNumber.setText("");
+                addPurchaseDate.setText("");
                 sceneSwitch(addAssetAnchorPane, "../pages/AssetView.fxml");
             }      
     }
 
     @FXML
     void cancelAddAssetClicked(ActionEvent event) {
-            AddAssetType.setText("");
-            AddFloorNumber.setText("");
-            AddRoomNumber.setText("");
-            AddPurchaseDate.setText("");
+            addAssetType.setText("");
+            addFloorNumber.setText("");
+            addRoomNumber.setText("");
+            addPurchaseDate.setText("");
             sceneSwitch(addAssetAnchorPane, "../pages/AssetView.fxml");
     }
 
