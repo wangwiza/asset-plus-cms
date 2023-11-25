@@ -11,8 +11,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AssetTypeViewAnchorPane" prefHeight="700.0" prefWidth="1030.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.AssetTypeViewController">
-   <children>
+<AnchorPane fx:id="assetTypeViewAnchorPane" prefHeight="700.0" prefWidth="1030.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.AssetTypeViewController">
+      <children>
       <VBox layoutX="0.5" layoutY="12.666666984558105" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <GridPane alignment="CENTER" prefHeight="50.0" prefWidth="1030.0" style="-fx-background-color: #fff;">
@@ -26,18 +26,17 @@
               </rowConstraints>
                <children>
                   <Button fx:id="addAssetType" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addAssetTypeClicked" text="Add Asset Type" GridPane.columnIndex="2" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="282.0" text="Asset Type Management" textAlignment="CENTER">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="308.0" text="Asset Type Management" textAlignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
                </children>
             </GridPane>
-            <TableView fx:id="AssetTableView" editable="true" prefHeight="590.0" prefWidth="1030.0">
+            <TableView fx:id="assetTypeTableView" editable="true" prefHeight="590.0" prefWidth="1030.0">
               <columns>
-                  <TableColumn fx:id="assetType" prefWidth="409.5999755859375" text="Asset Type" />
-                  <TableColumn fx:id="expectedLifespan" prefWidth="331.20001220703125" text="Expected Lifespan (Years)" />
-                  <TableColumn minWidth="0.0" prefWidth="0.0" />
+                <TableColumn fx:id="name" prefWidth="147.0" text="Name" />
+                  <TableColumn fx:id="expectedLifespan" prefWidth="165.0" text="Expected Lifespan" />
               </columns>
             </TableView>
             <GridPane prefHeight="60.0" prefWidth="1030.0">
@@ -49,8 +48,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="updateSelectedAssetType" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateSelectedAssetTypeClicked" text="Update Selected Asset Type" textAlignment="CENTER" />
-                  <Button fx:id="deleteSelectedAssetType" mnemonicParsing="false" onAction="#deleteSelectedAssetTypeClicked" text="Delete Selected Asset Type" GridPane.columnIndex="1" />
+                  <Button fx:id="updateAssetType" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateAssetTypeClicked" text="Update Selected Asset Type" textAlignment="CENTER" />
+                  <Button fx:id="deleteAssetType" mnemonicParsing="false" onAction="#deleteAssetTypeClicked" text="Delete Selected Asset Type" GridPane.columnIndex="1" />
                </children>
             </GridPane>
          </children>

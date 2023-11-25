@@ -152,8 +152,8 @@
       {
         "AssetType": [
           {
-            "name": "lamp",
-            "expectedLifeSpan": 1800,
+            "name": "lampz",
+            "expectedLifeSpan": 18000,
             "assetPlus": {
               "@reference": "../../.."
             },
@@ -178,46 +178,23 @@
             ]
           },
           {
-            "name": "bed",
-            "expectedLifeSpan": 5000,
+            "name": "ssdds",
+            "expectedLifeSpan": 23132,
             "assetPlus": {
               "@reference": "../../.."
             },
             "specificAssets": [
-              {
-                "SpecificAsset": [
-                  {
-                    "assetNumber": 2,
-                    "floorNumber": 10,
-                    "roomNumber": 35,
-                    "purchaseDate": "2010-01-30",
-                    "assetPlus": {
-                      "@reference": "../../../../.."
-                    },
-                    "maintenanceTickets": [
-                      ""
-                    ],
-                    "assetType": {
-                      "@reference": "../../.."
-                    }
-                  },
-                  {
-                    "assetNumber": 3,
-                    "floorNumber": 1,
-                    "roomNumber": 35,
-                    "purchaseDate": "2010-01-30",
-                    "assetPlus": {
-                      "@reference": "../../../../.."
-                    },
-                    "maintenanceTickets": [
-                      ""
-                    ],
-                    "assetType": {
-                      "@reference": "../../.."
-                    }
-                  }
-                ]
-              }
+              ""
+            ]
+          },
+          {
+            "name": "sadssad",
+            "expectedLifeSpan": 12323,
+            "assetPlus": {
+              "@reference": "../../.."
+            },
+            "specificAssets": [
+              ""
             ]
           }
         ]
@@ -225,17 +202,9 @@
     ],
     "specificAssets": [
       {
-        "SpecificAsset": [
-          {
-            "@reference": "../../assetTypes/AssetType/specificAssets/SpecificAsset"
-          },
-          {
-            "@reference": "../../assetTypes/AssetType[2]/specificAssets/SpecificAsset"
-          },
-          {
-            "@reference": "../../assetTypes/AssetType[2]/specificAssets/SpecificAsset[2]"
-          }
-        ]
+        "SpecificAsset": {
+          "@reference": "../../assetTypes/AssetType/specificAssets/SpecificAsset"
+        }
       }
     ]
   }

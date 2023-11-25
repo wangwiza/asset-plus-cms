@@ -17,6 +17,8 @@ public class MainPageController {
   @FXML
   private ToggleButton dashboardAssetsButton;
   @FXML
+  private ToggleButton dashboardAssetTypesButton;
+  @FXML
   private ToggleButton dashboardTicketsButton;
   @FXML
   private ToggleButton dashboardImagesButton;
@@ -27,6 +29,8 @@ public class MainPageController {
   private Pane imagesPane;
   @FXML
   private Pane ticketsPane;
+  @FXML
+  private Pane assetTypesPane;
 
   @FXML
   public void initialize() {
@@ -50,6 +54,11 @@ public class MainPageController {
   @FXML
   public void dashboardTicketsSelected(ActionEvent event) {
     ticketsPane.toFront();
+  }
+
+  @FXML
+  public void dashboardAssetTypesSelected(ActionEvent event) {
+    assetTypesPane.toFront();
   }
 
 }
