@@ -2,6 +2,7 @@ package ca.mcgill.ecse.assetplus.javafx.controllers;
 
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet1Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet3Controller;
+import ca.mcgill.ecse.assetplus.controller.TOAsset;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.successful;
 import java.sql.Date;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
@@ -37,6 +38,11 @@ public class AddAssetController {
 
     @FXML
     private Integer newAssetNumber;
+
+    @FXML
+    public void initialize() {
+        this.newAssetNumber = TOAsset.getNextAssetNumber();
+    }
 
     @FXML
     void addAssetClicked(ActionEvent event) {
