@@ -53,7 +53,7 @@ public class MainPageController {
   public void dashboardTicketsSelected(ActionEvent event) {
     ticketsPane.toFront();
   }
-  
+
   @FXML
   public void dashboardViewMaintenanceTicketsSelected(ActionEvent event) {
     maintenanceTicketsPane.toFront();

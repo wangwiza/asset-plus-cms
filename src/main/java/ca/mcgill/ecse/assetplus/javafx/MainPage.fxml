@@ -42,7 +42,7 @@
                   <fx:include fx:id="ticketsPane" source="pages/ReviewMaintenanceTicket.fxml" />
                   <fx:include fx:id="imagesPane" source="pages/ImagesPage.fxml" />
                   <fx:include fx:id="usersPane" source="pages/UserView.fxml" StackPane.alignment="TOP_CENTER" />
-                  <fx:include fx:id="maintenanceTicketsPage" source="pages/TicketsPage.fxml" StackPane.alignment="TOP_CENTER" />
+                  <fx:include fx:id="maintenanceTicketsPane" source="pages/TicketsPage.fxml" StackPane.alignment="TOP_CENTER" />
 
                </children></StackPane>
          </center>
