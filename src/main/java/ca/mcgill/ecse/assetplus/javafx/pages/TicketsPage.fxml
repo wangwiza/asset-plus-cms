@@ -7,23 +7,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.TicketsPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.TicketsPageController">
    <children>
       <TableView fx:id="ticketsTable" layoutX="-1.0" layoutY="46.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="1030.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
          <columns>
             <TableColumn fx:id="ticketColumn" prefWidth="75.0" text="Ticket" />
             <TableColumn fx:id="statusColumn" prefWidth="75.0" text="Status" />
-            <TableColumn fx:id="descriptionColumn" prefWidth="167.32870483398438" text="Description" />
-            <TableColumn prefWidth="112.67129516601562" text="D" />
-            <TableColumn prefWidth="139.45339965820312" text="E" />
-            <TableColumn prefWidth="129.54656982421875" text="F" />
-            <TableColumn prefWidth="141.39007568359375" text="G" />
-            <TableColumn prefWidth="136.051513671875" text="H" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="265.0" text="Description" />
+            <TableColumn prefWidth="151.0" text="Location" />
+            <TableColumn prefWidth="104.0" text="Asset" />
+            <TableColumn prefWidth="152.0" text="Image" />
+            <TableColumn prefWidth="134.0" text="Employee" />
          </columns>
       </TableView>
       <TextField fx:id="enteredstaffID" layoutX="785.0" layoutY="22.0" onAction="#hotelStaffIDentered" promptText="hotel staff ID" AnchorPane.rightAnchor="84.0" AnchorPane.topAnchor="22.0" />
       <Text layoutX="734.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sort by:" AnchorPane.rightAnchor="254.486328125" AnchorPane.topAnchor="26.0" />
-      <Button fx:id="submitStaffID" layoutX="952.0" layoutY="22.0" mnemonicParsing="false" onAction="#sortButtonPressed" text="Sort" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="22.0" />
       <Button fx:id="completeButton" layoutX="391.0" layoutY="22.0" mnemonicParsing="false" onAction="#completeSelected" text="Complete Selected Ticket" />
       <Button fx:id="startButton" layoutX="198.0" layoutY="22.0" mnemonicParsing="false" onAction="#startSelected" text="Start Selected Ticket" />
    </children>
