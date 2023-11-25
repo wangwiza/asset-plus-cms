@@ -55,23 +55,19 @@ public class TicketsPageController {
     // Reset TextField
     enteredstaffID = new TextField();
     enteredstaffID.setText("");
-
     // Refresh
     AssetPlusFxmlView.getInstance().registerRefreshEvent(enteredstaffID);
-    // AssetPlusFxmlView.getInstance().registerRefreshEvent(ticketsTable); //?
-
     ticketsTable.addEventHandler(AssetPlusFxmlView.REFRESH_EVENT,
         e -> ticketsTable.setItems(getTicketsTableItems()));
     // register refreshable nodes
     AssetPlusFxmlView.getInstance().registerRefreshEvent(ticketsTable);
-
   }
 
   @FXML
   public void hotelStaffIDentered(ActionEvent event) {
     // get tickets given the enteredstaffID
-    // display them on the table...?
-    // ? still needs work
+    // display them on the table
+    // still needs work
     AssetPlusFxmlView.getInstance().refresh();
   }
 

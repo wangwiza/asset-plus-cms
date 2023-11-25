@@ -31,6 +31,8 @@ public class MainPageController {
   private Pane ticketsPane;
   @FXML
   private Pane assetTypesPane;
+  @FXML
+  private Pane maintenanceTicketsPane;
 
   @FXML
   public void initialize() {
@@ -59,6 +61,10 @@ public class MainPageController {
   @FXML
   public void dashboardAssetTypesSelected(ActionEvent event) {
     assetTypesPane.toFront();
+  }
+
+  public void dashboardViewMaintenanceTicketsSelected(ActionEvent event) {
+    maintenanceTicketsPane.toFront();
   }
 
 }

@@ -36,6 +36,8 @@
                   </ToggleButton>
                   <ToggleButton fx:id="dashboardTicketsButton" mnemonicParsing="false" onAction="#dashboardTicketsSelected" prefHeight="60.0" prefWidth="260.0" text="Tickets" toggleGroup="$dashboardGroup" />
                   <ToggleButton fx:id="dashboardImagesButtom" mnemonicParsing="false" onAction="#dashboardImagesSelected" prefHeight="60.0" prefWidth="260.0" text="Images" toggleGroup="$dashboardGroup" />
+                  <ToggleButton fx:id="viewMaintenanceTicketsButton" mnemonicParsing="false" onAction="#dashboardViewMaintenanceTicketsSelected" prefHeight="60.0" prefWidth="260.0" text="View Maintenance Tickets" toggleGroup="$dashboardGroup" />
+
                </children>
             </VBox>
          </left>
@@ -46,6 +48,8 @@
                   <fx:include fx:id="assetTypesPane" source="pages/AssetTypeView.fxml" />
                   <fx:include fx:id="imagesPane" source="pages/ImagesPage.fxml" />
                   <fx:include fx:id="usersPane" source="pages/UserView.fxml" StackPane.alignment="TOP_CENTER" />
+                  <fx:include fx:id="maintenanceTicketsPane" source="pages/TicketsPage.fxml" StackPane.alignment="TOP_CENTER" />
+
                </children></StackPane>
          </center>
          <bottom>
