@@ -36,12 +36,15 @@ public class AddAssetController {
     private AnchorPane addAssetAnchorPane;
 
     @FXML
+    private Integer newAssetNumber;
+
+    @FXML
     void addAssetClicked(ActionEvent event) {
         String assetType = addAssetType.getText();
         Integer floorNumber = Integer.parseInt(addFloorNumber.getText());
         Integer roomNumber = Integer.parseInt(addRoomNumber.getText());
         Date purchaseDate = Date.valueOf(addPurchaseDate.getText());
-        if (successful(AssetPlusFeatureSet3Controller.addSpecificAsset(1, floorNumber, roomNumber,
+        if (successful(AssetPlusFeatureSet3Controller.addSpecificAsset(newAssetNumber, floorNumber, roomNumber,
                 purchaseDate, assetType))) {
                 addAssetType.setText("");
                 addFloorNumber.setText("");

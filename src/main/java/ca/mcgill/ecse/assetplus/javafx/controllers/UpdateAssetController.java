@@ -34,6 +34,9 @@ public class UpdateAssetController {
     private AnchorPane updateAssetAnchorPane;
 
     @FXML
+    private Integer assetNumber;
+
+    @FXML
     void cancelUpdateAssetClicked(ActionEvent event) {
         updateAssetType.setText("");
         updateFloorNumber.setText("");
@@ -48,7 +51,7 @@ public class UpdateAssetController {
         Integer floorNumber = Integer.parseInt(updateFloorNumber.getText());
         Integer roomNumber = Integer.parseInt(updateRoomNumber.getText());
         Date purchaseDate = Date.valueOf(updatePurchaseDate.getText());
-        if (successful(AssetPlusFeatureSet3Controller.updateSpecificAsset(1, floorNumber, roomNumber,
+        if (successful(AssetPlusFeatureSet3Controller.updateSpecificAsset(this.assetNumber, floorNumber, roomNumber,
             purchaseDate, assetType))) {
             updateAssetType.setText("");
             updateFloorNumber.setText("");
@@ -77,5 +80,9 @@ public class UpdateAssetController {
         updatePurchaseDate.setText("");
     }
     }
+
+    public void setAssetNumber(Integer sameAssetNumber) {
+        this.assetNumber = sameAssetNumber;
+      }
 
 }

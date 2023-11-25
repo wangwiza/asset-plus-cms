@@ -16,14 +16,14 @@ public class TOAsset
 {
   private static AssetPlus ap = AssetPlusApplication.getAssetPlus();
   //User Attributes
-  private AssetType assetType;
+  private String assetType;
   private Integer floorNumber;
   private Integer roomNumber;
   private Date purchaseDate;
   private Integer assetNumber;
 
 
-  public TOAsset(Integer aAssetNumber, AssetType aAssetType, Integer aFloorNumber, Integer aRoomNumber, Date aPurhcaseDate)
+  public TOAsset(Integer aAssetNumber, String aAssetType, Integer aFloorNumber, Integer aRoomNumber, Date aPurhcaseDate)
   {
     assetNumber = aAssetNumber;
     assetType = aAssetType;
@@ -35,13 +35,13 @@ public class TOAsset
   public static ArrayList<TOAsset> getAllAssets() {
     ArrayList<TOAsset> assetList = new ArrayList<TOAsset>();
     for (var asset: ap.getSpecificAssets()) {
-      assetList.add(new TOAsset(asset.getAssetNumber(), asset.getAssetType(), asset.getFloorNumber(), asset.getRoomNumber(), asset.getPurchaseDate()));
+      assetList.add(new TOAsset(asset.getAssetNumber(), asset.getAssetType().getName(), asset.getFloorNumber(), asset.getRoomNumber(), asset.getPurchaseDate()));
     }
     return assetList;
 
   }
   
-  public boolean setAssetType(AssetType aAssetType)
+  public boolean setAssetType(String aAssetType)
   {
     boolean wasSet = false;
     assetType = aAssetType;
@@ -73,7 +73,7 @@ public class TOAsset
     return wasSet;
   }
 
-  public AssetType getAssetType()
+  public String getAssetType()
   {
     return assetType;
   }
@@ -96,9 +96,5 @@ public class TOAsset
   public Date getPurchaseDate()
   {
     return purchaseDate;
-  }
-
-  public String toString(AssetType assetType){
-    return (getAssetType()!=null?Integer.toHexString(System.identityHashCode(getAssetType())):"null");
   }
 }
