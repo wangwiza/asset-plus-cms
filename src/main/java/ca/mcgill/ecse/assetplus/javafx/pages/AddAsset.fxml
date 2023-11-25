@@ -59,15 +59,15 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="AddAsset" mnemonicParsing="false" onAction="#addAssetClicked" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+            <Button fx:id="addAsset" mnemonicParsing="false" onAction="#addAssetClicked" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <TextField fx:id="AddAssetType" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="AddRoomNumber" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="AddFloorNumber" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="AddPurchaseDate" layoutX="310.0" layoutY="357.0" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="addAssetType" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="addRoomNumber" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="addFloorNumber" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="addPurchaseDate" layoutX="310.0" layoutY="357.0" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>

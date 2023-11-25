@@ -13,16 +13,16 @@ import javafx.scene.layout.AnchorPane;
 public class UpdateAssetController {
 
     @FXML
-    private TextField UpdateAssetType;
+    private TextField updateAssetType;
 
     @FXML
-    private TextField UpdateFloorNumber;
+    private TextField updateFloorNumber;
 
     @FXML
-    private TextField UpdateRoomNumber;
+    private TextField updateRoomNumber;
 
     @FXML
-    private TextField UpdatePurchaseDate;
+    private TextField updatePurchaseDate;
 
     @FXML
     private Button cancelUpdateAsset;
@@ -35,47 +35,46 @@ public class UpdateAssetController {
 
     @FXML
     void cancelUpdateAssetClicked(ActionEvent event) {
-        UpdateAssetType.setText("");
-        UpdateFloorNumber.setText("");
-        UpdateRoomNumber.setText("");
-        UpdatePurchaseDate.setText("");
+        updateAssetType.setText("");
+        updateFloorNumber.setText("");
+        updateRoomNumber.setText("");
+        updatePurchaseDate.setText("");
         sceneSwitch(updateAssetAnchorPane, "../pages/AssetView.fxml");
     }
 
     @FXML
     void updateAssetClicked(ActionEvent event) {
-        Integer assetNumber = 0;
-        String assetType = UpdateAssetType.getText();
-        Integer floorNumber = Integer.parseInt(UpdateFloorNumber.getText());
-        Integer roomNumber = Integer.parseInt(UpdateRoomNumber.getText());
-        Date purchaseDate = Date.valueOf(UpdatePurchaseDate.getText());
+        String assetType = updateAssetType.getText();
+        Integer floorNumber = Integer.parseInt(updateFloorNumber.getText());
+        Integer roomNumber = Integer.parseInt(updateRoomNumber.getText());
+        Date purchaseDate = Date.valueOf(updatePurchaseDate.getText());
         if (successful(AssetPlusFeatureSet3Controller.updateSpecificAsset(1, floorNumber, roomNumber,
             purchaseDate, assetType))) {
-            UpdateAssetType.setText("");
-            UpdateFloorNumber.setText("");
-            UpdateRoomNumber.setText("");
-            UpdatePurchaseDate.setText("");
+            updateAssetType.setText("");
+            updateFloorNumber.setText("");
+            updateRoomNumber.setText("");
+            updatePurchaseDate.setText("");
             sceneSwitch(updateAssetAnchorPane, "../pages/AssetView.fxml");
         }
     }
 
     public void setAssetType(String assetType) {
-        UpdateAssetType.setText(assetType);
+        updateAssetType.setText(assetType);
     }
 
     public void setFloorNumber(Integer floorNumber) {
-      UpdateFloorNumber.setText(floorNumber != null ? floorNumber.toString() : "");
+      updateFloorNumber.setText(floorNumber != null ? floorNumber.toString() : "");
     }
 
     public void setRoomNumber(Integer roomNumber) {
-      UpdateRoomNumber.setText(roomNumber != null ? roomNumber.toString() : "");
+      updateRoomNumber.setText(roomNumber != null ? roomNumber.toString() : "");
     }
 
     public void setPurchaseDate(Date purchaseDate) {
       if (purchaseDate != null) {
-        UpdatePurchaseDate.setText(purchaseDate.toString());
+        updatePurchaseDate.setText(purchaseDate.toString());
     } else {
-        UpdatePurchaseDate.setText("");
+        updatePurchaseDate.setText("");
     }
     }
 
