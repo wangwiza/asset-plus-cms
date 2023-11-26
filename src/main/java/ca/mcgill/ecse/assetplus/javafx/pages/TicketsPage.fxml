@@ -53,12 +53,19 @@
                   <TableColumn fx:id="imageURLs" prefWidth="102.0" text="Image URLs" />
                   <TableColumn fx:id="raisedByEmail" prefWidth="146.0" text="Employee" />
                   <TableColumn fx:id="priority" prefWidth="84.0" text="Priority" />
+                  <TableColumn fx:id="fixedByEmail" prefWidth="84.0" text="Fixer" />
+                  <TableColumn fx:id="timeToResolve" prefWidth="84.0" text="Time to Resolve" />
+                  <TableColumn fx:id="approvalRequired" prefWidth="84.0" text="Approval Required" />
+                  <TableColumn fx:id="expectLifeSpanInDays" prefWidth="84.0" text="Life Span" />
+                  <TableColumn fx:id="notes" prefWidth="84.0" text="Notes" />
               </columns>
             </TableView>
             <GridPane prefHeight="60.0" prefWidth="1030.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -66,6 +73,8 @@
                <children>
                   <Button fx:id="completeButton" mnemonicParsing="false" onAction="#completeClicked" text="Complete Selected Ticket" />
                   <Button fx:id="startButton" mnemonicParsing="false" onAction="#startClicked" text="Start Selected Ticket" GridPane.columnIndex="1" />
+                  <Button fx:id="approveWork" mnemonicParsing="false" onAction="#approveSelectedTicket" text="Approve Work" GridPane.columnIndex="2" />
+                  <Button fx:id="disapproveWork" mnemonicParsing="false" onAction="#disapproveSelectedTicket" text="Disapprove Work" GridPane.columnIndex="3" />
                </children>
             </GridPane>
          </children>
