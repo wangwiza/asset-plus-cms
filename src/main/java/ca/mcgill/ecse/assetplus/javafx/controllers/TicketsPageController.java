@@ -1,14 +1,17 @@
 // package ca.mcgill.ecse.assetplus.controller;
 package ca.mcgill.ecse.assetplus.javafx.controllers;
 
+import java.io.IOException;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.successful;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet1Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet6Controller;
+import ca.mcgill.ecse.assetplus.controller.TOMaintenanceNote;
 import ca.mcgill.ecse.assetplus.controller.TOMaintenanceTicket;
 import ca.mcgill.ecse.assetplus.controller.TOUser;
 import ca.mcgill.ecse.assetplus.controller.Util;
@@ -56,19 +59,34 @@ public class TicketsPageController {
   private TableColumn<TOMaintenanceTicket, String> raisedByEmail;
   @FXML
   private TableColumn<TOMaintenanceTicket, String> priority;
+  @FXML
+  private TableColumn<TOMaintenanceTicket, String> fixedByEmail;
+  @FXML
+  private TableColumn<TOMaintenanceTicket, String> timeToResolve;
+  @FXML
+  private TableColumn<TOMaintenanceTicket, Boolean> approvalRequired;
+  @FXML
+  private TableColumn<TOMaintenanceTicket, Integer> expectLifeSpanInDays;
+  @FXML
+  private TableColumn<TOMaintenanceTicket, List<TOMaintenanceNote>> notes;
 
   // Buttons and fields
   @FXML
-  private TextField enteredstaffID;
+  private TextField hotelStaffIDTextField;
   @FXML
   private Button startButton;
   @FXML
   private Button completeButton;
+  @FXML
+  private Button disapproveWork;
+  @FXML
+  private Button approveWork;
 
   // For accessing all the maintenance tickets
   ObservableList<TOMaintenanceTicket> maintenanceTicketsList;
 
   public void refresh() {
+    // set text to ""
     maintenanceTicketsList =
         FXCollections.observableArrayList(AssetPlusFeatureSet6Controller.getTickets());
     id.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, Integer>("id"));
@@ -88,6 +106,16 @@ public class TicketsPageController {
     raisedByEmail.setCellValueFactory(
         new PropertyValueFactory<TOMaintenanceTicket, String>("raisedByEmail"));
     priority.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, String>("priority"));
+    fixedByEmail
+        .setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, String>("fixedByEmail"));
+    timeToResolve.setCellValueFactory(
+        new PropertyValueFactory<TOMaintenanceTicket, String>("timeToResolve"));
+    approvalRequired.setCellValueFactory(
+        new PropertyValueFactory<TOMaintenanceTicket, Boolean>("approvalRequired"));
+    expectLifeSpanInDays.setCellValueFactory(
+        new PropertyValueFactory<TOMaintenanceTicket, Integer>("expectLifeSpanInDays"));
+    notes.setCellValueFactory(
+        new PropertyValueFactory<TOMaintenanceTicket, List<TOMaintenanceNote>>("notes"));
     ticketsTable.setItems(maintenanceTicketsList);
   }
 
@@ -96,11 +124,21 @@ public class TicketsPageController {
   }
 
   @FXML
-  public void sortByStaffIDButton(ActionEvent event) {
-    String staffID = enteredstaffID.getSelectedText();
-    int staffIDInt = Integer.parseInt(staffID);
-    List<TOMaintenanceTicket> sortedTickets = AssetPlusFeatureSet6Controller.getTickets();
-    for (TOMaintenanceTicket ticket : sortedTickets) {
+  public void sortByStaffIDButton(ActionEvent event) { // Not sorting by assigned employee yet
+    String staffIdentifier = hotelStaffIDTextField.getText();
+    if (staffIdentifier == "") {
+      refresh();
+    } else {
+      // int staffIDInt = Integer.parseInt(staffIdentifier);
+      List<TOMaintenanceTicket> sortedTickets = new ArrayList<>();
+      for (TOMaintenanceTicket ticket : AssetPlusFeatureSet6Controller.getTickets()) {
+        String theEmail = ticket.getRaisedByEmail();
+        if (theEmail.equals(staffIdentifier)) {
+          sortedTickets.add(ticket);
+        }
+
+      }
+      ticketsTable.setItems(FXCollections.observableArrayList(sortedTickets));
     }
   }
 
@@ -120,4 +158,27 @@ public class TicketsPageController {
     }
   }
 
+  @FXML
+  void disapproveSelectedTicket(ActionEvent event) { // not fully done yet
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("../pages/DisapproveWork.fxml"));
+      AnchorPane nextAnchorPane = (AnchorPane) loader.load();
+      DisapproveWorkController disapproveWorkController = loader.getController();
+      disapproveWorkController
+          .getSelectedTicketID((ticketsTable.getSelectionModel().getSelectedItem()).getId());
+
+      maintenanceTicketsViewAnchorPane.getChildren().removeAll();
+      maintenanceTicketsViewAnchorPane.getChildren().setAll(nextAnchorPane);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @FXML
+  void approveSelectedTicket(ActionEvent event) { // Not done yet
+    // change the ticket status
+  }
+
 }
+
+

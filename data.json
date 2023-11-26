@@ -42,9 +42,51 @@
                   "description": "The bed needs replacement",
                   "timeToResolve": "ThreeToSevenDays",
                   "priority": "Low",
-                  "status": "Resolved",
+                  "status": "InProgress",
                   "ticketNotes": [
-                    ""
+                    {
+                      "MaintenanceNote": {
+                        "date": "2023-11-26",
+                        "description": "dsadas",
+                        "ticket": {
+                          "@reference": "../../.."
+                        },
+                        "noteTaker": {
+                          "@class": "Manager",
+                          "email": "manager@ap.com",
+                          "name": "",
+                          "password": "Managerr!",
+                          "phoneNumber": "",
+                          "raisedTickets": [
+                            {
+                              "MaintenanceTicket": {
+                                "@reference": "../../../../.."
+                              }
+                            }
+                          ],
+                          "maintenanceNotes": [
+                            {
+                              "MaintenanceNote": {
+                                "@reference": "../../.."
+                              }
+                            }
+                          ],
+                          "maintenanceTasks": [
+                            ""
+                          ],
+                          "assetPlus": {
+                            "@reference": "../../../../../../../.."
+                          },
+                          "ticketsForApproval": [
+                            {
+                              "MaintenanceTicket": {
+                                "@reference": "../../../../.."
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
                   ],
                   "ticketImages": [
                     ""
@@ -54,40 +96,14 @@
                   },
                   "ticketRaiser": {
                     "@class": "Manager",
-                    "email": "manager@ap.com",
-                    "name": "",
-                    "password": "Managerr!",
-                    "phoneNumber": "",
-                    "raisedTickets": [
-                      {
-                        "MaintenanceTicket": {
-                          "@reference": "../../.."
-                        }
-                      }
-                    ],
-                    "maintenanceNotes": [
-                      ""
-                    ],
-                    "maintenanceTasks": [
-                      ""
-                    ],
-                    "assetPlus": {
-                      "@reference": "../../../../../.."
-                    },
-                    "ticketsForApproval": [
-                      {
-                        "MaintenanceTicket": {
-                          "@reference": "../../.."
-                        }
-                      }
-                    ]
+                    "@reference": "../ticketNotes/MaintenanceNote/noteTaker"
                   },
                   "ticketFixer": {
                     "@class": "Employee",
                     "@reference": "../../.."
                   },
                   "fixApprover": {
-                    "@reference": "../ticketRaiser"
+                    "@reference": "../ticketNotes/MaintenanceNote/noteTaker"
                   }
                 }
               }
@@ -134,7 +150,7 @@
       }
     ],
     "manager": {
-      "@reference": "../employees/Employee/maintenanceTasks/MaintenanceTicket/ticketRaiser"
+      "@reference": "../employees/Employee/maintenanceTasks/MaintenanceTicket/ticketNotes/MaintenanceNote/noteTaker"
     },
     "maintenanceTickets": [
       {
