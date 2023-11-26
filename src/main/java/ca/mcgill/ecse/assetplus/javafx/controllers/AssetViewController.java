@@ -85,7 +85,6 @@ public class AssetViewController {
     @FXML
     void deleteAssetClicked(ActionEvent event) {
         TOAsset selectedAsset = assetTableView.getSelectionModel().getSelectedItem();
-        //System.out.println(selectedAsset.getAssetNumber());
         AssetPlusFeatureSet3Controller.deleteSpecificAsset(selectedAsset.getAssetNumber());
         sceneSwitch(assetViewAnchorPane, "../pages/AssetView.fxml");
     }

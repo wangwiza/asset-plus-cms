@@ -51,9 +51,8 @@ public class TOAsset
   public static Integer getNextAssetNumber() {
     List<TOAsset> assets = getAllAssets();
     if (assets.isEmpty()) {
-        return 1; // Start with 1 if no assets exist
+        return 1;
     } else {
-        // Finding the maximum asset number and incrementing it by one
         return Collections.max(assets, Comparator.comparing(TOAsset::getAssetNumber)).getAssetNumber() + 1;
     }
 }

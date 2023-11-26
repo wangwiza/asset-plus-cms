@@ -6,6 +6,7 @@ import ca.mcgill.ecse.assetplus.controller.TOAsset;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.successful;
 import java.sql.Date;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.showError;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -46,18 +47,24 @@ public class AddAssetController {
 
     @FXML
     void addAssetClicked(ActionEvent event) {
-        String assetType = addAssetType.getText();
-        Integer floorNumber = Integer.parseInt(addFloorNumber.getText());
-        Integer roomNumber = Integer.parseInt(addRoomNumber.getText());
-        Date purchaseDate = Date.valueOf(addPurchaseDate.getText());
-        if (successful(AssetPlusFeatureSet3Controller.addSpecificAsset(newAssetNumber, floorNumber, roomNumber,
-                purchaseDate, assetType))) {
+        try {
+            String assetType = addAssetType.getText();
+            Integer floorNumber = Integer.parseInt(addFloorNumber.getText());
+            Integer roomNumber = Integer.parseInt(addRoomNumber.getText());
+            Date purchaseDate = Date.valueOf(addPurchaseDate.getText());
+
+            if (successful(AssetPlusFeatureSet3Controller.addSpecificAsset(newAssetNumber, floorNumber, roomNumber, purchaseDate, assetType))) {
                 addAssetType.setText("");
                 addFloorNumber.setText("");
                 addRoomNumber.setText("");
                 addPurchaseDate.setText("");
                 sceneSwitch(addAssetAnchorPane, "../pages/AssetView.fxml");
-            }      
+            }
+        } catch (NumberFormatException e) {
+            showError("Invalid number format: " + e.getMessage() + " .Should be an integer.");
+        } catch (IllegalArgumentException e) {
+            showError("Invalid date format. Correct format should be: YYYY-MM-DD.");
+        }
     }
 
     @FXML
