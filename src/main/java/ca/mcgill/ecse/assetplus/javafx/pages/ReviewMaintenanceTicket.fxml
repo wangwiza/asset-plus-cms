@@ -30,7 +30,7 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="updateButton" layoutX="921.0" layoutY="642.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="79.0" text="Update">
+            <Button fx:id="updateButton" layoutX="921.0" layoutY="642.0" mnemonicParsing="false" onAction="#updateClicked" prefHeight="31.0" prefWidth="79.0" text="Update">
                <font>
                   <Font size="16.0" />
                </font>
@@ -48,7 +48,7 @@
                               <Font size="28.0" />
                            </font>
                         </Text>
-                        <DatePicker fx:id="dateField" editable="false" layoutX="258.0" layoutY="29.0" prefHeight="31.0" prefWidth="207.0" />
+                        <DatePicker fx:id="dateField" layoutX="258.0" layoutY="29.0" prefHeight="31.0" prefWidth="207.0" />
                      </children>
                   </Pane>
                   <Pane layoutX="11.0" layoutY="171.0" prefHeight="289.0" prefWidth="494.0">
@@ -68,14 +68,14 @@
                               <Font size="28.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="idField" layoutX="250.0" layoutY="30.0" prefHeight="31.0" prefWidth="207.0" promptText="Id" />
+                        <TextField fx:id="idField" editable="false" layoutX="250.0" layoutY="30.0" prefHeight="31.0" prefWidth="207.0" promptText="Id" />
                      </children>
                   </Pane>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Pane layoutY="79.0" prefHeight="90.0" prefWidth="505.0">
+                  <Pane layoutY="143.0" prefHeight="90.0" prefWidth="505.0">
                      <children>
                         <Text layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Image:" textAlignment="CENTER" wrappingWidth="250.48876953125">
                            <font>
@@ -85,7 +85,7 @@
                         <TextField fx:id="imageField" layoutX="250.0" layoutY="30.0" prefHeight="31.0" prefWidth="207.0" promptText="URL" />
                      </children>
                   </Pane>
-                  <Pane layoutY="151.0" prefHeight="73.0" prefWidth="494.0">
+                  <Pane layoutY="215.0" prefHeight="73.0" prefWidth="494.0">
                      <children>
                         <Text layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assigned:" textAlignment="CENTER" wrappingWidth="250.48876953125">
                            <font>
@@ -95,7 +95,7 @@
                         <TextField fx:id="assignedField" layoutX="250.0" layoutY="21.0" prefHeight="31.0" prefWidth="207.0" promptText="Email" />
                      </children>
                   </Pane>
-                  <Pane layoutY="224.0" prefHeight="73.0" prefWidth="505.0">
+                  <Pane layoutY="288.0" prefHeight="73.0" prefWidth="505.0">
                      <children>
                         <Text layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Priority:" textAlignment="CENTER" wrappingWidth="250.48876953125">
                            <font>
@@ -105,7 +105,7 @@
                         <ChoiceBox fx:id="prioritySelect" layoutX="250.0" layoutY="24.0" prefHeight="26.0" prefWidth="221.0" />
                      </children>
                   </Pane>
-                  <Pane layoutY="303.0" prefHeight="73.0" prefWidth="494.0">
+                  <Pane layoutY="367.0" prefHeight="73.0" prefWidth="494.0">
                      <children>
                         <Text layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Estimate:" textAlignment="CENTER" wrappingWidth="250.48876953125">
                            <font>
@@ -115,12 +115,12 @@
                         <ChoiceBox fx:id="timeEstimateSelect" layoutX="252.0" layoutY="31.0" prefHeight="26.0" prefWidth="221.0" />
                      </children>
                   </Pane>
-                  <CheckBox fx:id="requireApprovalSelect" layoutX="280.0" layoutY="413.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="192.0" text="Manger Approval">
+                  <CheckBox fx:id="requireApprovalSelect" layoutX="280.0" layoutY="477.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="192.0" text="Manger Approval">
                      <font>
                         <Font size="21.0" />
                      </font>
                   </CheckBox>
-                  <Pane layoutY="14.0" prefHeight="66.0" prefWidth="505.0">
+                  <Pane layoutY="78.0" prefHeight="66.0" prefWidth="505.0">
                      <children>
                         <Text layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Asset:" textAlignment="CENTER" wrappingWidth="250.48876953125">
                            <font>
@@ -128,6 +128,16 @@
                            </font>
                         </Text>
                         <TextField fx:id="assetNumberField" layoutX="250.0" layoutY="18.0" prefHeight="31.0" prefWidth="207.0" promptText="Number" />
+                     </children>
+                  </Pane>
+                  <Pane layoutY="14.0" prefHeight="66.0" prefWidth="505.0">
+                     <children>
+                        <Text layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Raiser:" textAlignment="CENTER" wrappingWidth="250.48876953125">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="raiserField" layoutX="250.0" layoutY="18.0" prefHeight="31.0" prefWidth="207.0" promptText="Email" />
                      </children>
                   </Pane>
                </children>
