@@ -4,6 +4,7 @@ package ca.mcgill.ecse.assetplus.javafx.controllers;
 import java.io.IOException;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.successful;
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -73,6 +74,9 @@ public class TicketsPageController {
   // Buttons and fields
   @FXML
   private TextField hotelStaffIDTextField;
+  private Button updateSelectedButton;
+  @FXML
+  private TextField enteredstaffID;
   @FXML
   private Button startButton;
   @FXML
@@ -81,6 +85,7 @@ public class TicketsPageController {
   private Button disapproveWork;
   @FXML
   private Button approveWork;
+  private Button addTicketButton;
 
   // For accessing all the maintenance tickets
   ObservableList<TOMaintenanceTicket> maintenanceTicketsList;
@@ -147,6 +152,26 @@ public class TicketsPageController {
     Integer ticketId = ticketsTable.getSelectionModel().getSelectedItem().getId();
     if (successful(Util.startTicket(ticketId))) {
       sceneSwitch(maintenanceTicketsViewAnchorPane, "../pages/TicketsPage.fxml");
+    }
+  }
+
+  @FXML
+  void addButtonClicked(ActionEvent event) {
+    sceneSwitch(maintenanceTicketsViewAnchorPane, "../pages/AddMaintanceTicket.fxml");
+  }
+
+  @FXML
+  void updateButtonClicked(ActionEvent event) {
+    try {
+      FXMLLoader l = new FXMLLoader(getClass().getResource("../pages/ReviewMaintenanceTicket.fxml"));
+      AnchorPane nextPane = (AnchorPane) l.load();
+      ReviewMaintenanceTicket c = l.getController();
+      c.initialize(ticketsTable.getSelectionModel().getSelectedItem());
+      maintenanceTicketsViewAnchorPane.getChildren().removeAll();
+      System.out.println("Reached");
+      maintenanceTicketsViewAnchorPane.getChildren().setAll(nextPane);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 

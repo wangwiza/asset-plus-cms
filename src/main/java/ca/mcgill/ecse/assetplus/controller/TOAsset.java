@@ -37,6 +37,10 @@ public class TOAsset
 
   public static TOAsset getAssetFromTicket(int id) {
     SpecificAsset a = MaintenanceTicket.getWithId(id).getAsset();
+    if (a == null) {
+      return null;
+    }
+
     return new TOAsset(a.getAssetNumber(), a.getAssetType().getName(), a.getFloorNumber(), a.getRoomNumber(), a.getPurchaseDate());
   }
 

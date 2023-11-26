@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.AddMaintanceTicket">
+<AnchorPane fx:id="addMaintanceTicketAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.AddMaintanceTicket">
    <children>
       <BorderPane prefHeight="100.0" prefWidth="1030.0" AnchorPane.bottomAnchor="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -51,12 +51,12 @@
       </Pane>
       <Pane layoutY="596.0" prefHeight="90.0" prefWidth="1030.0">
          <children>
-            <Button fx:id="cancelButton" layoutX="804.0" layoutY="33.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="79.0" text="Cancel">
+            <Button fx:id="cancelButton" layoutX="804.0" layoutY="33.0" mnemonicParsing="false" onAction="#cancelButtonClicked" prefHeight="31.0" prefWidth="79.0" text="Cancel">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="addButton" layoutX="905.0" layoutY="33.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="79.0" text="Add">
+            <Button fx:id="addButton" layoutX="905.0" layoutY="33.0" mnemonicParsing="false" onAction="#addButtonClicked" prefHeight="31.0" prefWidth="79.0" text="Add">
                <font>
                   <Font size="16.0" />
                </font>

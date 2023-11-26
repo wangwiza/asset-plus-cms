@@ -4,7 +4,6 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.AssignController">
+<AnchorPane fx:id="ReviewMaintenanceTicketPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.ReviewMaintenanceTicket">
    <children>
       <BorderPane prefHeight="100.0" prefWidth="1030.0" AnchorPane.bottomAnchor="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -24,14 +23,14 @@
             </Text>
          </center>
       </BorderPane>
-      <Pane layoutX="1.0" layoutY="610.0" prefHeight="90.0" prefWidth="1030.0">
+      <Pane layoutX="1.0" layoutY="610.0" prefHeight="90.0" prefWidth="1030.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button layoutX="804.0" layoutY="33.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="79.0" text="Cancel">
+            <Button fx:id="cancelButton" layoutX="809.0" layoutY="642.0" mnemonicParsing="false" onAction="#cancelButtonClicked" prefHeight="31.0" prefWidth="79.0" text="Cancel">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="assign" layoutX="905.0" layoutY="33.0" mnemonicParsing="false" onAction="#assignClicked" prefHeight="31.0" prefWidth="79.0" text="Update">
+            <Button fx:id="updateButton" layoutX="921.0" layoutY="642.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="79.0" text="Update">
                <font>
                   <Font size="16.0" />
                </font>
@@ -49,68 +48,54 @@
                               <Font size="28.0" />
                            </font>
                         </Text>
-                        <DatePicker layoutX="275.0" layoutY="29.0" prefHeight="31.0" prefWidth="207.0" />
+                        <DatePicker fx:id="dateField" editable="false" layoutX="258.0" layoutY="29.0" prefHeight="31.0" prefWidth="207.0" />
                      </children>
                   </Pane>
-                  <Pane layoutY="80.0" prefHeight="73.0" prefWidth="516.0">
+                  <Pane layoutX="11.0" layoutY="171.0" prefHeight="289.0" prefWidth="494.0">
                      <children>
-                        <Text layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Location:" textAlignment="CENTER" wrappingWidth="192.48876953125">
-                           <font>
-                              <Font size="28.0" />
-                           </font>
-                        </Text>
-                        <ChoiceBox layoutX="278.0" layoutY="21.0" prefHeight="26.0" prefWidth="192.0" />
-                     </children>
-                  </Pane>
-                  <Pane layoutY="148.0" prefHeight="61.0" prefWidth="516.0">
-                     <children>
-                        <Text layoutX="7.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Asset:" textAlignment="CENTER" wrappingWidth="167.0">
-                           <font>
-                              <Font size="28.0" />
-                           </font>
-                        </Text>
-                        <ChoiceBox layoutX="277.0" layoutY="14.0" prefHeight="26.0" prefWidth="192.0" />
-                     </children>
-                  </Pane>
-                  <Pane layoutX="19.0" layoutY="210.0" prefHeight="41.0" prefWidth="351.0">
-                     <children>
-                        <Text layoutX="144.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" textAlignment="CENTER" wrappingWidth="192.48876953125">
+                        <TextField fx:id="descriptionField" layoutY="37.0" prefHeight="270.0" prefWidth="494.0" />
+                        <Text layoutX="151.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" textAlignment="CENTER" wrappingWidth="192.48876953125">
                            <font>
                               <Font size="28.0" />
                            </font>
                         </Text>
                      </children>
                   </Pane>
-                  <TextField layoutX="11.0" layoutY="251.0" prefHeight="242.0" prefWidth="494.0" />
+                  <Pane layoutX="6.0" layoutY="62.0" prefHeight="90.0" prefWidth="505.0">
+                     <children>
+                        <Text layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ticket:" textAlignment="CENTER" wrappingWidth="250.48876953125">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="idField" layoutX="250.0" layoutY="30.0" prefHeight="31.0" prefWidth="207.0" promptText="Id" />
+                     </children>
+                  </Pane>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Pane prefHeight="90.0" prefWidth="505.0">
+                  <Pane layoutY="79.0" prefHeight="90.0" prefWidth="505.0">
                      <children>
                         <Text layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Image:" textAlignment="CENTER" wrappingWidth="250.48876953125">
                            <font>
                               <Font size="28.0" />
                            </font>
                         </Text>
-                        <Button layoutX="253.0" layoutY="29.0" mnemonicParsing="false" text="Add Image">
-                           <font>
-                              <Font size="17.0" />
-                           </font>
-                        </Button>
+                        <TextField fx:id="imageField" layoutX="250.0" layoutY="30.0" prefHeight="31.0" prefWidth="207.0" promptText="URL" />
                      </children>
                   </Pane>
-                  <Pane layoutY="72.0" prefHeight="73.0" prefWidth="494.0">
+                  <Pane layoutY="151.0" prefHeight="73.0" prefWidth="494.0">
                      <children>
                         <Text layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assigned:" textAlignment="CENTER" wrappingWidth="250.48876953125">
                            <font>
                               <Font size="28.0" />
                            </font>
                         </Text>
-                        <ChoiceBox fx:id="assignedHotelStaffSelect" layoutX="250.0" layoutY="24.0" prefHeight="26.0" prefWidth="221.0" />
+                        <TextField fx:id="assignedField" layoutX="250.0" layoutY="21.0" prefHeight="31.0" prefWidth="207.0" promptText="Email" />
                      </children>
                   </Pane>
-                  <Pane layoutY="145.0" prefHeight="73.0" prefWidth="505.0">
+                  <Pane layoutY="224.0" prefHeight="73.0" prefWidth="505.0">
                      <children>
                         <Text layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Priority:" textAlignment="CENTER" wrappingWidth="250.48876953125">
                            <font>
@@ -120,7 +105,7 @@
                         <ChoiceBox fx:id="prioritySelect" layoutX="250.0" layoutY="24.0" prefHeight="26.0" prefWidth="221.0" />
                      </children>
                   </Pane>
-                  <Pane layoutY="224.0" prefHeight="73.0" prefWidth="494.0">
+                  <Pane layoutY="303.0" prefHeight="73.0" prefWidth="494.0">
                      <children>
                         <Text layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Estimate:" textAlignment="CENTER" wrappingWidth="250.48876953125">
                            <font>
@@ -130,21 +115,21 @@
                         <ChoiceBox fx:id="timeEstimateSelect" layoutX="252.0" layoutY="31.0" prefHeight="26.0" prefWidth="221.0" />
                      </children>
                   </Pane>
-                  <Pane layoutY="304.0" prefHeight="90.0" prefWidth="505.0">
-                     <children>
-                        <Text layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notes:" textAlignment="CENTER" wrappingWidth="250.48876953125">
-                           <font>
-                              <Font size="28.0" />
-                           </font>
-                        </Text>
-                        <ListView layoutX="250.0" layoutY="-2.0" prefHeight="158.0" prefWidth="221.0" />
-                     </children>
-                  </Pane>
-                  <CheckBox fx:id="requireApprovalSelect" layoutX="278.0" layoutY="477.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="192.0" text="Manger Approval">
+                  <CheckBox fx:id="requireApprovalSelect" layoutX="280.0" layoutY="413.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="192.0" text="Manger Approval">
                      <font>
                         <Font size="21.0" />
                      </font>
                   </CheckBox>
+                  <Pane layoutY="14.0" prefHeight="66.0" prefWidth="505.0">
+                     <children>
+                        <Text layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Asset:" textAlignment="CENTER" wrappingWidth="250.48876953125">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="assetNumberField" layoutX="250.0" layoutY="18.0" prefHeight="31.0" prefWidth="207.0" promptText="Number" />
+                     </children>
+                  </Pane>
                </children>
             </AnchorPane>
         </items>

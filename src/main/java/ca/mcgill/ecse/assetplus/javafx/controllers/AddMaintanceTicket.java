@@ -1,5 +1,6 @@
 package ca.mcgill.ecse.assetplus.javafx.controllers;
 
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.showError;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.successful;
 import java.sql.Date;
@@ -10,11 +11,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 public class AddMaintanceTicket {
 
     @FXML
     private Button addButton;
+
+    @FXML
+    private AnchorPane addMaintanceTicketAnchor;
 
     @FXML
     private TextField assetNumberField;
@@ -65,11 +70,13 @@ public class AddMaintanceTicket {
             }
         }
         reset();
+        sceneSwitch(addMaintanceTicketAnchor, "../pages/TicketsPage.fxml");
     }
 
     @FXML
     void cancelButtonClicked(ActionEvent event) {
         reset();
+        sceneSwitch(addMaintanceTicketAnchor, "../pages/TicketsPage.fxml");
     }
 
     private void reset() {
@@ -77,5 +84,6 @@ public class AddMaintanceTicket {
         imageField.clear();
         raiserField.clear();
         assetNumberField.clear();
+        ticketIdField.clear();
     }
 }

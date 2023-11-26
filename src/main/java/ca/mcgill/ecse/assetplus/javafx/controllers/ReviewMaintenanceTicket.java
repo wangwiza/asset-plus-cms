@@ -1,21 +1,23 @@
 package ca.mcgill.ecse.assetplus.javafx.controllers;
 
-import java.time.LocalDate;
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
 import ca.mcgill.ecse.assetplus.controller.TOAsset;
-import ca.mcgill.ecse.assetplus.controller.TOMaintenanceNote;
 import ca.mcgill.ecse.assetplus.controller.TOMaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
-import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.AnchorPane;
 
 public class ReviewMaintenanceTicket {
+
+    @FXML
+    private AnchorPane ReviewMaintenanceTicketPane;
 
     @FXML
     private TextField assetNumberField;
@@ -36,9 +38,6 @@ public class ReviewMaintenanceTicket {
     private TextField imageField;
 
     @FXML
-    private ListView<TOMaintenanceNote> noteList;
-
-    @FXML
     private ChoiceBox<MaintenanceTicket.PriorityLevel> prioritySelect;
 
     @FXML
@@ -50,18 +49,48 @@ public class ReviewMaintenanceTicket {
     @FXML
     private Button updateButton;
 
+    @FXML
+    private TextField idField;
+
     private TOMaintenanceTicket currentTicket;
 
     public void initialize(TOMaintenanceTicket ticket) {
-        //Needed asset id
+        // Needed asset id
         currentTicket = ticket;
-        assetNumberField.setText(String.valueOf(TOAsset.getAssetFromTicket(currentTicket.getId())));
+        idField.setText(String.valueOf(currentTicket.getId()));
+
+        TOAsset a = TOAsset.getAssetFromTicket(currentTicket.getId());
+        if (a != null) {
+            assetNumberField.setText(String.valueOf(TOAsset.getAssetFromTicket(currentTicket.getId()).getAssetNumber()));
+        }
+
         dateField.setValue(ticket.getRaisedOnDate().toLocalDate());
         descriptionField.setText(ticket.getDescription());
         imageField.setText("NOT IMPLEMENTED");
         assignedField.setText(currentTicket.getFixedByEmail());
-        prioritySelect.setValue(MaintenanceTicket.PriorityLevel.valueOf(currentTicket.getPriority()));
-        timeEstimateSelect.setValue(MaintenanceTicket.TimeEstimate.valueOf(currentTicket.getTimeToResolve()));
+
+        prioritySelect.setItems(FXCollections.observableArrayList(MaintenanceTicket.PriorityLevel.values()));
+        if (currentTicket.getPriority() != null) {
+            prioritySelect
+                    .setValue(MaintenanceTicket.PriorityLevel.valueOf(currentTicket.getPriority()));
+        }
+
+        timeEstimateSelect.setItems(FXCollections.observableArrayList(MaintenanceTicket.TimeEstimate.values()));
+        if (currentTicket.getTimeToResolve() != null) {
+            timeEstimateSelect.setValue(
+                    MaintenanceTicket.TimeEstimate.valueOf(currentTicket.getTimeToResolve()));
+        }
+
         requireApprovalSelect.setSelected(currentTicket.isApprovalRequired());
+    }
+
+    @FXML
+    void cancelButtonClicked() {
+        reset();
+    }
+
+    @FXML
+    void reset() {
+        sceneSwitch(ReviewMaintenanceTicketPane, "../pages/TicketsPage.fxml");
     }
 }
