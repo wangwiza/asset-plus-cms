@@ -1,0 +1,81 @@
+package ca.mcgill.ecse.assetplus.javafx.controllers;
+
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.showError;
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.successful;
+import java.sql.Date;
+import java.time.LocalDate;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet5Controller;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+
+public class AddMaintanceTicket {
+
+    @FXML
+    private Button addButton;
+
+    @FXML
+    private TextField assetNumberField;
+
+    @FXML
+    private Button cancelButton;
+
+    @FXML
+    private TextField descriptionField;
+
+    @FXML
+    private TextField imageField;
+
+    @FXML
+    private TextField raiserField;
+
+    @FXML
+    private TextField ticketIdField;
+
+    @FXML
+    void addButtonClicked(ActionEvent event) {
+        boolean s = false;
+
+        try {
+            s = successful(AssetPlusFeatureSet4Controller.addMaintenanceTicket(
+                    Integer.parseInt(ticketIdField.getText()), Date.valueOf(LocalDate.now()),
+                    descriptionField.getText(), raiserField.getText(),
+                    Integer.valueOf(assetNumberField.getText())));
+        } catch (Exception e) {
+            showError(e.toString());
+            return;
+        }
+        if (!s) {
+            return;
+        }
+
+        if (!imageField.getText().isBlank()) {
+            try {
+                s = successful(AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(
+                        imageField.getText(), Integer.parseInt(ticketIdField.getText())));
+            } catch (Exception e) {
+                showError(e.toString());
+                return;
+            }
+
+            if (!s) {
+                return;
+            }
+        }
+        reset();
+    }
+
+    @FXML
+    void cancelButtonClicked(ActionEvent event) {
+        reset();
+    }
+
+    private void reset() {
+        descriptionField.clear();
+        imageField.clear();
+        raiserField.clear();
+        assetNumberField.clear();
+    }
+}

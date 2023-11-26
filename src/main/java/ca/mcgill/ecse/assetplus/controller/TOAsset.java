@@ -8,6 +8,7 @@ import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet3Controller;
 import ca.mcgill.ecse.assetplus.model.AssetPlus;
 import ca.mcgill.ecse.assetplus.model.AssetType;
+import ca.mcgill.ecse.assetplus.model.MaintenanceTicket;
 import ca.mcgill.ecse.assetplus.model.SpecificAsset;
 import java.util.Comparator;
 import java.util.List;
@@ -34,6 +35,11 @@ public class TOAsset
     purchaseDate = aPurhcaseDate;
   }
 
+  public static TOAsset getAssetFromTicket(int id) {
+    SpecificAsset a = MaintenanceTicket.getWithId(id).getAsset();
+    return new TOAsset(a.getAssetNumber(), a.getAssetType(), a.getFloorNumber(), a.getRoomNumber(), a.getPurchaseDate());
+  }
+
   public static ArrayList<TOAsset> getAllAssets() {
     ArrayList<TOAsset> assetList = new ArrayList<TOAsset>();
     for (var asset: ap.getSpecificAssets()) {
@@ -51,8 +57,9 @@ public class TOAsset
         return Collections.max(assets, Comparator.comparing(TOAsset::getAssetNumber)).getAssetNumber() + 1;
     }
 }
-  
+
   public boolean setAssetType(String aAssetType)
+  public boolean setAssetType(AssetType aAssetType)
   {
     boolean wasSet = false;
     assetType = aAssetType;
