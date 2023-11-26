@@ -4,6 +4,7 @@ import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet3Controller;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.successful;
 import java.sql.Date;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.showError;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -47,17 +48,23 @@ public class UpdateAssetController {
 
     @FXML
     void updateAssetClicked(ActionEvent event) {
-        String assetType = updateAssetType.getText();
-        Integer floorNumber = Integer.parseInt(updateFloorNumber.getText());
-        Integer roomNumber = Integer.parseInt(updateRoomNumber.getText());
-        Date purchaseDate = Date.valueOf(updatePurchaseDate.getText());
-        if (successful(AssetPlusFeatureSet3Controller.updateSpecificAsset(this.assetNumber, floorNumber, roomNumber,
-            purchaseDate, assetType))) {
-            updateAssetType.setText("");
-            updateFloorNumber.setText("");
-            updateRoomNumber.setText("");
-            updatePurchaseDate.setText("");
-            sceneSwitch(updateAssetAnchorPane, "../pages/AssetView.fxml");
+        try {
+            String assetType = updateAssetType.getText();
+            int floorNumber = Integer.parseInt(updateFloorNumber.getText());
+            int roomNumber = Integer.parseInt(updateRoomNumber.getText());
+            Date purchaseDate = Date.valueOf(updatePurchaseDate.getText());
+
+            if (successful(AssetPlusFeatureSet3Controller.updateSpecificAsset(this.assetNumber, floorNumber, roomNumber, purchaseDate, assetType))) {
+                updateAssetType.setText("");
+                updateFloorNumber.setText("");
+                updateRoomNumber.setText("");
+                updatePurchaseDate.setText("");
+                sceneSwitch(updateAssetAnchorPane, "../pages/AssetView.fxml");
+            }
+        } catch (NumberFormatException e) {
+            showError("Invalid number format: " + e.getMessage() + " .Should be an integer.");
+        } catch (IllegalArgumentException e) {
+            showError("Invalid date format. Correct format should be: YYYY-MM-DD.");
         }
     }
 
