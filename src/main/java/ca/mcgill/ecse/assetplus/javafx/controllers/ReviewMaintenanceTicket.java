@@ -81,19 +81,28 @@ public class ReviewMaintenanceTicket {
 
         prioritySelect.setItems(
                 FXCollections.observableArrayList(MaintenanceTicket.PriorityLevel.values()));
+
+        timeEstimateSelect.setItems(
+                FXCollections.observableArrayList(MaintenanceTicket.TimeEstimate.values()));
+
+        if (currentTicket.getStatus().equals("Open")){
+            return;
+        }
+
+        prioritySelect.setDisable(true);
         if (currentTicket.getPriority() != null) {
             prioritySelect
                     .setValue(MaintenanceTicket.PriorityLevel.valueOf(currentTicket.getPriority()));
         }
 
-        timeEstimateSelect.setItems(
-                FXCollections.observableArrayList(MaintenanceTicket.TimeEstimate.values()));
+        timeEstimateSelect.setDisable(true);
         if (currentTicket.getTimeToResolve() != null) {
             timeEstimateSelect.setValue(
                     MaintenanceTicket.TimeEstimate.valueOf(currentTicket.getTimeToResolve()));
         }
 
         requireApprovalSelect.setSelected(currentTicket.isApprovalRequired());
+        requireApprovalSelect.setDisable(true);
     }
 
     @FXML
@@ -112,19 +121,16 @@ public class ReviewMaintenanceTicket {
             return;
         }
 
+        MaintenanceTicket.PriorityLevel priority = prioritySelect.getValue();
+        MaintenanceTicket.TimeEstimate time = timeEstimateSelect.getValue();
+        String assignee = assignedField.getText();
+        boolean approval = requireApprovalSelect.isSelected();
+
+        if (currentTicket.getStatus() == "Open" && assignee != null && !assignee.isEmpty()) {
+            AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(currentTicket.getId(), assignee, time, priority, approval);
+        }
+
         sceneSwitch(ReviewMaintenanceTicketPane, "../pages/TicketsPage.fxml");
-
-        // MaintenanceTicket.PriorityLevel priority = prioritySelect.getValue();
-        // MaintenanceTicket.TimeEstimate time = timeEstimateSelect.getValue();
-        // String raiser = raiserField.getText();
-        // boolean approval = requireApprovalSelect.isSelected();
-
-        // boolean same =
-        //         (priority == MaintenanceTicket.PriorityLevel.valueOf(currentTicket.getPriority()))
-        //                 && (time == MaintenanceTicket.TimeEstimate
-        //                         .valueOf(currentTicket.getTimeToResolve()))
-        //                 && (raiser.equals(currentTicket.getRaisedByEmail()))
-        //                 && (approval == currentTicket.isApprovalRequired());
     }
 
     @FXML
