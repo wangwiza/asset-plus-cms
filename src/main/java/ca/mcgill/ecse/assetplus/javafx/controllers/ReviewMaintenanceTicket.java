@@ -76,7 +76,6 @@ public class ReviewMaintenanceTicket {
         dateField.setValue(ticket.getRaisedOnDate().toLocalDate());
         descriptionField.setText(ticket.getDescription());
         imageField.setText("NOT IMPLEMENTED");
-        assignedField.setText(currentTicket.getFixedByEmail());
         raiserField.setText(currentTicket.getRaisedByEmail());
 
         prioritySelect.setItems(
@@ -85,9 +84,12 @@ public class ReviewMaintenanceTicket {
         timeEstimateSelect.setItems(
                 FXCollections.observableArrayList(MaintenanceTicket.TimeEstimate.values()));
 
-        if (currentTicket.getStatus().equals("Open")){
+        if (currentTicket.getStatus().equals("Open")) {
             return;
         }
+
+        assignedField.setText(currentTicket.getFixedByEmail());
+        assignedField.setDisable(true);
 
         prioritySelect.setDisable(true);
         if (currentTicket.getPriority() != null) {
@@ -127,7 +129,8 @@ public class ReviewMaintenanceTicket {
         boolean approval = requireApprovalSelect.isSelected();
 
         if (currentTicket.getStatus() == "Open" && assignee != null && !assignee.isEmpty()) {
-            AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(currentTicket.getId(), assignee, time, priority, approval);
+            AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(currentTicket.getId(),
+                    assignee, time, priority, approval);
         }
 
         sceneSwitch(ReviewMaintenanceTicketPane, "../pages/TicketsPage.fxml");
