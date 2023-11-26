@@ -3,6 +3,7 @@ package ca.mcgill.ecse.assetplus.javafx.controllers;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet2Controller;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.successful;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.showError;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -38,13 +39,17 @@ public class UpdateAssetTypeController {
 
   @FXML
   void updateAssetTypeClicked(ActionEvent event) {
-    String name = updateName.getText();
-    Integer expectedLifespan = Integer.parseInt(updateExpectedLifespan.getText());
-    if (successful(
-        AssetPlusFeatureSet2Controller.updateAssetType(this.oldName, name, expectedLifespan))) {
-      updateName.setText("");
-      updateExpectedLifespan.setText("");
-      sceneSwitch(updateAssetTypeAnchorPane, "../pages/AssetTypeView.fxml");
+    try {
+      String name = updateName.getText();
+      Integer expectedLifespan = Integer.parseInt(updateExpectedLifespan.getText());
+      if (successful(
+          AssetPlusFeatureSet2Controller.updateAssetType(this.oldName, name, expectedLifespan))) {
+        updateName.setText("");
+        updateExpectedLifespan.setText("");
+        sceneSwitch(updateAssetTypeAnchorPane, "../pages/AssetTypeView.fxml");
+      }
+    } catch (NumberFormatException e) {
+      showError("Invalid number format: " + e.getMessage() + " .Should be an integer.");
     }
   }
 

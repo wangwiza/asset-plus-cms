@@ -42,7 +42,7 @@
                   "description": "The bed needs replacement",
                   "timeToResolve": "ThreeToSevenDays",
                   "priority": "Low",
-                  "status": "InProgress",
+                  "status": "Resolved",
                   "ticketNotes": [
                     {
                       "MaintenanceNote": {
@@ -194,8 +194,8 @@
             ]
           },
           {
-            "name": "asdsads",
-            "expectedLifeSpan": 23132,
+            "name": "sadssaddsadsa",
+            "expectedLifeSpan": 1232312333,
             "assetPlus": {
               "@reference": "../../.."
             },
@@ -204,8 +204,8 @@
             ]
           },
           {
-            "name": "sadssad",
-            "expectedLifeSpan": 12323,
+            "name": "sadasd",
+            "expectedLifeSpan": 333333333,
             "assetPlus": {
               "@reference": "../../.."
             },
@@ -214,13 +214,29 @@
             ]
           },
           {
-            "name": "lamp",
+            "name": "test",
             "expectedLifeSpan": 123,
             "assetPlus": {
               "@reference": "../../.."
             },
             "specificAssets": [
-              ""
+              {
+                "SpecificAsset": {
+                  "assetNumber": 2,
+                  "floorNumber": 123,
+                  "roomNumber": 12345,
+                  "purchaseDate": "2002-11-10",
+                  "assetPlus": {
+                    "@reference": "../../../../.."
+                  },
+                  "maintenanceTickets": [
+                    ""
+                  ],
+                  "assetType": {
+                    "@reference": "../../.."
+                  }
+                }
+              }
             ]
           }
         ]
@@ -228,9 +244,14 @@
     ],
     "specificAssets": [
       {
-        "SpecificAsset": {
-          "@reference": "../../assetTypes/AssetType/specificAssets/SpecificAsset"
-        }
+        "SpecificAsset": [
+          {
+            "@reference": "../../assetTypes/AssetType/specificAssets/SpecificAsset"
+          },
+          {
+            "@reference": "../../assetTypes/AssetType[4]/specificAssets/SpecificAsset"
+          }
+        ]
       }
     ]
   }
