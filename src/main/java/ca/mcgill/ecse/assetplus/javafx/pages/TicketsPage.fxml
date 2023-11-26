@@ -33,7 +33,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="hotelStaffIDTextField" onAction="#sortByStaffIDButton" promptText="staff email" GridPane.columnIndex="2" />
+                  <TextField fx:id="hotelStaffIDTextField" onAction="#sortByStaffIDButton" promptText="hotel staff ID" GridPane.columnIndex="2" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sort by Hotel Staff:" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets />
@@ -43,22 +43,16 @@
             </GridPane>
             <TableView fx:id="ticketsTable" editable="true" prefHeight="590.0" prefWidth="1030.0">
               <columns>
-                <TableColumn fx:id="id" prefWidth="49.13788813352585" text="Ticket ID" />
-                  <TableColumn fx:id="status" prefWidth="42.25361251831055" text="Status" />
-                  <TableColumn fx:id="raisedOnDate" prefWidth="63.93822479248047" text="Raised On Date" />
-                  <TableColumn fx:id="description" prefWidth="58.09832763671875" text="Description" />
-                  <TableColumn fx:id="floorNumber" prefWidth="55.89385986328125" text="Floor Number" />
-                  <TableColumn fx:id="roomNumber" prefWidth="58.236083984375" text="Room Number" />
-                  <TableColumn fx:id="assetName" prefWidth="57.80511474609375" text="Asset Name" />
-                  <TableColumn fx:id="imageURLs" prefWidth="61.35186767578125" text="Image URLs" />
-                  <TableColumn fx:id="raisedByEmail" prefWidth="65.87646484375" text="Ticket Raiser" />
-                  <TableColumn fx:id="priority" prefWidth="45.03643798828125" text="Priority" />
-                  <TableColumn fx:id="fixerEmail" prefWidth="60.78765869140625" text="Ticket Fixer" />
-                  <TableColumn fx:id="timeToResolve" prefWidth="67.56103515625" text="Time to Resolve" />
-                  <TableColumn fx:id="approvalRequired" prefWidth="78.17437744140625" text="Approval Required" />
-                  <TableColumn fx:id="lifeSpan" prefWidth="56.10791015625" text="LifeSpan" />
-                  <TableColumn fx:id="purchaseDate" prefWidth="78.925537109375" text="Purchase Date" />
-                  <TableColumn fx:id="notes" prefWidth="61.83062744140625" text="Notes" />
+                <TableColumn fx:id="id" prefWidth="97.0" text="Ticket ID" />
+                  <TableColumn fx:id="status" prefWidth="107.0" text="Status" />
+                  <TableColumn fx:id="raisedOnDate" prefWidth="67.0" text="Date" />
+                  <TableColumn fx:id="description" prefWidth="90.0" text="Description" />
+                  <TableColumn fx:id="floorNumber" prefWidth="66.0" text="Floor Number" />
+                  <TableColumn fx:id="roomNumber" prefWidth="87.0" text="Room Number" />
+                  <TableColumn fx:id="assetName" prefWidth="87.0" text="Asset Name" />
+                  <TableColumn fx:id="imageURLs" prefWidth="102.0" text="Image URLs" />
+                  <TableColumn fx:id="raisedByEmail" prefWidth="146.0" text="Employee" />
+                  <TableColumn fx:id="priority" prefWidth="84.0" text="Priority" />
               </columns>
             </TableView>
             <GridPane prefHeight="60.0" prefWidth="1030.0">
