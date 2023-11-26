@@ -3,6 +3,7 @@ package ca.mcgill.ecse.assetplus.javafx.controllers;
 
 import java.io.IOException;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.showError;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.successful;
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet1Controller;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet6Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusTicketingController;
 import ca.mcgill.ecse.assetplus.controller.TOMaintenanceNote;
@@ -88,6 +90,12 @@ public class TicketsPageController {
   private Button approveWork;
   private Button addTicketButton;
 
+
+  @FXML
+  private Button deleteButton;
+
+
+
   // For accessing all the maintenance tickets
   ObservableList<TOMaintenanceTicket> maintenanceTicketsList;
 
@@ -149,6 +157,16 @@ public class TicketsPageController {
   }
 
   @FXML
+  void deleteButtonClicked(ActionEvent event) {
+    try {
+      AssetPlusFeatureSet4Controller.deleteMaintenanceTicket(ticketsTable.getSelectionModel().getSelectedItem().getId());
+      refresh();
+    } catch (Exception e) {
+      showError(e.toString());
+    }
+  }
+
+  @FXML
   void startClicked(ActionEvent event) throws IOException {
     Integer ticketId = ticketsTable.getSelectionModel().getSelectedItem().getId();
     if (successful(Util.startTicket(ticketId))) {
@@ -164,7 +182,8 @@ public class TicketsPageController {
   @FXML
   void updateButtonClicked(ActionEvent event) {
     try {
-      FXMLLoader l = new FXMLLoader(getClass().getResource("../pages/ReviewMaintenanceTicket.fxml"));
+      FXMLLoader l =
+          new FXMLLoader(getClass().getResource("../pages/ReviewMaintenanceTicket.fxml"));
       AnchorPane nextPane = (AnchorPane) l.load();
       ReviewMaintenanceTicket c = l.getController();
       c.initialize(ticketsTable.getSelectionModel().getSelectedItem());
@@ -185,12 +204,13 @@ public class TicketsPageController {
   }
 
   @FXML
-  void disapproveSelectedTicket(ActionEvent event) { 
+  void disapproveSelectedTicket(ActionEvent event) {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("../pages/DisapproveWork.fxml"));
       AnchorPane nextAnchorPane = (AnchorPane) loader.load();
       DisapproveWorkController disapproveWorkController = loader.getController();
-      disapproveWorkController.getSelectedTicketID((ticketsTable.getSelectionModel().getSelectedItem()).getId());
+      disapproveWorkController
+          .getSelectedTicketID((ticketsTable.getSelectionModel().getSelectedItem()).getId());
       maintenanceTicketsViewAnchorPane.getChildren().removeAll();
       maintenanceTicketsViewAnchorPane.getChildren().setAll(nextAnchorPane);
     } catch (IOException e) {
@@ -199,10 +219,10 @@ public class TicketsPageController {
   }
 
   @FXML
-  void approveSelectedTicket(ActionEvent event) { 
+  void approveSelectedTicket(ActionEvent event) {
     Integer ticketId = ticketsTable.getSelectionModel().getSelectedItem().getId();
     if (successful(AssetPlusTicketingController.approveWorkOnMaintenanceTicket(ticketId))) {
-      sceneSwitch(maintenanceTicketsViewAnchorPane, "../pages/TicketsPage.fxml"); 
+      sceneSwitch(maintenanceTicketsViewAnchorPane, "../pages/TicketsPage.fxml");
     }
   }
 

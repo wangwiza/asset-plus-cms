@@ -73,12 +73,13 @@
               </rowConstraints>
                <children>
                   <Button fx:id="startButton" mnemonicParsing="false" onAction="#startClicked" text="Start Selected Ticket" GridPane.columnIndex="1" />
-                  <Button fx:id="approveWork" mnemonicParsing="false" onAction="#approveSelectedTicket" text="Approve Work" GridPane.columnIndex="2" />
-                  <Button fx:id="disapproveWork" mnemonicParsing="false" onAction="#disapproveSelectedTicket" text="Disapprove Work" GridPane.columnIndex="3" />
+                  <Button fx:id="approveWork" mnemonicParsing="false" onAction="#approveSelectedTicket" text="Approve Work" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="disapproveWork" mnemonicParsing="false" onAction="#disapproveSelectedTicket" text="Disapprove Work" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   <Button fx:id="completeButton" mnemonicParsing="false" onAction="#completeClicked" text="Complete Selected Ticket" GridPane.rowIndex="1" />
                   <Button fx:id="startButton" mnemonicParsing="false" onAction="#startClicked" text="Start Selected Ticket" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Button fx:id="addTicketButton" mnemonicParsing="false" onAction="#addButtonClicked" text="Add Ticket" />
                   <Button fx:id="updateSelectedButton" mnemonicParsing="false" onAction="#updateButtonClicked" text="Update Selected Ticket" GridPane.columnIndex="1" />
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonClicked" text="Delete Selected Ticket" GridPane.columnIndex="2" />
                </children>
             </GridPane>
          </children>
