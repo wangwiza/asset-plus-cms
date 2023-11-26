@@ -3,9 +3,11 @@ package ca.mcgill.ecse.assetplus.javafx.controllers;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet1Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet6Controller;
+import ca.mcgill.ecse.assetplus.controller.TOMaintenanceNote;
 import ca.mcgill.ecse.assetplus.controller.TOMaintenanceTicket;
 import ca.mcgill.ecse.assetplus.controller.TOUser;
 import ca.mcgill.ecse.assetplus.controller.Util;
@@ -52,11 +54,23 @@ public class TicketsPageController {
   @FXML
   private TableColumn<TOMaintenanceTicket, String> raisedByEmail;
   @FXML
+  private TableColumn<TOMaintenanceTicket, String> fixerEmail;
+  @FXML
   private TableColumn<TOMaintenanceTicket, String> priority;
+  @FXML
+  private TableColumn<TOMaintenanceTicket, String> timeToResolve;
+  @FXML
+  private TableColumn<TOMaintenanceTicket, Boolean> approvalRequired;
+  @FXML
+  private TableColumn<TOMaintenanceTicket, Integer> lifeSpan;
+  @FXML
+  private TableColumn<TOMaintenanceTicket, Date> purchaseDate;
+  @FXML
+  private TableColumn<TOMaintenanceTicket, TOMaintenanceNote> notes;
 
   // Buttons and fields
   @FXML
-  private TextField enteredstaffID;
+  private TextField hotelStaffIDTextField;
   @FXML
   private Button startButton;
   @FXML
@@ -77,6 +91,12 @@ public class TicketsPageController {
     imageURLs.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, List<String>>("imageURLs"));
     raisedByEmail.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, String>("raisedByEmail"));
     priority.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, String>("priority"));
+    fixerEmail.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, String>("fixerEmail"));
+    timeToResolve.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, String>("timeToResolve"));
+    approvalRequired.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, Boolean>("approvalRequired"));
+    lifeSpan.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, Integer>("lifeSpan"));
+    purchaseDate.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, Date>("purchaseDate"));
+    notes.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, TOMaintenanceNote>("notes"));
     ticketsTable.setItems(maintenanceTicketsList);
   }
 
@@ -86,11 +106,21 @@ public class TicketsPageController {
 
   @FXML
   public void sortByStaffIDButton(ActionEvent event) {
-    String staffID = enteredstaffID.getSelectedText();
-    int staffIDInt = Integer.parseInt(staffID);
-    List<TOMaintenanceTicket> sortedTickets = AssetPlusFeatureSet6Controller.getTickets();
-    for (TOMaintenanceTicket ticket : sortedTickets) {
+    String staffID = hotelStaffIDTextField.getText();     // change hotel staff id for the email of the person it's assigned to.
+    if (staffID == ""){
+      refresh();
     }
+    else{
+      int staffIDInt = Integer.parseInt(staffID);
+      List<TOMaintenanceTicket> sortedTickets = new ArrayList<>();
+      for (TOMaintenanceTicket ticket : AssetPlusFeatureSet6Controller.getTickets()) {
+        if (ticket.getId() == staffIDInt){
+          sortedTickets.add(ticket);
+        }
+    }
+    ticketsTable.setItems(FXCollections.observableArrayList(sortedTickets));
+    }
+  
   }
 
   @FXML
