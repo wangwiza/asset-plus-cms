@@ -56,8 +56,8 @@ public class MainPageController {
   }
 
   @FXML
-  public void dashboardTicketsSelected(ActionEvent event) {
-    ticketsPane.toFront();
+  public void dashboardTicketsSelected(ActionEvent event) { 
+    ticketsPane.toFront(); 
   }
 
   @FXML

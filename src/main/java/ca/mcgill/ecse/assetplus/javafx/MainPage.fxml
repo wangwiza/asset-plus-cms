@@ -34,7 +34,7 @@
                         <ToggleGroup fx:id="dashboardGroup1" />
                      </toggleGroup>
                   </ToggleButton>
-                  <ToggleButton fx:id="dashboardTicketsButton" mnemonicParsing="false" onAction="#dashboardTicketsSelected" prefHeight="60.0" prefWidth="260.0" text="Tickets" toggleGroup="$dashboardGroup" />
+                  <ToggleButton fx:id="dashboardTicketsButton" mnemonicParsing="false" onAction="#dashboardViewMaintenanceTicketsSelected" prefHeight="60.0" prefWidth="260.0" text="Tickets" toggleGroup="$dashboardGroup" />
                   <ToggleButton fx:id="dashboardImagesButtom" mnemonicParsing="false" onAction="#dashboardImagesSelected" prefHeight="60.0" prefWidth="260.0" text="Images" toggleGroup="$dashboardGroup" />
                </children>
             </VBox>
@@ -42,7 +42,7 @@
          <center>
             <StackPane BorderPane.alignment="CENTER">
                <children>
-                  <fx:include fx:id="ticketsPane" source="pages/ReviewMaintenanceTicket.fxml" />
+                  <fx:include fx:id="maintenanceTicketsPane" source="pages/TicketsPage.fxml" StackPane.alignment="TOP_CENTER" />
                   <fx:include fx:id="assetTypesPane" source="pages/AssetTypeView.fxml" />
                   <fx:include fx:id="assetsPane" source="pages/AssetView.fxml" />
                   <fx:include fx:id="imagesPane" source="pages/ImagesPage.fxml" />
