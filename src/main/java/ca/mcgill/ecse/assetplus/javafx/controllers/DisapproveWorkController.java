@@ -19,9 +19,6 @@ import java.util.Calendar;
 public class DisapproveWorkController {
 
     private int ticketID;
-    //private Date disapprovalDate;
-    //private String reason;
-
 
     @FXML
     private TextField disapproveWorkComments;
@@ -36,13 +33,13 @@ public class DisapproveWorkController {
     private AnchorPane disapproveWorkAnchorPane;
 
     @FXML
-    void cancelDisapproveWorkClicked(ActionEvent event) { // approveSelectedTicket
+    void cancelDisapproveWorkClicked(ActionEvent event) {
         disapproveWorkComments.setText("");
         sceneSwitch(disapproveWorkAnchorPane, "../pages/TicketsPage.fxml");
     }
 
     @FXML
-    void updateDisapproveWorkClicked(ActionEvent event) { // this is a little sketchy atm
+    void updateDisapproveWorkClicked(ActionEvent event) { 
         String reason = disapproveWorkComments.getText();
         Calendar calendar = Calendar.getInstance();
         java.util.Date currentDate = calendar.getTime();

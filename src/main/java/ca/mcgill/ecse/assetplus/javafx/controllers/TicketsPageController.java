@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet1Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet6Controller;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusTicketingController;
 import ca.mcgill.ecse.assetplus.controller.TOMaintenanceNote;
 import ca.mcgill.ecse.assetplus.controller.TOMaintenanceTicket;
 import ca.mcgill.ecse.assetplus.controller.TOUser;
@@ -184,14 +185,12 @@ public class TicketsPageController {
   }
 
   @FXML
-  void disapproveSelectedTicket(ActionEvent event) { // not fully done yet
+  void disapproveSelectedTicket(ActionEvent event) { 
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("../pages/DisapproveWork.fxml"));
       AnchorPane nextAnchorPane = (AnchorPane) loader.load();
       DisapproveWorkController disapproveWorkController = loader.getController();
-      disapproveWorkController
-          .getSelectedTicketID((ticketsTable.getSelectionModel().getSelectedItem()).getId());
-
+      disapproveWorkController.getSelectedTicketID((ticketsTable.getSelectionModel().getSelectedItem()).getId());
       maintenanceTicketsViewAnchorPane.getChildren().removeAll();
       maintenanceTicketsViewAnchorPane.getChildren().setAll(nextAnchorPane);
     } catch (IOException e) {
@@ -200,8 +199,11 @@ public class TicketsPageController {
   }
 
   @FXML
-  void approveSelectedTicket(ActionEvent event) { // Not done yet
-    // change the ticket status
+  void approveSelectedTicket(ActionEvent event) { 
+    Integer ticketId = ticketsTable.getSelectionModel().getSelectedItem().getId();
+    if (successful(AssetPlusTicketingController.approveWorkOnMaintenanceTicket(ticketId))) {
+      sceneSwitch(maintenanceTicketsViewAnchorPane, "../pages/TicketsPage.fxml"); 
+    }
   }
 
 }
