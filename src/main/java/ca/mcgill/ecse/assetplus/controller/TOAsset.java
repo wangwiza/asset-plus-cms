@@ -37,7 +37,7 @@ public class TOAsset
 
   public static TOAsset getAssetFromTicket(int id) {
     SpecificAsset a = MaintenanceTicket.getWithId(id).getAsset();
-    return new TOAsset(a.getAssetNumber(), a.getAssetType(), a.getFloorNumber(), a.getRoomNumber(), a.getPurchaseDate());
+    return new TOAsset(a.getAssetNumber(), a.getAssetType().getName(), a.getFloorNumber(), a.getRoomNumber(), a.getPurchaseDate());
   }
 
   public static ArrayList<TOAsset> getAllAssets() {
@@ -59,7 +59,6 @@ public class TOAsset
 }
 
   public boolean setAssetType(String aAssetType)
-  public boolean setAssetType(AssetType aAssetType)
   {
     boolean wasSet = false;
     assetType = aAssetType;
