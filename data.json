@@ -14,7 +14,7 @@
                   "id": 2,
                   "raisedOnDate": "2023-07-10",
                   "description": "The lamp is sometimes flickering",
-                  "status": "Open",
+                  "status": "Closed",
                   "ticketNotes": [
                     ""
                   ],
@@ -42,7 +42,7 @@
                   "description": "The bed needs replacement",
                   "timeToResolve": "ThreeToSevenDays",
                   "priority": "Low",
-                  "status": "InProgress",
+                  "status": "Resolved",
                   "ticketNotes": [
                     ""
                   ],
@@ -152,7 +152,7 @@
       {
         "AssetType": [
           {
-            "name": "lampz",
+            "name": "sdasd",
             "expectedLifeSpan": 18000,
             "assetPlus": {
               "@reference": "../../.."
@@ -178,7 +178,7 @@
             ]
           },
           {
-            "name": "ssdds",
+            "name": "asdsads",
             "expectedLifeSpan": 23132,
             "assetPlus": {
               "@reference": "../../.."
@@ -190,6 +190,16 @@
           {
             "name": "sadssad",
             "expectedLifeSpan": 12323,
+            "assetPlus": {
+              "@reference": "../../.."
+            },
+            "specificAssets": [
+              ""
+            ]
+          },
+          {
+            "name": "lamp",
+            "expectedLifeSpan": 123,
             "assetPlus": {
               "@reference": "../../.."
             },

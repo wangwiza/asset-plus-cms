@@ -72,12 +72,12 @@ public class Util {
     AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(ticketId, employeeEmail, selectedTimeEstimate, selectedPriority, requiresApproval);
   }
 
-  public static void startTicket(int ticketId) {
-    AssetPlusTicketingController.startWorkOnMaintenanceTicket(ticketId);
+  public static String startTicket(int ticketId) {
+    return AssetPlusTicketingController.startWorkOnMaintenanceTicket(ticketId);
   }
 
-  public static void completeTicket(int ticketId) {
-    AssetPlusTicketingController.completeWorkOnMaintenanceTicket(ticketId);
+  public static String completeTicket(int ticketId) {
+    return AssetPlusTicketingController.completeWorkOnMaintenanceTicket(ticketId);
   }
 
   public static List<String> getTimeEstimate() {

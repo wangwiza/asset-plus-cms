@@ -1,6 +1,9 @@
 // package ca.mcgill.ecse.assetplus.controller;
 package ca.mcgill.ecse.assetplus.javafx.controllers;
 
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.successful;
+import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -34,7 +37,7 @@ public class TicketsPageController {
   @FXML
   private TableView<TOMaintenanceTicket> ticketsTable;
   @FXML
-  private TableColumn<TOMaintenanceTicket, Integer> id; 
+  private TableColumn<TOMaintenanceTicket, Integer> id;
   @FXML
   private TableColumn<TOMaintenanceTicket, String> status;
   @FXML
@@ -66,23 +69,31 @@ public class TicketsPageController {
   ObservableList<TOMaintenanceTicket> maintenanceTicketsList;
 
   public void refresh() {
-    maintenanceTicketsList = FXCollections.observableArrayList(AssetPlusFeatureSet6Controller.getTickets());
+    maintenanceTicketsList =
+        FXCollections.observableArrayList(AssetPlusFeatureSet6Controller.getTickets());
     id.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, Integer>("id"));
     status.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, String>("status"));
-    raisedOnDate.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, Date>("raisedOnDate"));
-    description.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, String>("description"));
-    floorNumber.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, Integer>("floorNumber"));
-    roomNumber.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, Integer>("roomNumber"));
-    assetName.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, String>("assetName"));
-    imageURLs.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, List<String>>("imageURLs"));
-    raisedByEmail.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, String>("raisedByEmail"));
+    raisedOnDate
+        .setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, Date>("raisedOnDate"));
+    description
+        .setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, String>("description"));
+    floorNumber
+        .setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, Integer>("floorNumber"));
+    roomNumber
+        .setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, Integer>("roomNumber"));
+    assetName
+        .setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, String>("assetName"));
+    imageURLs.setCellValueFactory(
+        new PropertyValueFactory<TOMaintenanceTicket, List<String>>("imageURLs"));
+    raisedByEmail.setCellValueFactory(
+        new PropertyValueFactory<TOMaintenanceTicket, String>("raisedByEmail"));
     priority.setCellValueFactory(new PropertyValueFactory<TOMaintenanceTicket, String>("priority"));
     ticketsTable.setItems(maintenanceTicketsList);
   }
 
   public void initialize() {
     refresh();
-}
+  }
 
   @FXML
   public void sortByStaffIDButton(ActionEvent event) {
@@ -94,41 +105,19 @@ public class TicketsPageController {
   }
 
   @FXML
-  void startClicked(ActionEvent event) {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("../pages/TicketsPage.fxml"));
-    // AnchorPane nextAnchorPane = (AnchorPane) loader.load();
+  void startClicked(ActionEvent event) throws IOException {
     Integer ticketId = ticketsTable.getSelectionModel().getSelectedItem().getId();
-
-    Util.startTicket(ticketId);
-
-    // UpdateUserController startTicketController = loader.getController();
-    // updateUserController.setEmail((userTableView.getSelectionModel().getSelectedItem()).getEmail());
-    // updateUserController.setName((userTableView.getSelectionModel().getSelectedItem()).getName());
-    // updateUserController
-    // .setPassword((userTableView.getSelectionModel().getSelectedItem()).getPassword());
-    // updateUserController
-    // .setPhone((userTableView.getSelectionModel().getSelectedItem()).getPhoneNumber());
-    // startTicketController.getChildren().removeAll();
-    // startTicketController.getChildren().setAll(nextAnchorPane);
+    if (successful(Util.startTicket(ticketId))) {
+      sceneSwitch(maintenanceTicketsViewAnchorPane, "../pages/TicketsPage.fxml");
+    }
   }
 
   @FXML
   void completeClicked(ActionEvent event) {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("../pages/TicketsPage.fxml"));
-    // AnchorPane nextAnchorPane = (AnchorPane) loader.load();
     Integer ticketId = ticketsTable.getSelectionModel().getSelectedItem().getId();
-
-    Util.completeTicket(ticketId);
-
-    // UpdateUserController startTicketController = loader.getController();
-    // updateUserController.setEmail((userTableView.getSelectionModel().getSelectedItem()).getEmail());
-    // updateUserController.setName((userTableView.getSelectionModel().getSelectedItem()).getName());
-    // updateUserController
-    // .setPassword((userTableView.getSelectionModel().getSelectedItem()).getPassword());
-    // updateUserController
-    // .setPhone((userTableView.getSelectionModel().getSelectedItem()).getPhoneNumber());
-    // startTicketController.getChildren().removeAll();
-    // startTicketController.getChildren().setAll(nextAnchorPane);
+    if (successful(Util.completeTicket(ticketId))) {
+      sceneSwitch(maintenanceTicketsViewAnchorPane, "../pages/TicketsPage.fxml");
+    }
   }
 
 }
