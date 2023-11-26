@@ -79,7 +79,7 @@ public class AssetPlusFeatureSet6Controller {
       String thePriority = null;
       if (maintenanceticket.hasTicketFixer()){
         fixerEmail = maintenanceticket.getTicketFixer().getEmail(); 
-        timeToResolve = null;
+        timeToResolve = maintenanceticket.getTimeToResolve().name();;
         priority = maintenanceticket.getPriority(); 
         thePriority = priority.name();
       }
