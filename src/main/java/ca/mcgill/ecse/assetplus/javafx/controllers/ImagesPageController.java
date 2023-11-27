@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
-public class TicketImageController {
+public class ImagesPageController {
 
   @FXML
   private AnchorPane imageAnchorPane;
