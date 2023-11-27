@@ -44,20 +44,19 @@ public class ImagesPageController {
 
 
   @FXML
-  public void regDoClear(ActionEvent event) {
+  public void addDoClear(ActionEvent event) {
     addDoClear();
   }
 
 
   @FXML
-  public void regDoUpdateCost(ActionEvent event) {
+  public void delDoClear(ActionEvent event) {
     delDoClear();
   }
 
 
   @FXML
   public void doAddImage(ActionEvent event) {
-    ViewUtils.makePopupWindow("booyah", "adding image");
     try {
       String imageURL = addImageUrlField.getText();
       Integer ticketID = Integer.parseInt(addTicketIdField.getText());
@@ -75,7 +74,13 @@ public class ImagesPageController {
   @FXML
   public void addDoDone(ActionEvent event) {
     addDoClear();
-    ViewUtils.sceneSwitch(imageAnchorPane, "../pages/TicketsView.fxml");
+    ViewUtils.sceneSwitch(imageAnchorPane, "../pages/TicketsPage.fxml");
+  }
+
+  @FXML
+  public void delDoDone(ActionEvent event) {
+    delDoClear();
+    ViewUtils.sceneSwitch(imageAnchorPane, "../pages/TicketsPage.fxml");
   }
 
   private void addDoClear() {

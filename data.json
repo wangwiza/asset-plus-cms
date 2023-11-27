@@ -19,7 +19,14 @@
                     ""
                   ],
                   "ticketImages": [
-                    ""
+                    {
+                      "TicketImage": {
+                        "imageURL": "https://hihi",
+                        "ticket": {
+                          "@reference": "../../.."
+                        }
+                      }
+                    }
                   ],
                   "assetPlus": {
                     "@reference": "../../../../.."
@@ -89,7 +96,14 @@
                     }
                   ],
                   "ticketImages": [
-                    ""
+                    {
+                      "TicketImage": {
+                        "imageURL": "https://haha",
+                        "ticket": {
+                          "@reference": "../../.."
+                        }
+                      }
+                    }
                   ],
                   "assetPlus": {
                     "@reference": "../../../../.."

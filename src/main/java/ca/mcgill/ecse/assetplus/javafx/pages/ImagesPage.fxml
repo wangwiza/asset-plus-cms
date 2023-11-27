@@ -62,13 +62,13 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Button fx:id="addImageButton" mnemonicParsing="false" text="Add Image" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                                    <Button fx:id="addClearButton" mnemonicParsing="false" text="Clear All Fields">
+                                    <Button fx:id="addImageButton" mnemonicParsing="false" onAction="#doAddImage" text="Add Image" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <Button fx:id="addClearButton" mnemonicParsing="false" onAction="#addDoClear" text="Clear All Fields">
                                        <GridPane.margin>
                                           <Insets left="50.0" />
                                        </GridPane.margin>
                                     </Button>
-                                    <Button fx:id="addDoneButton" mnemonicParsing="false" text="Done" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+                                    <Button fx:id="addDoneButton" mnemonicParsing="false" onAction="#addDoDone" text="Done" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                                        <GridPane.margin>
                                           <Insets right="50.0" />
                                        </GridPane.margin>
@@ -128,12 +128,12 @@
                                  </rowConstraints>
                                  <children>
                                     <Button fx:id="deleteImageButton" mnemonicParsing="false" text="Delete Image" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                                    <Button fx:id="delClearButton" mnemonicParsing="false" text="Clear All Fields">
+                                    <Button fx:id="delClearButton" mnemonicParsing="false" onAction="#delDoClear" text="Clear All Fields">
                                        <GridPane.margin>
                                           <Insets left="50.0" />
                                        </GridPane.margin>
                                     </Button>
-                                    <Button fx:id="delDoneButton" mnemonicParsing="false" text="Done" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+                                    <Button fx:id="delDoneButton" mnemonicParsing="false" onAction="#delDoDone" text="Done" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                                        <GridPane.margin>
                                           <Insets right="50.0" />
                                        </GridPane.margin>

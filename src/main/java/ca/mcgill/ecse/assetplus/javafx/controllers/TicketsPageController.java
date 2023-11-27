@@ -91,10 +91,13 @@ public class TicketsPageController {
   @FXML
   private Button approveWork;
   private Button addTicketButton;
-
+  
 
   @FXML
   private Button deleteButton;
+  @FXML
+  private Button imagesButton;
+
 
 
 
@@ -244,6 +247,10 @@ public class TicketsPageController {
     }
   }
 
+  @FXML
+  void goAddDelImage(ActionEvent event) {
+      sceneSwitch(maintenanceTicketsViewAnchorPane, "../pages/ImagesPage.fxml");
+  }
 }
 
 
