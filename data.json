@@ -96,14 +96,7 @@
                     }
                   ],
                   "ticketImages": [
-                    {
-                      "TicketImage": {
-                        "imageURL": "https://haha",
-                        "ticket": {
-                          "@reference": "../../.."
-                        }
-                      }
-                    }
+                    ""
                   ],
                   "assetPlus": {
                     "@reference": "../../../../.."

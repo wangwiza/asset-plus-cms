@@ -127,7 +127,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <Button fx:id="deleteImageButton" mnemonicParsing="false" text="Delete Image" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                    <Button fx:id="deleteImageButton" mnemonicParsing="false" onAction="#doDelImage" text="Delete Image" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                     <Button fx:id="delClearButton" mnemonicParsing="false" onAction="#delDoClear" text="Clear All Fields">
                                        <GridPane.margin>
                                           <Insets left="50.0" />

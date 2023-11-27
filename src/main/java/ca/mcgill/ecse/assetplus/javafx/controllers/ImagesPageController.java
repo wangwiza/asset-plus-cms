@@ -72,6 +72,21 @@ public class ImagesPageController {
   }
 
   @FXML
+  public void doDelImage(ActionEvent event) {
+    try {
+      String imageURL = delImageUrlField.getText();
+      Integer ticketID = Integer.parseInt(delTicketIdField.getText());
+      AssetPlusFeatureSet5Controller.deleteImageFromMaintenanceTicket(imageURL, ticketID);
+      delDoClear();
+
+    } catch (NumberFormatException e) {
+      ViewUtils.showError("Invalid number format: " + e.getMessage() + " .Should be an integer.");
+    } catch (RuntimeException e) {
+      ViewUtils.showError(e.getMessage());
+    }
+  }
+
+  @FXML
   public void addDoDone(ActionEvent event) {
     addDoClear();
     ViewUtils.sceneSwitch(imageAnchorPane, "../pages/TicketsPage.fxml");
