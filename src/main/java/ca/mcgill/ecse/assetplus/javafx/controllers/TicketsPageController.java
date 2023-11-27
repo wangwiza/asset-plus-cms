@@ -77,6 +77,8 @@ public class TicketsPageController {
   // Buttons and fields
   @FXML
   private TextField hotelStaffIDTextField;
+  @FXML 
+  private DatePicker datePicker;
   private Button updateSelectedButton;
   @FXML
   private TextField enteredstaffID;
@@ -138,24 +140,40 @@ public class TicketsPageController {
   }
 
   @FXML
-  public void sortByStaffIDButton(ActionEvent event) { // Not sorting by assigned employee yet
+  public void sortByStaffIDButton(ActionEvent event) { 
     String staffIdentifier = hotelStaffIDTextField.getText();
     if (staffIdentifier == "") {
       refresh();
     } else {
-      // int staffIDInt = Integer.parseInt(staffIdentifier);
       List<TOMaintenanceTicket> sortedTickets = new ArrayList<>();
       for (TOMaintenanceTicket ticket : AssetPlusFeatureSet6Controller.getTickets()) {
-        String theEmail = ticket.getRaisedByEmail();
+        String theEmail = ticket.getFixedByEmail(); // doesnt have a fixer...?
         if (theEmail.equals(staffIdentifier)) {
           sortedTickets.add(ticket);
         }
-
       }
       ticketsTable.setItems(FXCollections.observableArrayList(sortedTickets));
     }
   }
-
+  @FXML
+  public void sortByDate(ActionEvent event) { 
+    LocalDate selectedDate = datePicker.getValue();
+    if (selectedDate == null) {
+      ViewUtils.showError("Please select a valid date");
+    }
+    else{
+      var date = Date.valueOf(selectedDate);
+      List<TOMaintenanceTicket> sortedTickets = new ArrayList<>();
+      for (TOMaintenanceTicket ticket : AssetPlusFeatureSet6Controller.getTickets()) {
+        Date theDate = ticket.getRaisedOnDate();
+        if (theDate.equals(date)) {
+          sortedTickets.add(ticket);
+        }
+      }
+      ticketsTable.setItems(FXCollections.observableArrayList(sortedTickets));
+    }    
+  }
+  
   @FXML
   void deleteButtonClicked(ActionEvent event) {
     try {
