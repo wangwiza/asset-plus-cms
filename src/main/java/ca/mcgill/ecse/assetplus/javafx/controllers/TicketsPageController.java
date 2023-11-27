@@ -150,10 +150,11 @@ public class TicketsPageController {
     } else {
       List<TOMaintenanceTicket> sortedTickets = new ArrayList<>();
       for (TOMaintenanceTicket ticket : AssetPlusFeatureSet6Controller.getTickets()) {
-        String theEmail = ticket.getFixedByEmail(); // doesnt have a fixer...?
+        String theEmail = ticket.getFixedByEmail(); 
+        if (theEmail != null){
         if (theEmail.equals(staffIdentifier)) {
           sortedTickets.add(ticket);
-        }
+        }}
       }
       ticketsTable.setItems(FXCollections.observableArrayList(sortedTickets));
     }
