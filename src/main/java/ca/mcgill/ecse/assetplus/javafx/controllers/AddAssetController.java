@@ -17,6 +17,9 @@ import javafx.scene.layout.AnchorPane;
 public class AddAssetController {
 
     @FXML
+    private TextField addAssetNumber;
+
+    @FXML
     private TextField addAssetType;
 
     @FXML
@@ -38,22 +41,16 @@ public class AddAssetController {
     private AnchorPane addAssetAnchorPane;
 
     @FXML
-    private Integer newAssetNumber;
-
-    @FXML
-    public void initialize() {
-        this.newAssetNumber = TOAsset.getNextAssetNumber();
-    }
-
-    @FXML
     void addAssetClicked(ActionEvent event) {
         try {
+            Integer assetNumber = Integer.parseInt(addAssetNumber.getText());
             String assetType = addAssetType.getText();
             Integer floorNumber = Integer.parseInt(addFloorNumber.getText());
             Integer roomNumber = Integer.parseInt(addRoomNumber.getText());
             Date purchaseDate = Date.valueOf(addPurchaseDate.getText());
 
-            if (successful(AssetPlusFeatureSet3Controller.addSpecificAsset(newAssetNumber, floorNumber, roomNumber, purchaseDate, assetType))) {
+            if (successful(AssetPlusFeatureSet3Controller.addSpecificAsset(assetNumber, floorNumber, roomNumber, purchaseDate, assetType))) {
+                addAssetNumber.setText("");
                 addAssetType.setText("");
                 addFloorNumber.setText("");
                 addRoomNumber.setText("");
@@ -69,6 +66,7 @@ public class AddAssetController {
 
     @FXML
     void cancelAddAssetClicked(ActionEvent event) {
+            addAssetNumber.setText("");
             addAssetType.setText("");
             addFloorNumber.setText("");
             addRoomNumber.setText("");
