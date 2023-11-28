@@ -10,9 +10,11 @@ import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.showError;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import java.time.LocalDate;
 
 public class AddAssetController {
 
@@ -29,7 +31,7 @@ public class AddAssetController {
     private TextField addRoomNumber;
 
     @FXML
-    private TextField addPurchaseDate;
+    private DatePicker addPurchaseDate;
 
     @FXML
     private Button addAsset;
@@ -47,21 +49,19 @@ public class AddAssetController {
             String assetType = addAssetType.getText();
             Integer floorNumber = Integer.parseInt(addFloorNumber.getText());
             Integer roomNumber = addRoomNumber.getText() != null && !addRoomNumber.getText().isEmpty() ? Integer.parseInt(addRoomNumber.getText()) : -1;
-            Date purchaseDate = Date.valueOf(addPurchaseDate.getText());
+            Date purchaseDate = Date.valueOf(addPurchaseDate.getValue());
 
             if (successful(AssetPlusFeatureSet3Controller.addSpecificAsset(assetNumber, floorNumber, roomNumber, purchaseDate, assetType))) {
                 addAssetNumber.setText("");
                 addAssetType.setText("");
                 addFloorNumber.setText("");
                 addRoomNumber.setText("");
-                addPurchaseDate.setText("");
+                addPurchaseDate.setValue(LocalDate.now());
                 sceneSwitch(addAssetAnchorPane, "../pages/AssetView.fxml");
             }
         } catch (NumberFormatException e) {
             showError("Invalid number format: " + e.getMessage() + " .Should be an integer.");
-        } catch (IllegalArgumentException e) {
-            showError("Invalid date format. Correct format should be: YYYY-MM-DD.");
-        }
+        } 
     }
 
     @FXML
@@ -70,7 +70,7 @@ public class AddAssetController {
             addAssetType.setText("");
             addFloorNumber.setText("");
             addRoomNumber.setText("");
-            addPurchaseDate.setText("");
+            addPurchaseDate.setValue(LocalDate.now());
             sceneSwitch(addAssetAnchorPane, "../pages/AssetView.fxml");
     }
 

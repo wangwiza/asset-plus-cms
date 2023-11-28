@@ -2,16 +2,21 @@ package ca.mcgill.ecse.assetplus.javafx.controllers;
 
 
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.showError;
 import ca.mcgill.ecse.assetplus.javafx.AssetPlusFxmlView;
 import ca.mcgill.ecse.assetplus.javafx.controllers.UpdateAssetController;
 import ca.mcgill.ecse.assetplus.model.AssetType;
+import ca.mcgill.ecse.assetplus.model.SpecificAsset;
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet3Controller;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet6Controller;
 import ca.mcgill.ecse.assetplus.controller.TOAsset;
 import ca.mcgill.ecse.assetplus.controller.TOMaintenanceTicket;
@@ -62,6 +67,8 @@ public class AssetViewController {
 
     ObservableList<TOAsset> AssetList = FXCollections.observableArrayList(TOAsset.getAllAssets());
 
+    ObservableList<TOMaintenanceTicket> maintenanceTicketsList = FXCollections.observableArrayList(AssetPlusFeatureSet6Controller.getTickets());
+
     public void refresh() {
         assetNumber.setCellValueFactory(new PropertyValueFactory<TOAsset, Integer>("assetNumber"));
         assetType.setCellValueFactory(new PropertyValueFactory<TOAsset, String>("assetType"));
@@ -87,9 +94,27 @@ public class AssetViewController {
 
     @FXML
     void deleteAssetClicked(ActionEvent event) {
-        TOAsset selectedAsset = assetTableView.getSelectionModel().getSelectedItem();
-        AssetPlusFeatureSet3Controller.deleteSpecificAsset(selectedAsset.getAssetNumber());
-        sceneSwitch(assetViewAnchorPane, "../pages/AssetView.fxml");
+        try {
+            TOAsset selectedAsset = assetTableView.getSelectionModel().getSelectedItem();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../pages/TicketsPage.fxml"));
+            AnchorPane nextAnchorPane = (AnchorPane) loader.load();
+            TicketsPageController ticketsPageController = loader.getController();
+
+            for (TOMaintenanceTicket ticket : ticketsPageController.getAllTickets()){
+                if(ticket.getAssetName() != null && ticket.getAssetName().equals(selectedAsset.getAssetType()) &&
+                    ticket.getFloorNumber() == (selectedAsset.getFloorNumber()) &&
+                    ticket.getRoomNumber() == (selectedAsset.getRoomNumber())) {
+                        AssetPlusFeatureSet4Controller.deleteMaintenanceTicket(ticket.getId());
+                    }
+            }
+
+            ticketsPageController.refresh();
+            AssetPlusFeatureSet3Controller.deleteSpecificAsset(selectedAsset.getAssetNumber());
+            
+            sceneSwitch(assetViewAnchorPane, "../pages/AssetView.fxml");
+        } catch (Exception e) {
+            e.printStackTrace();
+          }
     }
 
 

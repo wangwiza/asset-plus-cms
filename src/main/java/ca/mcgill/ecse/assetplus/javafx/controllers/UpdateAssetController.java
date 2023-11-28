@@ -8,8 +8,11 @@ import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.showError;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import java.time.LocalDate;
+
 
 public class UpdateAssetController {
 
@@ -23,7 +26,7 @@ public class UpdateAssetController {
     private TextField updateRoomNumber;
 
     @FXML
-    private TextField updatePurchaseDate;
+    private DatePicker updatePurchaseDate;
 
     @FXML
     private Button cancelUpdateAsset;
@@ -38,11 +41,14 @@ public class UpdateAssetController {
     private Integer assetNumber;
 
     @FXML
+    private LocalDate originalDate;
+
+    @FXML
     void cancelUpdateAssetClicked(ActionEvent event) {
         updateAssetType.setText("");
         updateFloorNumber.setText("");
         updateRoomNumber.setText("");
-        updatePurchaseDate.setText("");
+        updatePurchaseDate.setValue(this.originalDate);
         sceneSwitch(updateAssetAnchorPane, "../pages/AssetView.fxml");
     }
 
@@ -52,20 +58,20 @@ public class UpdateAssetController {
             String assetType = updateAssetType.getText();
             int floorNumber = Integer.parseInt(updateFloorNumber.getText());
             Integer roomNumber = updateRoomNumber.getText() != null && !updateRoomNumber.getText().isEmpty() ? Integer.parseInt(updateRoomNumber.getText()) : -1;
-            Date purchaseDate = Date.valueOf(updatePurchaseDate.getText());
-
+            Date purchaseDate = Date.valueOf(updatePurchaseDate.getValue());
             if (successful(AssetPlusFeatureSet3Controller.updateSpecificAsset(this.assetNumber, floorNumber, roomNumber, purchaseDate, assetType))) {
                 updateAssetType.setText("");
                 updateFloorNumber.setText("");
                 updateRoomNumber.setText("");
-                updatePurchaseDate.setText("");
+                updatePurchaseDate.setValue(LocalDate.now());
                 sceneSwitch(updateAssetAnchorPane, "../pages/AssetView.fxml");
             }
         } catch (NumberFormatException e) {
             showError("Invalid number format: " + e.getMessage() + " .Should be an integer.");
-        } catch (IllegalArgumentException e) {
-            showError("Invalid date format. Correct format should be: YYYY-MM-DD.");
-        }
+        } 
+        // catch (IllegalArgumentException e) {
+        //     showError("Invalid date format. Correct format should be: YYYY-MM-DD.");
+        // }
     }
 
     public void setAssetType(String assetType) {
@@ -82,9 +88,9 @@ public class UpdateAssetController {
 
     public void setPurchaseDate(Date purchaseDate) {
       if (purchaseDate != null) {
-        updatePurchaseDate.setText(purchaseDate.toString());
+        updatePurchaseDate.setValue(purchaseDate.toLocalDate());
     } else {
-        updatePurchaseDate.setText("");
+        updatePurchaseDate.setValue(this.originalDate);
     }
     }
 
