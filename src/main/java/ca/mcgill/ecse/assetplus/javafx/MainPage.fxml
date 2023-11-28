@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -33,6 +34,16 @@
                </children>
             </VBox>
          </left>
+         <center>
+            <StackPane BorderPane.alignment="CENTER">
+               <children>
+                  <fx:include fx:id="maintenanceTicketsPane" source="pages/TicketsPage.fxml" StackPane.alignment="TOP_CENTER" />
+                  <fx:include fx:id="assetTypesPane" source="pages/AssetTypeView.fxml" />
+                  <fx:include fx:id="assetsPane" source="pages/AssetView.fxml" />
+                  <fx:include fx:id="usersPane" source="pages/UserView.fxml" StackPane.alignment="TOP_CENTER" />
+
+               </children></StackPane>
+         </center>
          <bottom>
             <VBox prefHeight="30.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
                <children>
@@ -41,9 +52,6 @@
                </children>
             </VBox>
          </bottom>
-         <center>
-            <AnchorPane fx:id="viewAnchorPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-         </center>
       </BorderPane>
    </children>
 </AnchorPane>
