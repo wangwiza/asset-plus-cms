@@ -1,5 +1,6 @@
 package ca.mcgill.ecse.assetplus.javafx.controllers;
 
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.showError;
 import java.util.ArrayList;
 import ca.mcgill.ecse.assetplus.controller.TOUser;
 import ca.mcgill.ecse.assetplus.controller.Util;
@@ -34,6 +35,10 @@ public class AssignController {
     @FXML
     void assignClicked(ActionEvent event) {
         String email = assignedHotelStaffSelect.getValue().getEmail();
+        if (!email.substring(email.length()-7).equals("@ap.com")) {
+            showError("Ticket fixer must be an a hotel staff.");
+            return;
+        }
         String time = timeEstimateSelect.getValue();
         String priority = prioritySelect.getValue();
         int id = Integer.valueOf(ticketIDUpdate.getText(),10);

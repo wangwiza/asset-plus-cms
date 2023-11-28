@@ -133,11 +133,19 @@ public class ReviewMaintenanceTicket {
         boolean approval = requireApprovalSelect.isSelected();
 
         if (currentTicket.getStatus() == "Open" && assignee != null && !assignee.isEmpty()) {
-            AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(currentTicket.getId(),
-                    assignee, time, priority, approval);
+            if (!assignee.substring(assignee.length()-7).equals("@ap.com")) {
+                showError("Ticket fixer must be an a hotel staff.");
+                return;
+            }
+            if(successful(AssetPlusTicketingController.assignHotelStaffToMaintenanceTicket(currentTicket.getId(),
+                assignee, time, priority, approval))) {
+                    sceneSwitch(ReviewMaintenanceTicketPane, "../pages/TicketsPage.fxml");
+                }
         }
-
-        sceneSwitch(ReviewMaintenanceTicketPane, "../pages/TicketsPage.fxml");
+        else {
+            sceneSwitch(ReviewMaintenanceTicketPane, "../pages/TicketsPage.fxml");
+        }
+        
     }
 
     @FXML
