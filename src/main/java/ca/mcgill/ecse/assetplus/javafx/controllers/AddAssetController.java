@@ -46,7 +46,7 @@ public class AddAssetController {
             Integer assetNumber = Integer.parseInt(addAssetNumber.getText());
             String assetType = addAssetType.getText();
             Integer floorNumber = Integer.parseInt(addFloorNumber.getText());
-            Integer roomNumber = Integer.parseInt(addRoomNumber.getText());
+            Integer roomNumber = addRoomNumber.getText() != null && !addRoomNumber.getText().isEmpty() ? Integer.parseInt(addRoomNumber.getText()) : -1;
             Date purchaseDate = Date.valueOf(addPurchaseDate.getText());
 
             if (successful(AssetPlusFeatureSet3Controller.addSpecificAsset(assetNumber, floorNumber, roomNumber, purchaseDate, assetType))) {
