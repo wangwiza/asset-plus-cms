@@ -8,11 +8,13 @@ import ca.mcgill.ecse.assetplus.model.AssetType;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Collections;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet3Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet6Controller;
 import ca.mcgill.ecse.assetplus.controller.TOAsset;
+import ca.mcgill.ecse.assetplus.controller.TOMaintenanceTicket;
 import ca.mcgill.ecse.assetplus.controller.TOUser;
 import ca.mcgill.ecse.assetplus.controller.Util;
 import javafx.collections.FXCollections;
@@ -58,9 +60,7 @@ public class AssetViewController {
     @FXML
     private AnchorPane assetViewAnchorPane;
 
-    ObservableList<TOAsset> AssetList = FXCollections.observableArrayList(
-        TOAsset.getAllAssets()
-    );
+    ObservableList<TOAsset> AssetList = FXCollections.observableArrayList(TOAsset.getAllAssets());
 
     public void refresh() {
         assetNumber.setCellValueFactory(new PropertyValueFactory<TOAsset, Integer>("assetNumber"));
@@ -75,13 +75,16 @@ public class AssetViewController {
         refresh();
     }
 
+    public List<TOAsset> getAllAssets() {
+        return new ArrayList<>(AssetList);
+    }
 
     @FXML
     void addAssetClicked(ActionEvent event) {
         sceneSwitch(assetViewAnchorPane, "../pages/AddAsset.fxml");
     }
 
-    
+
     @FXML
     void deleteAssetClicked(ActionEvent event) {
         TOAsset selectedAsset = assetTableView.getSelectionModel().getSelectedItem();
@@ -89,18 +92,23 @@ public class AssetViewController {
         sceneSwitch(assetViewAnchorPane, "../pages/AssetView.fxml");
     }
 
-    
+
     @FXML
     void updateAssetClicked(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../pages/UpdateAsset.fxml"));
             AnchorPane nextAnchorPane = (AnchorPane) loader.load();
             UpdateAssetController updateAssetController = loader.getController();
-            updateAssetController.setAssetNumber((assetTableView.getSelectionModel().getSelectedItem()).getAssetNumber());
-            updateAssetController.setAssetType((assetTableView.getSelectionModel().getSelectedItem()).getAssetType());
-            updateAssetController.setFloorNumber((assetTableView.getSelectionModel().getSelectedItem()).getFloorNumber());
-            updateAssetController.setRoomNumber((assetTableView.getSelectionModel().getSelectedItem()).getRoomNumber());
-            updateAssetController.setPurchaseDate((assetTableView.getSelectionModel().getSelectedItem()).getPurchaseDate());
+            updateAssetController.setAssetNumber(
+                    (assetTableView.getSelectionModel().getSelectedItem()).getAssetNumber());
+            updateAssetController.setAssetType(
+                    (assetTableView.getSelectionModel().getSelectedItem()).getAssetType());
+            updateAssetController.setFloorNumber(
+                    (assetTableView.getSelectionModel().getSelectedItem()).getFloorNumber());
+            updateAssetController.setRoomNumber(
+                    (assetTableView.getSelectionModel().getSelectedItem()).getRoomNumber());
+            updateAssetController.setPurchaseDate(
+                    (assetTableView.getSelectionModel().getSelectedItem()).getPurchaseDate());
             assetViewAnchorPane.getChildren().removeAll();
             assetViewAnchorPane.getChildren().setAll(nextAnchorPane);
         } catch (IOException e) {

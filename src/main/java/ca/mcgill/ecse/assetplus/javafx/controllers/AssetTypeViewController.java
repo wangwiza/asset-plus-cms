@@ -8,14 +8,17 @@ import ca.mcgill.ecse.assetplus.model.AssetType;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Collections;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet1Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet2Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet3Controller;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet6Controller;
 import ca.mcgill.ecse.assetplus.controller.TOAsset;
 import ca.mcgill.ecse.assetplus.controller.TOAssetType;
+import ca.mcgill.ecse.assetplus.controller.TOMaintenanceTicket;
 import ca.mcgill.ecse.assetplus.controller.TOUser;
 import ca.mcgill.ecse.assetplus.controller.Util;
 import javafx.collections.FXCollections;
@@ -92,10 +95,28 @@ public class AssetTypeViewController {
 
   @FXML
   void deleteAssetTypeClicked(ActionEvent event) {
-    TOAssetType selectedAssetType = assetTypeTableView.getSelectionModel().getSelectedItem();
-    // System.out.println(selectedAsset.getAssetNumber());
-    AssetPlusFeatureSet2Controller.deleteAssetType(selectedAssetType.getName());
-    sceneSwitch(assetTypeViewAnchorPane, "../pages/AssetTypeView.fxml");
+    try {
+      TOAssetType selectedAssetType = assetTypeTableView.getSelectionModel().getSelectedItem();
+
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("../pages/AssetView.fxml"));
+      AnchorPane nextAnchorPane = (AnchorPane) loader.load();
+
+      AssetViewController assetViewController = loader.getController();
+
+      for (TOAsset asset : assetViewController.getAllAssets()) {
+        if (asset.getAssetType().equals(selectedAssetType.getName())) {
+          AssetPlusFeatureSet3Controller.deleteSpecificAsset(asset.getAssetNumber());
+        }
+      }
+
+      assetViewController.refresh();
+      AssetPlusFeatureSet2Controller.deleteAssetType(selectedAssetType.getName());
+      
+      sceneSwitch(assetTypeViewAnchorPane, "../pages/AssetTypeView.fxml");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
   }
 
 }
