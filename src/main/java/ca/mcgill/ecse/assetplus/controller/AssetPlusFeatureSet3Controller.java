@@ -52,7 +52,11 @@ public class AssetPlusFeatureSet3Controller {
       ap.addSpecificAsset(ap.addSpecificAsset(assetNumber, floorNumber, roomNumber, purchaseDate, assetType));
       AssetPlusPersistence.save();
     } catch (RuntimeException e) {
-      return e.getMessage();
+      String caughtError = e.getMessage();
+      if (caughtError.startsWith("Cannot create due to duplicate assetNumber.")) {
+        caughtError = "Cannot create due to duplicate asset number.";
+      }
+      return caughtError;
     }
     return "";
   }
