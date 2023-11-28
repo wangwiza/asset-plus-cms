@@ -26,7 +26,7 @@
             <RowConstraints maxHeight="220.00003051757812" minHeight="10.0" prefHeight="63.33335367838538" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Room Number: " GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+            <Label text="Room Number: " GridPane.halignment="RIGHT" GridPane.rowIndex="4">
                <font>
                   <Font size="18.0" />
                </font>
@@ -39,36 +39,42 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Asset Type: " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+            <Label text="Asset Type: " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label text="Floor Number: " GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <Label text="Floor Number: " GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label text="Purchase Date: " GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+            <Label text="Purchase Date: " GridPane.halignment="RIGHT" GridPane.rowIndex="5">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="cancelAddAsset" mnemonicParsing="false" onAction="#cancelAddAssetClicked" text="Cancel" GridPane.rowIndex="5">
+            <TextField fx:id="addAssetType" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="addFloorNumber" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="addRoomNumber" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="addPurchaseDate" layoutX="310.0" layoutY="357.0" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="addAssetNumber" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Asset Number: " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                <font>
                   <Font size="18.0" />
                </font>
-            </Button>
-            <Button fx:id="addAsset" mnemonicParsing="false" onAction="#addAssetClicked" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <TextField fx:id="addAssetType" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="addFloorNumber" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="addRoomNumber" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="addPurchaseDate" layoutX="310.0" layoutY="357.0" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            </Label>
          </children>
       </GridPane>
+      <Button fx:id="cancelAddAsset" layoutX="112.0" layoutY="526.0" mnemonicParsing="false" onAction="#cancelAddAssetClicked" text="Cancel">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="addAsset" layoutX="426.0" layoutY="519.0" mnemonicParsing="false" onAction="#addAssetClicked" text="Add">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

@@ -54,7 +54,6 @@ public class ImagesPageController {
     delDoClear();
   }
 
-
   @FXML
   public void doAddImage(ActionEvent event) {
     try {
@@ -63,7 +62,7 @@ public class ImagesPageController {
 
       if (ViewUtils.successful(
           AssetPlusFeatureSet5Controller.addImageToMaintenanceTicket(imageURL, ticketID))) {
-        addDoClear();
+          addDoClear();
         // sceneSwitch(addAssetAnchorPane, "../pages/AssetView.fxml");
       }
     } catch (NumberFormatException e) {
