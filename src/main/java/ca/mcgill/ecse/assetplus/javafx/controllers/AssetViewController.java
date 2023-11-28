@@ -2,17 +2,23 @@ package ca.mcgill.ecse.assetplus.javafx.controllers;
 
 
 import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.sceneSwitch;
+import static ca.mcgill.ecse.assetplus.javafx.controllers.ViewUtils.showError;
 import ca.mcgill.ecse.assetplus.javafx.AssetPlusFxmlView;
 import ca.mcgill.ecse.assetplus.javafx.controllers.UpdateAssetController;
 import ca.mcgill.ecse.assetplus.model.AssetType;
+import ca.mcgill.ecse.assetplus.model.SpecificAsset;
+import ca.mcgill.ecse.assetplus.persistence.AssetPlusPersistence;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import ca.mcgill.ecse.assetplus.application.AssetPlusApplication;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet3Controller;
+import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet4Controller;
 import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet6Controller;
 import ca.mcgill.ecse.assetplus.controller.TOAsset;
+import ca.mcgill.ecse.assetplus.controller.TOMaintenanceTicket;
 import ca.mcgill.ecse.assetplus.controller.TOUser;
 import ca.mcgill.ecse.assetplus.controller.Util;
 import javafx.collections.FXCollections;
@@ -86,6 +92,21 @@ public class AssetViewController {
     void deleteAssetClicked(ActionEvent event) {
         TOAsset selectedAsset = assetTableView.getSelectionModel().getSelectedItem();
         AssetPlusFeatureSet3Controller.deleteSpecificAsset(selectedAsset.getAssetNumber());
+        List<TOMaintenanceTicket> tickets = AssetPlusFeatureSet6Controller.getTickets();
+        
+        for (TOMaintenanceTicket ticket : tickets){
+            if(ticket.getAssetName() != null && ticket.getAssetName().equals(assetTableView.getSelectionModel().getSelectedItem().getAssetType()) &&
+                ticket.getFloorNumber() == (assetTableView.getSelectionModel().getSelectedItem()).getFloorNumber() &&
+                ticket.getRoomNumber() == (assetTableView.getSelectionModel().getSelectedItem()).getRoomNumber()) {
+                    try {
+                        AssetPlusFeatureSet4Controller.deleteMaintenanceTicket(ticket.getId());
+                    } catch (Exception e) {
+                        showError(e.toString());
+                    }
+                }
+        }
+    
+        
         sceneSwitch(assetViewAnchorPane, "../pages/AssetView.fxml");
     }
 
