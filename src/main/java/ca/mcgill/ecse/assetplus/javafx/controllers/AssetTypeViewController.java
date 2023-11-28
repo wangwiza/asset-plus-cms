@@ -97,12 +97,23 @@ public class AssetTypeViewController {
   void deleteAssetTypeClicked(ActionEvent event) {
     try {
       TOAssetType selectedAssetType = assetTypeTableView.getSelectionModel().getSelectedItem();
-      AssetPlusFeatureSet2Controller.deleteAssetType(selectedAssetType.getName());
-      sceneSwitch(assetTypeViewAnchorPane, "../pages/AssetTypeView.fxml");
+
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("../pages/TicketsPage.fxml"));
+      AnchorPane nextAnchorPane = (AnchorPane) loader.load();
+      TicketsPageController ticketsPageController = loader.getController();
+
+      for (TOMaintenanceTicket ticket : ticketsPageController.getAllTickets()){
+        if(ticket.getAssetName() != null && ticket.getAssetName().equals(selectedAssetType.getName())) {
+                AssetPlusFeatureSet4Controller.deleteMaintenanceTicket(ticket.getId());
+            }
+      }
+
+    ticketsPageController.refresh();
+
+    AssetPlusFeatureSet2Controller.deleteAssetType(selectedAssetType.getName());
+    sceneSwitch(assetTypeViewAnchorPane, "../pages/AssetTypeView.fxml");
     } catch (Exception e) {
       e.printStackTrace();
     }
-
   }
-
 }
