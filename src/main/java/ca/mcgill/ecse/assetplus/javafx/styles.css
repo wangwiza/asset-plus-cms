@@ -1,12 +1,8 @@
 
 /*
- * Global Button styling for a uniformed look
- * Can be overridden by specifying Properties/Style or Style Class in SceneBuilder
- * Or use another CSS file
+ * global button
  */
 .button {
-    -fx-font-family: "Open Sans Semibold";
-    -fx-font-size: 12;
     -fx-text-fill: #FFF;
     -fx-pref-height: 30px;
     -fx-base: rgb(76, 133, 255);

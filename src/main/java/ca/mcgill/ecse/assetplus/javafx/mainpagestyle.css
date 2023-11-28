@@ -1,0 +1,32 @@
+.dashboard-button {
+    -fx-font-size: 22;
+    -fx-background-color: #2460c7;
+    -fx-background-radius: 0px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.dashboard-button:hover {
+    -fx-background-color: #D9D9FF;
+}
+
+.dashboard-button:pressed {
+    -fx-background-color: #2424aa;
+}
+
+.dashboard-button:selected {
+    -fx-background-color: #2424aa;
+    -fx-border-color: #5C5CCC;
+    -fx-border-width: 0px 0px 0px 4px;
+    -fx-font-family: "Open Sans Light";
+    -fx-text-fill: #FFFFFF;
+}
+
+.main-window-title {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 32;
+}
+
+.root {
+    -fx-base: #d9f0ff;
+    -fx-focus-color: #5C5CCC;
+}
