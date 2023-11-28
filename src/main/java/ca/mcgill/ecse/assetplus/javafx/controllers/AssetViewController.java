@@ -94,10 +94,8 @@ public class AssetViewController {
     void deleteAssetClicked(ActionEvent event) {
         try {
             TOAsset selectedAsset = assetTableView.getSelectionModel().getSelectedItem();
-            
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../pages/TicketsPage.fxml"));
             AnchorPane nextAnchorPane = (AnchorPane) loader.load();
-
             TicketsPageController ticketsPageController = loader.getController();
 
             for (TOMaintenanceTicket ticket : ticketsPageController.getAllTickets()){
@@ -110,7 +108,6 @@ public class AssetViewController {
 
             ticketsPageController.refresh();
             AssetPlusFeatureSet3Controller.deleteSpecificAsset(selectedAsset.getAssetNumber());
-        
             
             sceneSwitch(assetViewAnchorPane, "../pages/AssetView.fxml");
         } catch (Exception e) {
