@@ -110,11 +110,15 @@ public class ReviewMaintenanceTicket {
     @FXML
     void updateClicked() {
         boolean s = false;
+        int asset = -1;
+        if (!assetNumberField.getText().isEmpty()) {
+            asset = Integer.parseInt(assetNumberField.getText());
+        }
         try {
             s = successful(AssetPlusFeatureSet4Controller.updateMaintenanceTicket(
                     Integer.parseInt(idField.getText()), Date.valueOf(dateField.getValue()),
                     descriptionField.getText(), raiserField.getText(),
-                    Integer.parseInt(assetNumberField.getText())));
+                    asset));
         } catch (Exception e) {
             showError(e.toString());
         }

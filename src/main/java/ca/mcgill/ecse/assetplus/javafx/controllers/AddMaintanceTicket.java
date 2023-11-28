@@ -10,6 +10,7 @@ import ca.mcgill.ecse.assetplus.controller.AssetPlusFeatureSet5Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -40,12 +41,15 @@ public class AddMaintanceTicket {
     private TextField ticketIdField;
 
     @FXML
+    private DatePicker raisedByField;
+
+    @FXML
     void addButtonClicked(ActionEvent event) {
         boolean s = false;
 
         try {
             s = successful(AssetPlusFeatureSet4Controller.addMaintenanceTicket(
-                    Integer.parseInt(ticketIdField.getText()), Date.valueOf(LocalDate.now()),
+                    Integer.parseInt(ticketIdField.getText()), Date.valueOf(raisedByField.getValue()),
                     descriptionField.getText(), raiserField.getText(),
                     Integer.valueOf(assetNumberField.getText())));
         } catch (Exception e) {
@@ -85,5 +89,6 @@ public class AddMaintanceTicket {
         raiserField.clear();
         assetNumberField.clear();
         ticketIdField.clear();
+        raisedByField.setValue(LocalDate.now());
     }
 }
