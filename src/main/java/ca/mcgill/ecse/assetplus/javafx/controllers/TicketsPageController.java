@@ -163,7 +163,7 @@ public class TicketsPageController {
   public void sortByDate(ActionEvent event) { 
     LocalDate selectedDate = datePicker.getValue();
     if (selectedDate == null) {
-      ViewUtils.showError("Please select a valid date");
+      ticketsTable.setItems(FXCollections.observableArrayList(AssetPlusFeatureSet6Controller.getTickets()));
     }
     else{
       var date = Date.valueOf(selectedDate);
