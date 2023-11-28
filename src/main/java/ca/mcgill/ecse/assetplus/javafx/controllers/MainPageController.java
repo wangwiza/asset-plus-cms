@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 public class MainPageController {
@@ -24,17 +25,7 @@ public class MainPageController {
   private ToggleButton dashboardImagesButton;
   // Panes
   @FXML
-  private Pane usersPane;
-  @FXML
-  private Pane imagesPane;
-  @FXML
-  private Pane ticketsPane;
-  @FXML
-  private Pane assetTypesPane;
-  @FXML
-  private Pane assetsPane;
-  @FXML
-  private Pane maintenanceTicketsPane;
+  private AnchorPane viewAnchorPane;
 
   @FXML
   public void initialize() {
@@ -47,31 +38,21 @@ public class MainPageController {
 
   @FXML
   public void dashboardUsersSelected(ActionEvent event) {
-    usersPane.toFront();
-  }
-
-  @FXML
-  public void dashboardImagesSelected(ActionEvent event) {
-    imagesPane.toFront();
-  }
-
-  @FXML
-  public void dashboardTicketsSelected(ActionEvent event) { 
-    ticketsPane.toFront(); 
+    ViewUtils.sceneSwitch((AnchorPane) viewAnchorPane, "../pages/UserView.fxml");
   }
 
   @FXML
   public void dashboardAssetTypesSelected(ActionEvent event) {
-    assetTypesPane.toFront();
+    ViewUtils.sceneSwitch((AnchorPane) viewAnchorPane, "../pages/AssetTypeView.fxml");
   }
 
   @FXML
   public void dashboardAssetsSelected(ActionEvent event) {
-    assetsPane.toFront();
+    ViewUtils.sceneSwitch((AnchorPane) viewAnchorPane, "../pages/AssetView.fxml");
   }
 
   public void dashboardViewMaintenanceTicketsSelected(ActionEvent event) {
-    maintenanceTicketsPane.toFront();
+    ViewUtils.sceneSwitch((AnchorPane) viewAnchorPane, "../pages/TicketsPage.fxml");
   }
 
 }
