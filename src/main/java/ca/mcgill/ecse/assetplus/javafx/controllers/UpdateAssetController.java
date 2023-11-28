@@ -51,7 +51,7 @@ public class UpdateAssetController {
         try {
             String assetType = updateAssetType.getText();
             int floorNumber = Integer.parseInt(updateFloorNumber.getText());
-            int roomNumber = Integer.parseInt(updateRoomNumber.getText());
+            Integer roomNumber = updateRoomNumber.getText() != null && !updateRoomNumber.getText().isEmpty() ? Integer.parseInt(updateRoomNumber.getText()) : -1;
             Date purchaseDate = Date.valueOf(updatePurchaseDate.getText());
 
             if (successful(AssetPlusFeatureSet3Controller.updateSpecificAsset(this.assetNumber, floorNumber, roomNumber, purchaseDate, assetType))) {
