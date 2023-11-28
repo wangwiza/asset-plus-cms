@@ -52,14 +52,13 @@ public class TOAsset
     return assetList;
   }
 
-  public static Integer getNextAssetNumber() {
-    List<TOAsset> assets = getAllAssets();
-    if (assets.isEmpty()) {
-        return 1;
-    } else {
-        return Collections.max(assets, Comparator.comparing(TOAsset::getAssetNumber)).getAssetNumber() + 1;
-    }
-}
+  public boolean setAssetNumber(Integer aAssetNumber)
+  {
+    boolean wasSet = false;
+    assetNumber = aAssetNumber;
+    wasSet = true;
+    return wasSet;
+  }
 
   public boolean setAssetType(String aAssetType)
   {

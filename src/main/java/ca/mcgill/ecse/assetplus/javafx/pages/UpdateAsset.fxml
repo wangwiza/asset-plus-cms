@@ -20,6 +20,7 @@
         <rowConstraints>
           <RowConstraints maxHeight="128.66668701171875" minHeight="0.0" prefHeight="57.0" valignment="CENTER" />
           <RowConstraints maxHeight="247.33332316080725" minHeight="0.0" prefHeight="67.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="247.33332316080725" minHeight="0.0" prefHeight="67.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="220.00003051757812" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="220.00003051757812" minHeight="10.0" prefHeight="58.666646321614564" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="220.00003051757812" minHeight="10.0" prefHeight="63.33335367838538" vgrow="SOMETIMES" />
@@ -38,11 +39,6 @@
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin>
-            </Label>
-            <Label text="Asset Type: " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-               <font>
-                  <Font size="18.0" />
-               </font>
             </Label>
             <Label text="Floor Number: " GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <font>
@@ -68,6 +64,11 @@
             <TextField fx:id="updateRoomNumber" layoutX="310.0" layoutY="357.0" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="updatePurchaseDate" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <TextField fx:id="updateFloorNumber" layoutX="525.0" layoutY="120.0" maxWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Asset Type: " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
    </children>
