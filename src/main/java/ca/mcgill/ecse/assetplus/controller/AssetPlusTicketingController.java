@@ -149,6 +149,10 @@ public class AssetPlusTicketingController {
         error = "Maintenance ticket does not exist.";
         return error;
       }
+      if (reason.isEmpty()) {
+        error = "A note must be provided when disapproving.";
+        return error;
+      }
       ticket.disapprove(date, reason, ap.getManager());
       AssetPlusPersistence.save();
       return error;
