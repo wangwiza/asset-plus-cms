@@ -97,21 +97,7 @@ public class AssetTypeViewController {
   void deleteAssetTypeClicked(ActionEvent event) {
     try {
       TOAssetType selectedAssetType = assetTypeTableView.getSelectionModel().getSelectedItem();
-
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("../pages/AssetView.fxml"));
-      AnchorPane nextAnchorPane = (AnchorPane) loader.load();
-
-      AssetViewController assetViewController = loader.getController();
-
-      for (TOAsset asset : assetViewController.getAllAssets()) {
-        if (asset.getAssetType().equals(selectedAssetType.getName())) {
-          AssetPlusFeatureSet3Controller.deleteSpecificAsset(asset.getAssetNumber());
-        }
-      }
-
-      assetViewController.refresh();
       AssetPlusFeatureSet2Controller.deleteAssetType(selectedAssetType.getName());
-      
       sceneSwitch(assetTypeViewAnchorPane, "../pages/AssetTypeView.fxml");
     } catch (Exception e) {
       e.printStackTrace();
