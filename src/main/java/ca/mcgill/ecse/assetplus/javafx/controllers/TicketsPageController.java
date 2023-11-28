@@ -142,6 +142,10 @@ public class TicketsPageController {
     refresh();
   }
 
+  public List<TOMaintenanceTicket> getAllTickets() {
+    return new ArrayList<>(maintenanceTicketsList);
+  }
+
   @FXML
   public void sortByStaffIDButton(ActionEvent event) { 
     String staffIdentifier = hotelStaffIDTextField.getText();

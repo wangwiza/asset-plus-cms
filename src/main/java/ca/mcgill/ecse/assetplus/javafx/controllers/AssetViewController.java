@@ -68,6 +68,8 @@ public class AssetViewController {
         TOAsset.getAllAssets()
     );
 
+    ObservableList<TOMaintenanceTicket> maintenanceTicketsList = FXCollections.observableArrayList(AssetPlusFeatureSet6Controller.getTickets());
+
     public void refresh() {
         assetNumber.setCellValueFactory(new PropertyValueFactory<TOAsset, Integer>("assetNumber"));
         assetType.setCellValueFactory(new PropertyValueFactory<TOAsset, String>("assetType"));
@@ -90,24 +92,30 @@ public class AssetViewController {
     
     @FXML
     void deleteAssetClicked(ActionEvent event) {
-        TOAsset selectedAsset = assetTableView.getSelectionModel().getSelectedItem();
-        AssetPlusFeatureSet3Controller.deleteSpecificAsset(selectedAsset.getAssetNumber());
-        List<TOMaintenanceTicket> tickets = AssetPlusFeatureSet6Controller.getTickets();
-        
-        for (TOMaintenanceTicket ticket : tickets){
-            if(ticket.getAssetName() != null && ticket.getAssetName().equals(assetTableView.getSelectionModel().getSelectedItem().getAssetType()) &&
-                ticket.getFloorNumber() == (assetTableView.getSelectionModel().getSelectedItem()).getFloorNumber() &&
-                ticket.getRoomNumber() == (assetTableView.getSelectionModel().getSelectedItem()).getRoomNumber()) {
-                    try {
+        try {
+            TOAsset selectedAsset = assetTableView.getSelectionModel().getSelectedItem();
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../pages/TicketsPage.fxml"));
+            AnchorPane nextAnchorPane = (AnchorPane) loader.load();
+
+            TicketsPageController ticketsPageController = loader.getController();
+
+            for (TOMaintenanceTicket ticket : ticketsPageController.getAllTickets()){
+                if(ticket.getAssetName() != null && ticket.getAssetName().equals(selectedAsset.getAssetType()) &&
+                    ticket.getFloorNumber() == (selectedAsset.getFloorNumber()) &&
+                    ticket.getRoomNumber() == (selectedAsset.getRoomNumber())) {
                         AssetPlusFeatureSet4Controller.deleteMaintenanceTicket(ticket.getId());
-                    } catch (Exception e) {
-                        showError(e.toString());
                     }
-                }
-        }
-    
+            }
+
+            ticketsPageController.refresh();
+            AssetPlusFeatureSet3Controller.deleteSpecificAsset(selectedAsset.getAssetNumber());
         
-        sceneSwitch(assetViewAnchorPane, "../pages/AssetView.fxml");
+            
+            sceneSwitch(assetViewAnchorPane, "../pages/AssetView.fxml");
+        } catch (Exception e) {
+            e.printStackTrace();
+          }
     }
 
     
