@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="addAssetAnchorPane" prefHeight="700.0" prefWidth="1030.0" style="-fx-background-color: #FFFFFF;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.AddAssetController">
+<AnchorPane fx:id="addAssetAnchorPane" prefHeight="700.0" prefWidth="1030.0" style="-fx-background-color: #FFFFFF;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.AddAssetController">
    <children>
-      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0">
+      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1030.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -22,6 +22,7 @@
           <RowConstraints maxHeight="247.33332316080725" minHeight="0.0" prefHeight="67.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="220.00003051757812" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="220.00003051757812" minHeight="10.0" prefHeight="58.666646321614564" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="220.00003051757812" minHeight="10.0" prefHeight="63.33335367838538" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="220.00003051757812" minHeight="10.0" prefHeight="63.33335367838538" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="220.00003051757812" minHeight="10.0" prefHeight="63.33335367838538" vgrow="SOMETIMES" />
         </rowConstraints>
@@ -64,17 +65,17 @@
                   <Font size="18.0" />
                </font>
             </Label>
+            <Button fx:id="addAsset" mnemonicParsing="false" onAction="#addAssetClicked" text="Add" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="cancelAddAsset" mnemonicParsing="false" onAction="#cancelAddAssetClicked" text="Cancel" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
          </children>
       </GridPane>
-      <Button fx:id="cancelAddAsset" layoutX="112.0" layoutY="526.0" mnemonicParsing="false" onAction="#cancelAddAssetClicked" text="Cancel">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="addAsset" layoutX="426.0" layoutY="519.0" mnemonicParsing="false" onAction="#addAssetClicked" text="Add">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>
