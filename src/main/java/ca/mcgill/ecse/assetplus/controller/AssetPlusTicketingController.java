@@ -35,6 +35,14 @@ public class AssetPlusTicketingController {
       return "Maintenance ticket does not exist.";
     }
 
+    if (timeEstimate == null) {
+      return "Please input a time estimate.";
+    }
+
+    if (priority == null) {
+      return "Please input a priority level.";
+    }
+
     //employee validation
     User ticketFixer = HotelStaff.getWithEmail(employeeEmail);
     HotelStaff hotelStaff;
