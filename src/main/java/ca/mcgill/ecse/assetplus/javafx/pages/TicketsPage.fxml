@@ -36,8 +36,8 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="hotelStaffIDTextField" onAction="#sortByStaffIDButton" prefWidth="136.0" promptText="enter hotel staff email" GridPane.columnIndex="2" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by Assignee:" textAlignment="CENTER" wrappingWidth="127.7236328125" GridPane.columnIndex="1">
+                  <TextField fx:id="hotelStaffIDTextField" onAction="#sortByStaffIDButton" prefWidth="136.0" promptText="hotel staff email" GridPane.columnIndex="2" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by raiser:" textAlignment="CENTER" wrappingWidth="127.7236328125" GridPane.columnIndex="1">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>

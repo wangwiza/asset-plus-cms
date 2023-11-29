@@ -154,7 +154,7 @@ public class TicketsPageController {
     } else {
       List<TOMaintenanceTicket> sortedTickets = new ArrayList<>();
       for (TOMaintenanceTicket ticket : AssetPlusFeatureSet6Controller.getTickets()) {
-        String theEmail = ticket.getFixedByEmail(); 
+        String theEmail = ticket.getRaisedByEmail(); 
         if (theEmail != null){
         if (theEmail.equals(staffIdentifier)) {
           sortedTickets.add(ticket);
