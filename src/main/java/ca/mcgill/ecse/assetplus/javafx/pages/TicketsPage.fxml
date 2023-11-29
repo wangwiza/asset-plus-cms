@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="maintenanceTicketsViewAnchorPane" prefHeight="700.0" prefWidth="1030.0" style="-fx-background-color: #FFFFFF;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.TicketsPageController">
+<AnchorPane fx:id="maintenanceTicketsViewAnchorPane" prefHeight="700.0" prefWidth="1030.0" style="-fx-background-color: #FFFFFF;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.mcgill.ecse.assetplus.javafx.controllers.TicketsPageController">
    <children>
       <VBox layoutX="0.5" layoutY="12.666666984558105" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -65,7 +65,7 @@
                   <TableColumn fx:id="notes" prefWidth="84.0" text="Notes" />
               </columns>
             </TableView>
-            <GridPane prefHeight="60.0" prefWidth="1030.0">
+            <GridPane prefHeight="99.0" prefWidth="1030.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -78,14 +78,14 @@
               </rowConstraints>
                <children>
                   <Button fx:id="startButton" mnemonicParsing="false" onAction="#startClicked" text="Start Selected Ticket" GridPane.columnIndex="1" />
-                  <Button fx:id="approveWork" mnemonicParsing="false" onAction="#approveSelectedTicket" text="Approve Work" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Button fx:id="disapproveWork" mnemonicParsing="false" onAction="#disapproveSelectedTicket" text="Disapprove Work" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <Button fx:id="completeButton" mnemonicParsing="false" onAction="#completeClicked" text="Complete Selected Ticket" GridPane.rowIndex="1" />
-                  <Button fx:id="startButton" mnemonicParsing="false" onAction="#startClicked" text="Start Selected Ticket" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button fx:id="addTicketButton" mnemonicParsing="false" onAction="#addButtonClicked" text="Add Ticket" />
-                  <Button fx:id="updateSelectedButton" mnemonicParsing="false" onAction="#updateButtonClicked" text="Update Selected Ticket" GridPane.columnIndex="1" />
-                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonClicked" text="Delete Selected Ticket" GridPane.columnIndex="2" />
-                  <Button fx:id="imagesButton" mnemonicParsing="false" onAction="#goAddDelImage" text="Add/Delete Images" GridPane.columnIndex="3" />
+                  <Button fx:id="approveWork" mnemonicParsing="false" onAction="#approveSelectedTicket" style="-fx-background-color: #9867AD;" text="Approve Work" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="disapproveWork" mnemonicParsing="false" onAction="#disapproveSelectedTicket" style="-fx-background-color: #7D69AE;" text="Disapprove Work" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Button fx:id="completeButton" mnemonicParsing="false" onAction="#completeClicked" style="-fx-background-color: #C7609C;" text="Complete Selected Ticket" GridPane.rowIndex="1" />
+                  <Button fx:id="startButton" mnemonicParsing="false" onAction="#startClicked" style="-fx-background-color: #B163A7;" text="Start Selected Ticket" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="addTicketButton" mnemonicParsing="false" onAction="#addButtonClicked" style="-fx-background-color: #466BA4;" text="Add Ticket" />
+                  <Button fx:id="updateSelectedButton" mnemonicParsing="false" onAction="#updateButtonClicked" style="-fx-background-color: #0090C2;" text="Update Selected Ticket" GridPane.columnIndex="1" />
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonClicked" style="-fx-background-color: #00B3C5;" text="Delete Selected Ticket" GridPane.columnIndex="2" />
+                  <Button fx:id="imagesButton" mnemonicParsing="false" onAction="#goAddDelImage" style="-fx-background-color: #00D2AD;" text="Add/Delete Images" GridPane.columnIndex="3" />
                </children>
             </GridPane>
          </children>
